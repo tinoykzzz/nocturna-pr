@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/logo-tienda/icono-oficial.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#ff003c" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DROPS | NOCTURNA PR - Urban Machine</title>
+  <meta name="description" content="Descubre los últimos drops de NOCTURNA PR. Bividis, Bermudas Baggy y streetwear exclusivo.">
+
+  <link rel="canonical" href="https://nocturnapr.com/drops.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DROPS | NOCTURNA PR - Urban Machine">
+  <meta property="og:description" content="Descubre los últimos drops de NOCTURNA PR. Bividis, Bermudas Baggy y streetwear exclusivo.">
+  <meta property="og:image" content="https://nocturnapr.com/logo-tienda/icono-oficial.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:url" content="https://nocturnapr.com/drops.html">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DROPS | NOCTURNA PR - Urban Machine">
+  <meta name="twitter:description" content="Descubre los últimos drops de NOCTURNA PR. Bividis, Bermudas Baggy y streetwear exclusivo.">
+  <meta name="twitter:image" content="https://nocturnapr.com/logo-tienda/icono-oficial.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <nav class="breadcrumbs" id="breadcrumbs" aria-label="Ruta de navegación">
+    <a href="/">Inicio</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current" id="breadcrumbCurrent">Drops</span>
+  </nav>
+
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <div class="bg-container">
+    <div class="bg-gradient"></div>
+  </div>
+
+  <header>
+    <div class="logo-container">
+      <a href="/" class="logo-link">
+        <div class="logo-text">
+          <span class="logo">NOCTURNA</span>
+          <span class="logo-sub">PR</span>
+        </div>
+      </a>
+    </div>
+    <nav>
+      <a href="/" class="nav-link"><span>00</span> INICIO</a>
+      <a href="/#polos" class="nav-link"><span>01</span> COLECCIÓN</a>
+      <a href="/#perfumes" class="nav-link"><span>02</span> ESENCIAS</a>
+      <a href="/#lookbook" class="nav-link"><span>03</span> LOOKBOOK</a>
+      <a href="/drops.html" class="nav-link active"><span>04</span> DROPS</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" id="searchBtn" aria-label="Buscar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+      <button class="icon-button" id="wishlistBtn" aria-label="Favoritos">
+        <span class="wishlist-count">0</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+      </button>
+      <button class="cart-button" id="cartBtn" aria-label="Carrito">
+        <span class="cart-count">0</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+      </button>
+      <button class="hamburger-btn" id="menuBtn" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="logo-container">
+        <a href="/"><span class="logo">NOCTURNA</span></a>
+      </div>
+      <button class="close-menu" id="closeMenu" aria-label="Cerrar menú">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <nav class="mobile-nav">
+      <a href="/" class="mobile-nav-link"><span>00</span> INICIO</a>
+      <a href="/#polos" class="mobile-nav-link"><span>01</span> COLECCIÓN</a>
+      <a href="/#perfumes" class="mobile-nav-link"><span>02</span> ESENCIAS</a>
+      <a href="/#lookbook" class="mobile-nav-link"><span>03</span> LOOKBOOK</a>
+      <a href="/drops.html" class="mobile-nav-link active"><span>04</span> DROPS</a>
+    </nav>
+    <div class="mobile-menu-footer">
+      <div class="social-icons">
+        <a href="https://www.instagram.com/nocturna_pr" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+          </svg>
+        </a>
+        <a href="https://www.tiktok.com/@nocturna_pr" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TikTok">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.51a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.48 6.3 6.3 0 001.86-4.49V8.76a8.26 8.26 0 004.84 1.56v-3.5a4.84 4.84 0 01-1.12-.13z" />
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/share/185sDpw3Us/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+  <main class="drops-page-main">
+    <canvas id="global-stars-canvas"></canvas>
+
+    <section class="drops-hero-section">
+      <div class="section-header reveal-up">
+        <div class="section-label">ARCHIVO</div>
+        <h2>CRONOLOGÍA <span class="text-gradient">DE DROPS</span></h2>
+        <p class="section-desc">Historial de lanzamientos. Cada drop, una edición limitada en el tiempo.</p>
+      </div>
+    </section>
+
+    <div class="timeline">
+      <div class="timeline-line"></div>
+
+      <article class="timeline-item" id="drop-primer">
+        <div class="timeline-marker">01</div>
+        <div class="timeline-content">
+          <span class="timeline-date">Origen</span>
+          <h3>PRIMER DROP</h3>
+          <p class="timeline-desc">Colección fundadora · West Coast Choppers</p>
+          <ul class="timeline-list">
+            <li>West Coast Choppers</li>
+          </ul>
+          <button type="button" class="timeline-toggle" data-target="primer-images" aria-expanded="false">
+            <span class="toggle-text">Ver imágenes (4)</span>
+            <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="timeline-images" id="primer-images">
+            <img src="/primer-drop/producto-principal.jpeg" alt="Producto principal">
+            <img src="/primer-drop/mujer-1.jpeg" alt="Mujer 1">
+            <img src="/primer-drop/mujer-2.jpeg" alt="Mujer 2">
+            <img src="/primer-drop/mujer-3.jpeg" alt="Mujer 3">
+          </div>
+        </div>
+      </article>
+
+      <article class="timeline-item" id="drop-segundo">
+        <div class="timeline-marker">02</div>
+        <div class="timeline-content">
+          <span class="timeline-date">Polos JDM</span>
+          <h3>SEGUNDO DROP</h3>
+          <p class="timeline-desc">Polos inspirados en la cultura motorsport japonesa</p>
+          <ul class="timeline-list">
+            <li>Supra Beige</li>
+            <li>Godzilla GTR</li>
+            <li>Silvia S15</li>
+            <li>Nissan 180SX</li>
+            <li>Mazda RX7</li>
+          </ul>
+          <button type="button" class="timeline-toggle" data-target="segundo-images" aria-expanded="false">
+            <span class="toggle-text">Ver imágenes (10)</span>
+            <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="timeline-images" id="segundo-images">
+            <img src="/segundo-drop/supra-beige.jpeg" alt="Supra Beige">
+            <img src="/segundo-drop/supra2-beige.jpeg" alt="Supra Beige 2">
+            <img src="/segundo-drop/godzilla.jpeg" alt="Godzilla GTR">
+            <img src="/segundo-drop/godzilla-2.jpeg" alt="Godzilla GTR 2">
+            <img src="/segundo-drop/silvias15-1.jpeg" alt="Silvia S15">
+            <img src="/segundo-drop/silvias15-2.jpeg" alt="Silvia S15 2">
+            <img src="/segundo-drop/nissanlust-1.jpeg" alt="Nissan 180SX">
+            <img src="/segundo-drop/nissanlust-2.jpeg" alt="Nissan 180SX 2">
+            <img src="/segundo-drop/mazdarx7-1.jpeg" alt="Mazda RX7">
+            <img src="/segundo-drop/mazdarx7-2.jpeg" alt="Mazda RX7 2">
+          </div>
+        </div>
+      </article>
+
+      <article class="timeline-item" id="drop-tercer">
+        <div class="timeline-marker">03</div>
+        <div class="timeline-content">
+          <span class="timeline-date">Colección Future</span>
+          <h3>TERCER DROP</h3>
+          <p class="timeline-desc">Edición especial · Siluetas futuristas</p>
+          <ul class="timeline-list">
+            <li>Future Black</li>
+            <li>Future Gray</li>
+            <li>Future White</li>
+            <li>GTR R35 Nismo</li>
+            <li>Supra MK4</li>
+            <li>Mazda RX7 V2</li>
+          </ul>
+          <button type="button" class="timeline-toggle" data-target="tercer-images" aria-expanded="false">
+            <span class="toggle-text">Ver imágenes (6)</span>
+            <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="timeline-images" id="tercer-images">
+            <img src="/tercer-drop/blackfuture-1.jpeg" alt="Future Black">
+            <img src="/tercer-drop/grayfuture-1.jpeg" alt="Future Gray">
+            <img src="/tercer-drop/whitefuture-1.jpeg" alt="Future White">
+            <img src="/tercer-drop/gt35-1.jpeg" alt="GTR R35 Nismo">
+            <img src="/tercer-drop/supramk4-1.jpeg" alt="Supra MK4">
+            <img src="/tercer-drop/mazdarx7-1.jpeg" alt="Mazda RX7 V2">
+          </div>
+        </div>
+      </article>
+
+      <article class="timeline-item" id="drop-cuarto">
+        <div class="timeline-marker">04</div>
+        <div class="timeline-content">
+          <span class="timeline-date">Bermudas</span>
+          <h3>CUARTO DROP</h3>
+          <p class="timeline-desc">Bermudas Baggy · Summer vibes</p>
+          <ul class="timeline-list">
+            <li>Blanco</li>
+            <li>Café</li>
+            <li>Negro</li>
+          </ul>
+          <button type="button" class="timeline-toggle" data-target="cuarto-images" aria-expanded="false">
+            <span class="toggle-text">Ver imágenes (3)</span>
+            <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="timeline-images" id="cuarto-images">
+            <img src="/cuarto-drop/short-blanco.jpeg" alt="Bermudas Baggy Blanco">
+            <img src="/cuarto-drop/short-cafe.jpeg" alt="Bermudas Baggy Café">
+            <img src="/cuarto-drop/short-negro.jpeg" alt="Bermudas Baggy Negro">
+          </div>
+        </div>
+      </article>
+
+      <article class="timeline-item" id="drop-quinto">
+        <div class="timeline-marker">05</div>
+        <div class="timeline-content">
+          <span class="timeline-date">Bividis 2026</span>
+          <h3>QUINTO DROP</h3>
+          <p class="timeline-desc">Essentials · Bividis en múltiples colores</p>
+          <ul class="timeline-list">
+            <li>Bividi Blanco, Gris, Negro</li>
+            <li>Blanco V2, Gris V2, Negro V2</li>
+            <li>Tres Edición</li>
+          </ul>
+          <button type="button" class="timeline-toggle" data-target="quinto-images" aria-expanded="false">
+            <span class="toggle-text">Ver imágenes (7)</span>
+            <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="timeline-images" id="quinto-images">
+            <img src="/quinto-drop/bividi-blanco.jpeg" alt="Bividi Blanco">
+            <img src="/quinto-drop/bividi-gris.jpeg" alt="Bividi Gris">
+            <img src="/quinto-drop/bividi-negro.jpeg" alt="Bividi Negro">
+            <img src="/quinto-drop/blanco-2.jpeg" alt="Blanco V2">
+            <img src="/quinto-drop/gris-2.jpeg" alt="Gris V2">
+            <img src="/quinto-drop/negro-2.jpeg" alt="Negro V2">
+            <img src="/quinto-drop/tres.jpeg" alt="Tres Edición">
+          </div>
+        </div>
+      </article>
+
+      <article class="timeline-item" id="drop-poleras">
+        <div class="timeline-marker">—</div>
+        <div class="timeline-content">
+          <span class="timeline-date">Limited</span>
+          <h3>DROP POLERAS</h3>
+          <p class="timeline-desc">Heavyweight Cotton</p>
+          <ul class="timeline-list">
+            <li>Black Polera</li>
+          </ul>
+          <button type="button" class="timeline-toggle" data-target="poleras-images" aria-expanded="false">
+            <span class="toggle-text">Ver imágenes (1)</span>
+            <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="timeline-images" id="poleras-images">
+            <img src="/drop-poleras/blackpolera-1.jpeg" alt="Black Polera">
+          </div>
+        </div>
+      </article>
+
+      <article class="timeline-item" id="drop-space">
+        <div class="timeline-marker">—</div>
+        <div class="timeline-content">
+          <span class="timeline-date">Lookbook</span>
+          <h3>DROP SPACE</h3>
+          <p class="timeline-desc">Colección espacial</p>
+          <ul class="timeline-list">
+            <li>Space Black</li>
+            <li>Space White</li>
+            <li>Space Red</li>
+          </ul>
+          <button type="button" class="timeline-toggle" data-target="space-images" aria-expanded="false">
+            <span class="toggle-text">Ver imágenes (3)</span>
+            <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="timeline-images" id="space-images">
+            <img src="/drop-space/black-space.jpeg" alt="Space Black">
+            <img src="/drop-space/white-space.jpeg" alt="Space White">
+            <img src="/drop-space/red-space.jpeg" alt="Space Red">
+          </div>
+        </div>
+      </article>
+
+      <article class="timeline-item" id="drop-perfumes">
+        <div class="timeline-marker"><svg class="icon-inline" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/><path d="M5 14l1.5 4.5L11 20l-4.5-1.5L5 14z"/><path d="M19 14l1.5 4.5L23 20l-4.5-1.5L19 14z"/></svg></div>
+        <div class="timeline-content">
+          <span class="timeline-date">Esencias</span>
+          <h3>PERFUMES DROP</h3>
+          <p class="timeline-desc">Línea de fragancias exclusivas</p>
+          <ul class="timeline-list">
+            <li>Khamra · Sceptre · Wanted · Nuit</li>
+            <li>Aqua · With You · Mango · Haramain</li>
+          </ul>
+          <button type="button" class="timeline-toggle" data-target="perfumes-images" aria-expanded="false">
+            <span class="toggle-text">Ver imágenes (16)</span>
+            <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="timeline-images" id="perfumes-images">
+            <img src="/perfumes-drop/perfume-khamra/product-khamra.png" alt="Khamra">
+            <img src="/perfumes-drop/perfume-khamra/khamra.png" alt="Khamra 2">
+            <img src="/perfumes-drop/perfume-sceptre/product-sceptre.png" alt="Sceptre">
+            <img src="/perfumes-drop/perfume-sceptre/sceptre.png" alt="Sceptre 2">
+            <img src="/perfumes-drop/perfume-mostwanted/product-mostwanted.png" alt="Wanted">
+            <img src="/perfumes-drop/perfume-mostwanted/azzaro.png" alt="Wanted 2">
+            <img src="/perfumes-drop/perfume-nuit/product-nuit.png" alt="Nuit">
+            <img src="/perfumes-drop/perfume-nuit/nuit.png" alt="Nuit 2">
+            <img src="/perfumes-drop/perfume-aqua/product-aqua.png" alt="Aqua">
+            <img src="/perfumes-drop/perfume-aqua/aqua.png" alt="Aqua 2">
+            <img src="/perfumes-drop/perfume-with/product-with.png" alt="With You">
+            <img src="/perfumes-drop/perfume-with/with.png" alt="With You 2">
+            <img src="/perfumes-drop/perfume-mango/product-mango.png" alt="Mango">
+            <img src="/perfumes-drop/perfume-mango/mango.png" alt="Mango 2">
+            <img src="/perfumes-drop/perfume-haramain/producto-haramain.png" alt="Haramain">
+            <img src="/perfumes-drop/perfume-haramain/haramain.png" alt="Haramain 2">
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <section class="drops-cta-section">
+      <a href="/#polos" class="btn-primary">
+        <span>VER COLECCIÓN</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </a>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span>NOCTURNA <span class="accent">PR</span></span>
+        </div>
+        <p>Streetwear premium inspirado en la cultura motorsport y la noche urbana.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>TIENDA</h4>
+          <a href="/#polos">Colección</a>
+          <a href="/#perfumes">Perfumes</a>
+          <a href="/#lookbook">Lookbook</a>
+          <a href="/drops.html">Drops</a>
+        </div>
+        <div class="footer-col">
+          <h4>NOSOTROS</h4>
+          <a href="/#nosotros">Sobre Nosotros</a>
+        </div>
+        <div class="footer-col">
+          <h4>AYUDA</h4>
+          <a href="/#faq">FAQ</a>
+          <a href="/#metodos-pago">Métodos de pago</a>
+          <a href="/#contacto">Contacto</a>
+          <a href="https://wa.me/51970663060" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </div>
+        <div class="footer-col">
+          <h4>LEGAL</h4>
+          <a href="/terminos.html">Términos</a>
+          <a href="/privacidad.html">Privacidad</a>
+          <a href="/privacidad.html#cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 NOCTURNA PR. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>TU CARRITO</h3>
+      <button class="close-cart" id="closeCart" aria-label="Cerrar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="empty-cart">Tu carrito está vacío</p>
+    </div>
+    <div class="cart-coupon" id="cartCoupon">
+      <div class="coupon-input">
+        <input type="text" id="couponInput" placeholder="Código de descuento">
+        <button type="button" class="btn-coupon" id="applyCouponBtn">APLICAR</button>
+      </div>
+      <span class="coupon-message" id="couponMessage"></span>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-totals">
+        <div class="cart-subtotal" id="cartSubtotalRow">
+          <span>Subtotal:</span>
+          <span id="cartSubtotal">$0.00</span>
+        </div>
+        <div class="cart-discount" id="cartDiscountRow" style="display: none;">
+          <span>Descuento (<span id="couponCodeDisplay"></span>):</span>
+          <span id="cartDiscount">-$0.00</span>
+        </div>
+        <div class="cart-total">
+          <span>Total:</span>
+          <span class="total-amount" id="cartTotal">$0.00</span>
+        </div>
+      </div>
+      <button class="btn-primary checkout-btn">
+        <span>CHECKOUT</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <div class="toast" id="toast">
+    <span class="toast-message">Producto agregado al carrito</span>
+  </div>
+
+  <div class="search-modal" id="searchModal">
+    <div class="search-modal-content">
+      <button class="close-search" id="closeSearch" aria-label="Cerrar búsqueda">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="search-input-wrapper">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Buscar productos..." autocomplete="off">
+      </div>
+      <div class="search-suggestions">
+        <span class="search-label">BÚSQUEDAS POPULARES</span>
+        <div class="suggestion-tags">
+          <button class="suggestion-tag" data-search="Supra">Supra</button>
+          <button class="suggestion-tag" data-search="Godzilla">Godzilla</button>
+          <button class="suggestion-tag" data-search="Bermudas">Bermudas</button>
+          <button class="suggestion-tag" data-search="Bividi">Bividi</button>
+          <button class="suggestion-tag" data-search="Nissan">Nissan</button>
+          <button class="suggestion-tag" data-search="Khamra">Khamra</button>
+          <button class="suggestion-tag" data-search="Perfume">Perfume</button>
+          <button class="suggestion-tag" data-search="Space">Space</button>
+        </div>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <div class="quick-view-modal" id="quickViewModal">
+    <div class="quick-view-content">
+      <button class="close-quick-view" id="closeQuickView" aria-label="Cerrar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="quick-view-gallery">
+        <img src="" alt="" id="quickViewImage" class="quick-view-main-img">
+        <div class="qv-thumbnails" id="qvThumbnails"></div>
+      </div>
+      <div class="quick-view-info">
+        <span class="quick-view-category" id="quickViewCategory">COLECCIÓN</span>
+        <h2 id="quickViewTitle">Nombre del Producto</h2>
+        <p class="quick-view-price" id="quickViewPrice">$45.00</p>
+        <div class="qv-tabs-container">
+          <div class="qv-tabs-header">
+            <button class="qv-tab active" data-target="desc">Descripción</button>
+            <button class="qv-tab" data-target="shipping">Envíos</button>
+          </div>
+          <div class="qv-tab-content active" id="qv-desc">
+            <p class="quick-view-desc" id="quickViewDesc">Polo de alta calidad con diseño exclusivo.</p>
+          </div>
+          <div class="qv-tab-content" id="qv-shipping">
+            <ul class="shipping-list">
+              <li><svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h5l3 3v5h-8V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Envíos a todo Lima (24-48 hrs)</li>
+              <li><svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg> Envíos a Provincia (2-4 días hábiles)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="quick-view-stock">
+          <span class="stock-indicator in-stock"></span>
+          <span id="quickViewStock">En stock</span>
+        </div>
+        <div class="quick-view-sizes">
+          <span class="size-label">TALLA:</span>
+          <div class="size-options">
+            <button class="size-option" data-size="S">S</button>
+            <button class="size-option active" data-size="M">M</button>
+            <button class="size-option" data-size="L">L</button>
+            <button class="size-option" data-size="XL">XL</button>
+          </div>
+        </div>
+        <div class="quick-view-quantity">
+          <span class="qty-label">CANTIDAD:</span>
+          <div class="qty-controls">
+            <button class="qty-btn" id="qtyMinus">−</button>
+            <input type="number" value="1" min="1" max="10" id="qtyInput">
+            <button class="qty-btn" id="qtyPlus">+</button>
+          </div>
+        </div>
+        <div class="quick-view-actions">
+          <button class="btn-primary add-to-cart-modal" id="addToCartModal">
+            <span>AGREGAR AL CARRITO</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+          </button>
+          <button class="btn-outline add-to-wishlist-modal" id="addToWishlistModal">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="quick-view-overlay" id="quickViewOverlay"></div>
+
+  <div class="wishlist-sidebar" id="wishlistSidebar">
+    <div class="wishlist-header">
+      <h3>TUS FAVORITOS</h3>
+      <button class="close-wishlist" id="closeWishlist" aria-label="Cerrar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="wishlist-items" id="wishlistItems">
+      <p class="empty-wishlist">No tienes favoritos aún</p>
+    </div>
+    <div class="wishlist-footer">
+      <button class="btn-primary" id="moveAllToCart">
+        <span>AGREGAR TODOS AL CARRITO</span>
+      </button>
+    </div>
+  </div>
+  <div class="wishlist-overlay" id="wishlistOverlay"></div>
+
+  <div class="checkout-modal" id="checkoutModal">
+    <div class="checkout-content">
+      <div class="checkout-header">
+        <h2>CHECKOUT</h2>
+        <button class="close-checkout" id="closeCheckout">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+      </div>
+      <div class="checkout-body">
+        <div class="checkout-steps">
+          <div class="step active" data-step="1">1. ENVÍO</div>
+          <div class="step" data-step="2">2. WHATSAPP</div>
+          <div class="step" data-step="3">3. CONFIRMACIÓN</div>
+        </div>
+        <form id="checkoutForm">
+          <div class="checkout-step-content active" id="step1">
+            <div class="form-group">
+              <label>Nombre Completo</label>
+              <input type="text" name="customer_name" required placeholder="Ej: Juan Pérez">
+            </div>
+            <div class="form-group">
+              <label>Teléfono (WhatsApp)</label>
+              <input type="tel" name="customer_phone" required placeholder="+51 999 999 999">
+            </div>
+            <div class="form-group">
+              <label>Email (opcional)</label>
+              <input type="email" name="customer_email" placeholder="tu@email.com">
+            </div>
+            <div class="form-group">
+              <label>Dirección</label>
+              <input type="text" name="customer_address" required placeholder="Calle 123, Distrito">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Ciudad</label>
+                <input type="text" name="customer_city" required placeholder="Lima">
+              </div>
+              <div class="form-group">
+                <label>Código Postal</label>
+                <input type="text" name="customer_postal" placeholder="15001">
+              </div>
+            </div>
+            <button type="button" class="btn-primary next-step" data-next="2">CONTINUAR</button>
+          </div>
+          <div class="checkout-step-content" id="step2">
+            <div class="whatsapp-checkout-info">
+              <p>Tu pedido se guardará y se abrirá WhatsApp para que confirmes el pago (Yape, Plin o transferencia).</p>
+            </div>
+            <div class="order-summary-mini">
+              <h4>Resumen del pedido</h4>
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="checkoutSubtotal">$0.00</span>
+              </div>
+              <div class="summary-row">
+                <span>Envío</span>
+                <span>GRATIS</span>
+              </div>
+              <div class="summary-row total">
+                <span>Total</span>
+                <span id="checkoutTotal">$0.00</span>
+              </div>
+            </div>
+            <div class="checkout-actions">
+              <button type="button" class="btn-outline prev-step" data-prev="1">ATRÁS</button>
+              <button type="submit" class="btn-primary pay-now" id="whatsappCheckoutBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                <span>COMPRAR POR WHATSAPP</span>
+              </button>
+            </div>
+          </div>
+          <div class="checkout-step-content" id="step3">
+            <div class="success-message">
+              <div class="success-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <h3>¡PEDIDO REGISTRADO!</h3>
+              <p>Tu pedido #<span id="orderId">-</span> ha sido guardado.</p>
+              <p>Se abrió WhatsApp para que confirmes el pago. ¡Gracias por tu compra!</p>
+              <button type="button" class="btn-primary close-checkout-final">SEGUIR COMPRANDO</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="checkout-overlay" id="checkoutOverlay"></div>
+
+  <div class="size-modal" id="sizeModal">
+    <div class="size-modal-content">
+      <button class="close-size" id="closeSize">✕</button>
+      <h3>GUÍA DE TALLAS</h3>
+      <div class="size-tabs">
+        <button class="size-tab active" data-cat="polos">Polos</button>
+        <button class="size-tab" data-cat="bividis">Bividis</button>
+        <button class="size-tab" data-cat="shorts">Bermudas Baggy</button>
+      </div>
+      <div class="size-table-wrapper">
+        <table class="size-table">
+          <thead>
+            <tr>
+              <th>Talla</th>
+              <th>Pecho (cm)</th>
+              <th>Largo (cm)</th>
+              <th>Hombro (cm)</th>
+            </tr>
+          </thead>
+          <tbody id="sizeTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="size-overlay" id="sizeOverlay"></div>
+
+  <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 15l-6-6-6 6" />
+    </svg>
+  </button>
+
+  <div class="floating-social-stack">
+    <a href="https://wa.me/51970663060" target="_blank" rel="noopener noreferrer" class="floating-social-btn whatsapp" aria-label="WhatsApp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+    <a href="https://www.instagram.com/nocturna_pr" target="_blank" rel="noopener noreferrer" class="floating-social-btn instagram" aria-label="Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0z"/>
+      </svg>
+    </a>
+    <a href="https://www.tiktok.com/@nocturna_pr" target="_blank" rel="noopener noreferrer" class="floating-social-btn tiktok" aria-label="TikTok">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.51a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.48 6.3 6.3 0 001.86-4.49V8.76a8.26 8.26 0 004.84 1.56v-3.5a4.84 4.84 0 01-1.12-.13z"/>
+      </svg>
+    </a>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

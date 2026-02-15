@@ -1,0 +1,2091 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/logo-tienda/icono-oficial.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#ff003c" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOCTURNA PR | Urban Machine - Premium Streetwear</title>
+  <meta name="description"
+    content="Colección exclusiva de streetwear inspirada en motorsport y cultura nocturna. Drops limitados, calidad premium. Polos, Bermudas Baggy, Bividis y Perfumes.">
+  <meta name="keywords" content="streetwear, motorsport, nocturna, polos, bermudas, perfumes, moda urbana, JDM">
+  <meta name="author" content="NOCTURNA PR">
+
+  <link rel="canonical" href="https://nocturnapr.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NOCTURNA PR | Urban Machine - Premium Streetwear">
+  <meta property="og:description" content="Colección exclusiva de streetwear inspirada en motorsport y cultura nocturna. Drops limitados.">
+  <meta property="og:image" content="https://nocturnapr.com/logo-tienda/icono-oficial.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:url" content="https://nocturnapr.com">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NOCTURNA PR | Urban Machine">
+  <meta name="twitter:description" content="Streetwear premium inspirado en motorsport y la noche urbana.">
+  <meta name="twitter:image" content="https://nocturnapr.com/logo-tienda/icono-oficial.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Breadcrumbs (dynamic) -->
+  <nav class="breadcrumbs" id="breadcrumbs" aria-label="Ruta de navegación">
+    <a href="#hero">Inicio</a>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current" id="breadcrumbCurrent">Inicio</span>
+  </nav>
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Background -->
+  <div class="bg-container">
+    <div class="bg-gradient"></div>
+  </div>
+
+  <header>
+    <div class="logo-container">
+      <a href="/" class="logo-link">
+        <div class="logo-text">
+          <span class="logo">NOCTURNA</span>
+          <span class="logo-sub">PR</span>
+        </div>
+      </a>
+    </div>
+    <nav>
+      <a href="#hero" class="nav-link"><span>00</span> INICIO</a>
+      <a href="#polos" class="nav-link"><span>01</span> COLECCIÓN</a>
+      <a href="#perfumes" class="nav-link"><span>02</span> ESENCIAS</a>
+      <a href="#lookbook" class="nav-link"><span>03</span> LOOKBOOK</a>
+      <a href="/drops.html" class="nav-link"><span>04</span> DROPS</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button" id="searchBtn" aria-label="Buscar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+      <button class="icon-button" id="wishlistBtn" aria-label="Favoritos">
+        <span class="wishlist-count">0</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+          </path>
+        </svg>
+      </button>
+      <button class="cart-button" id="cartBtn" aria-label="Carrito">
+        <span class="cart-count">0</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+      </button>
+      <button class="hamburger-btn" id="menuBtn" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <div class="logo-container">
+        <a href="/"><span class="logo">NOCTURNA</span></a>
+      </div>
+      <button class="close-menu" id="closeMenu" aria-label="Cerrar menú">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <nav class="mobile-nav">
+      <a href="#hero" class="mobile-nav-link"><span>00</span> INICIO</a>
+      <a href="#polos" class="mobile-nav-link"><span>01</span> COLECCIÓN</a>
+      <a href="#perfumes" class="mobile-nav-link"><span>02</span> ESENCIAS</a>
+      <a href="#lookbook" class="mobile-nav-link"><span>03</span> LOOKBOOK</a>
+      <a href="/drops.html" class="mobile-nav-link"><span>04</span> DROPS</a>
+    </nav>
+    <div class="mobile-menu-footer">
+      <div class="social-icons">
+        <a href="https://www.instagram.com/nocturna_pr" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+          </svg>
+        </a>
+        <a href="https://www.tiktok.com/@nocturna_pr" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TikTok">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.51a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.48 6.3 6.3 0 001.86-4.49V8.76a8.26 8.26 0 004.84 1.56v-3.5a4.84 4.84 0 01-1.12-.13z" />
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/share/185sDpw3Us/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+  <main>
+    <!-- Global Star Background Canvas -->
+    <canvas id="global-stars-canvas"></canvas>
+    <!-- HERO SECTION -->
+    <section id="hero">
+      <!-- Background Car Showcase - Full Screen -->
+      <div class="hero-bg-carousel">
+        <div class="car-slide active" style="background-image: url('/header-cars/Nissan Skyline GT-R R34.png')"></div>
+        <div class="car-slide" style="background-image: url('/header-cars/Supra MKIV (1994).png')"></div>
+        <div class="car-slide" style="background-image: url('/header-cars/Mazda RX-7.png')"></div>
+        <div class="car-slide" style="background-image: url('/header-cars/Nissan Silvia S15.png')"></div>
+        <div class="car-slide" style="background-image: url('/header-cars/Dodge Charger.png')"></div>
+        <div class="car-slide" style="background-image: url('/header-cars/Ford Mustang 1969.png')"></div>
+        <div class="car-slide" style="background-image: url('/header-cars/Mitsubishi Eclipse.png')"></div>
+        <div class="car-slide" style="background-image: url('/header-cars/Chevrolet Montecarlo.png')"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-vignette"></div>
+        <div class="hero-noise"></div>
+        <div class="car-indicators">
+          <span class="car-dot active" data-index="0"></span>
+          <span class="car-dot" data-index="1"></span>
+          <span class="car-dot" data-index="2"></span>
+          <span class="car-dot" data-index="3"></span>
+          <span class="car-dot" data-index="4"></span>
+          <span class="car-dot" data-index="5"></span>
+          <span class="car-dot" data-index="6"></span>
+          <span class="car-dot" data-index="7"></span>
+        </div>
+        <div class="car-name-display">
+          <span class="car-year">R34</span>
+          <span class="car-model">SKYLINE GT-R</span>
+        </div>
+      </div>
+
+      <div class="hero-content reveal-up">
+        <div class="hero-badge-wrapper">
+          <div class="drop-badge glitch-badge" data-text="DROP 2026 — LIVE NOW">
+            <span class="pulse"></span>
+            DROP 2026 — LIVE NOW
+          </div>
+        </div>
+
+        <h1 class="glitch-title">
+          <div class="line-wrapper">
+            <span class="line" data-text="NOCTURNA">NOCTURNA</span>
+          </div>
+          <div class="line-wrapper">
+            <span class="line accent" data-text="PR">PR</span>
+          </div>
+          <div class="line-wrapper small">
+            <span class="line" data-text="URBAN MACHINE">URBAN MACHINE</span>
+          </div>
+        </h1>
+
+        <p class="hero-desc">
+          Siluetas nocturnas, motorsport y gráfica cruda.<br>
+          <strong>Una colección creada entre luces rojas y asfalto.</strong>
+        </p>
+
+        <div class="cta-group">
+          <a href="#polos" class="btn-primary glitch-btn" data-text="EXPLORAR DROP">
+            <span>EXPLORAR DROP</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <a href="#lookbook" class="btn-outline">
+            <span>VER LOOKBOOK</span>
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number" data-count="12">00</span>
+            <span class="stat-label">DISEÑOS</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-count="34">00</span>
+            <span class="stat-label">PRODUCTOS</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-count="8">00</span>
+            <span class="stat-label">ESENCIAS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>SCROLL</span>
+        <div class="mouse">
+          <div class="wheel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PRODUCTS CAROUSEL -->
+    <section class="featured-strip">
+      <button class="featured-carousel-btn featured-prev" id="featuredPrev" aria-label="Anterior">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+      <div class="featured-strip-inner" id="featuredCarousel">
+        <div class="featured-item" data-product="GODZILLA GTR" data-price="50" data-img="/segundo-drop/godzilla.jpeg" data-images="/segundo-drop/godzilla.jpeg,/segundo-drop/godzilla-2.jpeg">
+          <img src="/segundo-drop/godzilla-2.jpeg" alt="Godzilla GTR">
+          <div class="featured-info">
+            <span class="featured-name">GODZILLA GTR</span>
+            <span class="featured-price">$50</span>
+          </div>
+        </div>
+        <div class="featured-item" data-product="SUPRA BEIGE" data-price="45" data-img="/segundo-drop/supra-beige.jpeg" data-images="/segundo-drop/supra-beige.jpeg,/segundo-drop/supra2-beige.jpeg">
+          <img src="/segundo-drop/supra2-beige.jpeg" alt="Supra Beige">
+          <div class="featured-info">
+            <span class="featured-name">SUPRA BEIGE</span>
+            <span class="featured-price">$45</span>
+          </div>
+        </div>
+        <div class="featured-item featured-main" data-product="GTR R35 NISMO" data-price="55" data-img="/tercer-drop/gt35-1.jpeg">
+          <img src="/tercer-drop/gt35-1.jpeg" alt="GTR R35 Nismo">
+          <div class="featured-info">
+            <span class="featured-tag">NUEVO</span>
+            <span class="featured-name">GTR R35 NISMO</span>
+            <span class="featured-price">$55</span>
+          </div>
+        </div>
+        <div class="featured-item" data-product="SILVIA S15" data-price="45" data-img="/segundo-drop/silvias15-1.jpeg" data-images="/segundo-drop/silvias15-1.jpeg,/segundo-drop/silvias15-2.jpeg">
+          <img src="/segundo-drop/silvias15-2.jpeg" alt="Silvia S15">
+          <div class="featured-info">
+            <span class="featured-name">SILVIA S15</span>
+            <span class="featured-price">$45</span>
+          </div>
+        </div>
+        <div class="featured-item" data-product="MAZDA RX7" data-price="50" data-img="/segundo-drop/mazdarx7-1.jpeg" data-images="/segundo-drop/mazdarx7-1.jpeg,/segundo-drop/mazdarx7-2.jpeg">
+          <img src="/segundo-drop/mazdarx7-2.jpeg" alt="Mazda RX7">
+          <div class="featured-info">
+            <span class="featured-name">MAZDA RX7</span>
+            <span class="featured-price">$50</span>
+          </div>
+        </div>
+      </div>
+      <button class="featured-carousel-btn featured-next" id="featuredNext" aria-label="Siguiente">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6 6 6" />
+        </svg>
+      </button>
+      <div class="featured-dots" id="featuredDots">
+        <span class="featured-dot active" data-index="0"></span>
+        <span class="featured-dot" data-index="1"></span>
+        <span class="featured-dot" data-index="2"></span>
+        <span class="featured-dot" data-index="3"></span>
+        <span class="featured-dot" data-index="4"></span>
+      </div>
+    </section>
+
+    <!-- COUNTDOWN - PRÓXIMO DROP -->
+    <section class="countdown-section" id="countdown">
+      <div class="countdown-content reveal-up">
+        <span class="countdown-label">PRÓXIMO DROP</span>
+        <h2 class="countdown-title">VERANO <span class="text-gradient">2026</span></h2>
+        <p class="countdown-desc">Nueva colección exclusiva. Sé el primero en llevarla.</p>
+        <div class="countdown-timer" id="countdownTimer">
+          <div class="countdown-block">
+            <span class="countdown-num" id="countDays">00</span>
+            <span class="countdown-unit">DÍAS</span>
+          </div>
+          <div class="countdown-block">
+            <span class="countdown-num" id="countHours">00</span>
+            <span class="countdown-unit">HRS</span>
+          </div>
+          <div class="countdown-block">
+            <span class="countdown-num" id="countMins">00</span>
+            <span class="countdown-unit">MIN</span>
+          </div>
+          <div class="countdown-block">
+            <span class="countdown-num" id="countSecs">00</span>
+            <span class="countdown-unit">SEG</span>
+          </div>
+        </div>
+        <a href="#newsletter" class="btn-outline countdown-cta">AVISARME CUANDO LANCE</a>
+      </div>
+    </section>
+
+    <!-- FEATURED CARS BANNER -->
+    <section class="cars-banner">
+      <div class="cars-track">
+        <img src="/header-cars/Nissan Silvia S15.png" alt="Nissan Silvia">
+        <img src="/header-cars/Mazda RX-7.png" alt="Mazda RX-7">
+        <img src="/header-cars/Nissan Skyline GT-R R34.png" alt="Nissan 350">
+        <img src="/header-cars/Ford Mustang 1969.png" alt="Ford Mustang">
+        <img src="/header-cars/Mitsubishi Eclipse.png" alt="Mitsubishi Lancer">
+        <img src="/header-cars/Mazda RX-7.png" alt="Mazda RX8">
+        <img src="/header-cars/Chevrolet Montecarlo.png" alt="Chevrolet Montecarlo">
+        <!-- Duplicate for seamless loop -->
+        <img src="/header-cars/Nissan Silvia S15.png" alt="Nissan Silvia">
+        <img src="/header-cars/Mazda RX-7.png" alt="Mazda RX-7">
+        <img src="/header-cars/Nissan Skyline GT-R R34.png" alt="Nissan 350">
+      </div>
+      <div class="cars-banner-overlay">
+        <h3>MOTORSPORT <span>CULTURE</span></h3>
+      </div>
+    </section>
+
+    <!-- FRESH DROPS SECTION - 2026 STYLE -->
+    <section id="fresh-drops" class="section-container">
+      <div class="section-header reveal-up">
+        <div class="section-label">NEW SEASON</div>
+        <h2>FRESH <span class="text-gradient">DROPS</span></h2>
+        <p class="section-desc">Lo último en streetwear. Bividis y Shorts para el verano 2026.</p>
+      </div>
+
+      <div class="fresh-drops-wrapper reveal-up">
+        <div class="fresh-drops-track">
+          <!-- Bividi Blanco -->
+          <div class="drop-card">
+            <div class="drop-image">
+              <img src="/quinto-drop/bividi-blanco.jpeg" alt="Bividi Blanco">
+              <div class="drop-overlay">
+                <button class="btn-icon quick-view-btn" data-product="BIVIDI BLANCO" data-price="35" data-img="/quinto-drop/bividi-blanco.jpeg">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </button>
+              </div>
+              <span class="drop-badge">NEW</span>
+            </div>
+            <div class="drop-info">
+              <h3>BIVIDI BLANCO</h3>
+              <span class="price">$35.00</span>
+            </div>
+          </div>
+
+          <!-- Bermudas Baggy Negro -->
+          <div class="drop-card">
+            <div class="drop-image">
+              <img src="/cuarto-drop/short-negro.jpeg" alt="Bermudas Baggy Negro">
+              <div class="drop-overlay">
+                <button class="btn-icon quick-view-btn" data-product="BERMUDAS BAGGY NEGRO" data-price="42" data-img="/cuarto-drop/short-negro.jpeg">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </button>
+              </div>
+              <span class="drop-badge">HOT</span>
+            </div>
+            <div class="drop-info">
+              <h3>BERMUDAS BAGGY NEGRO</h3>
+              <span class="price">$42.00</span>
+            </div>
+          </div>
+
+          <!-- Bividi Negro -->
+          <div class="drop-card">
+            <div class="drop-image">
+              <img src="/quinto-drop/bividi-negro.jpeg" alt="Bividi Negro">
+              <div class="drop-overlay">
+                <button class="btn-icon quick-view-btn" data-product="BIVIDI NEGRO" data-price="35" data-img="/quinto-drop/bividi-negro.jpeg">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </button>
+              </div>
+              <span class="drop-badge">TREND</span>
+            </div>
+            <div class="drop-info">
+              <h3>BIVIDI NEGRO</h3>
+              <span class="price">$35.00</span>
+            </div>
+          </div>
+
+          <!-- Bermudas Baggy Blanco -->
+          <div class="drop-card">
+            <div class="drop-image">
+              <img src="/cuarto-drop/short-blanco.jpeg" alt="Bermudas Baggy Blanco">
+              <div class="drop-overlay">
+                <button class="btn-icon quick-view-btn" data-product="BERMUDAS BAGGY BLANCO" data-price="42" data-img="/cuarto-drop/short-blanco.jpeg">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </button>
+              </div>
+              <span class="drop-badge">SUMMER</span>
+            </div>
+            <div class="drop-info">
+              <h3>BERMUDAS BAGGY BLANCO</h3>
+              <span class="price">$42.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POLOS SECTION - ALL 10 PRODUCTS -->
+    <section id="polos" class="section-container">
+      <div class="section-header reveal-up">
+        <div class="section-label">01</div>
+        <h2>COLECCIÓN <span class="text-gradient">2026</span></h2>
+        <p class="section-desc">Diseños exclusivos inspirados en la cultura motorsport japonesa</p>
+      </div>
+
+      <div class="products-filter-bar">
+        <div class="products-filter-row">
+          <div class="products-search">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+            <input type="search" id="productsSearch" class="search-input" placeholder="Buscar productos..." autocomplete="off">
+          </div>
+          <div class="products-filter">
+            <button class="filter-btn active" data-filter="all"><span>TODOS</span></button>
+            <button class="filter-btn" data-filter="polo"><span>POLOS</span></button>
+            <button class="filter-btn" data-filter="bividi"><span>BIVIDIS</span></button>
+            <button class="filter-btn" data-filter="short"><span>BERMUDAS BAGGY</span></button>
+            <button class="filter-btn" data-filter="polera"><span>POLERAS</span></button>
+          </div>
+          <div class="products-sort">
+          <label class="sort-label">Ordenar:</label>
+          <div class="sort-dropdown" id="sortDropdown">
+            <button class="sort-trigger" id="sortTrigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <span class="sort-trigger-text">Destacados</span>
+              <svg class="sort-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="sort-options" id="sortOptions" role="listbox">
+              <button type="button" class="sort-option active" data-value="default" role="option">Destacados</button>
+              <button type="button" class="sort-option" data-value="price-asc" role="option">Precio: menor a mayor</button>
+              <button type="button" class="sort-option" data-value="price-desc" role="option">Precio: mayor a menor</button>
+              <button type="button" class="sort-option" data-value="newest" role="option">Más recientes</button>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="products-drop-filter">
+          <label class="drop-filter-label">Drops:</label>
+          <div class="drop-dropdown" id="dropDropdown">
+            <button class="drop-dropdown-trigger" id="dropDropdownTrigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <span class="drop-dropdown-text">Todos los drops</span>
+              <svg class="drop-dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="drop-dropdown-options" id="dropDropdownOptions" role="listbox">
+              <button type="button" class="drop-dropdown-option active" data-drop="all" role="option">Todos los drops</button>
+              <button type="button" class="drop-dropdown-option" data-drop="primer" role="option">Primer Drop</button>
+              <button type="button" class="drop-dropdown-option" data-drop="segundo" role="option">Segundo Drop</button>
+              <button type="button" class="drop-dropdown-option" data-drop="tercer" role="option">Tercer Drop</button>
+              <button type="button" class="drop-dropdown-option" data-drop="cuarto" role="option">Cuarto Drop</button>
+              <button type="button" class="drop-dropdown-option" data-drop="quinto" role="option">Quinto Drop</button>
+              <button type="button" class="drop-dropdown-option" data-drop="space" role="option">Drop Space</button>
+              <button type="button" class="drop-dropdown-option" data-drop="poleras" role="option">Poleras</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+        <!-- PRIMER DROP — WEST COAST CHOPPERS -->
+        <div class="product-card reveal-up" data-category="polo" data-drop="primer" data-name="west coast choppers">
+          <div class="card-image">
+            <img src="/primer-drop/producto-principal.jpeg" alt="West Coast Choppers" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="WEST COAST CHOPPERS" data-price="50">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">PRIMER DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>WEST COAST CHOPPERS</h3>
+              <span class="price">$50.00</span>
+            </div>
+            <p class="card-desc">Chopper Culture</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="WEST COAST CHOPPERS" data-price="50"
+                data-img="/primer-drop/producto-principal.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+        <!-- Product 1 — SUPRA BEIGE -->
+        <div class="product-card reveal-up" data-category="polo" data-drop="segundo" data-name="supra beige">
+          <div class="card-image">
+            <img src="/segundo-drop/supra-beige.jpeg" alt="Supra Beige" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="SUPRA BEIGE" data-price="45">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">SEGUNDO DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>SUPRA BEIGE</h3>
+              <span class="price">$45.00</span>
+            </div>
+            <p class="card-desc">JDM Legend Series</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="SUPRA BEIGE" data-price="45"
+                data-img="/segundo-drop/supra-beige.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 2 — GODZILLA GTR -->
+        <div class="product-card reveal-up delay-1" data-category="polo" data-drop="segundo" data-name="godzilla gtr">
+          <div class="card-image">
+            <img src="/segundo-drop/godzilla.jpeg" alt="Godzilla GTR" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="GODZILLA GTR" data-price="50">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">LIMITED</div>
+          <div class="card-badge bestseller">LO MÁS VENDIDO</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>GODZILLA GTR</h3>
+              <span class="price">$50.00</span>
+            </div>
+            <p class="card-desc">Motorsport Culture</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="GODZILLA GTR" data-price="50"
+                data-img="/segundo-drop/godzilla.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 3 — SILVIA S15 -->
+        <div class="product-card reveal-up delay-2" data-category="polo" data-drop="segundo" data-name="silvia s15">
+          <div class="card-image">
+            <img src="/segundo-drop/silvias15-1.jpeg" alt="Silvia S15" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="SILVIA S15" data-price="45">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">SEGUNDO DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>SILVIA S15</h3>
+              <span class="price">$45.00</span>
+            </div>
+            <p class="card-desc">Street Drift Icon</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="SILVIA S15" data-price="45"
+                data-img="/segundo-drop/silvias15-1.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★☆</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 4 — NISSAN 180SX -->
+        <div class="product-card reveal-up" data-category="polo" data-drop="segundo" data-name="nissan 180sx">
+          <div class="card-image">
+            <img src="/segundo-drop/nissanlust-1.jpeg" alt="Nissan 180SX" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="NISSAN 180SX" data-price="48">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 23c-4 0-7-3-7-7 0-2 1-4 2.5-5.5C8 9 10 8 12 5c2 3 4 4 5.5 5.5C19 12 20 14 20 16c0 4-3 7-7 7z"/></svg> HOT</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>NISSAN 180SX</h3>
+              <span class="price">$48.00</span>
+            </div>
+            <p class="card-desc">Underground Racing</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="NISSAN 180SX" data-price="48"
+                data-img="/segundo-drop/nissanlust-1.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 5 — MAZDA RX7 -->
+        <div class="product-card reveal-up delay-1" data-category="polo" data-drop="segundo" data-name="mazda rx7">
+          <div class="card-image">
+            <img src="/segundo-drop/mazdarx7-1.jpeg" alt="Mazda RX7" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="MAZDA RX7" data-price="50">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">LIMITED</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>MAZDA RX7</h3>
+              <span class="price">$50.00</span>
+            </div>
+            <p class="card-desc">Rotary Power</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="MAZDA RX7" data-price="50"
+                data-img="/segundo-drop/mazdarx7-1.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 6 — FUTURE BLACK -->
+        <div class="product-card reveal-up delay-2" data-category="polo" data-drop="tercer" data-name="future black">
+          <div class="card-image">
+            <img src="/tercer-drop/blackfuture-1.jpeg" alt="Future Black" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="FUTURE BLACK" data-price="55">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">TERCER DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>FUTURE BLACK</h3>
+              <span class="price">$55.00</span>
+            </div>
+            <p class="card-desc">Vision Collection</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="FUTURE BLACK" data-price="55"
+                data-img="/tercer-drop/blackfuture-1.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 7 — FUTURE GRAY -->
+        <div class="product-card reveal-up" data-category="polo" data-drop="tercer" data-name="future gray">
+          <div class="card-image">
+            <img src="/tercer-drop/grayfuture-1.jpeg" alt="Future Gray" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="FUTURE GRAY" data-price="55">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">TERCER DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>FUTURE GRAY</h3>
+              <span class="price">$55.00</span>
+            </div>
+            <p class="card-desc">Vision Collection</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="FUTURE GRAY" data-price="55"
+                data-img="/tercer-drop/grayfuture-1.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★☆</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 8 — FUTURE WHITE -->
+        <div class="product-card reveal-up delay-1" data-category="polo" data-drop="tercer" data-name="future white">
+          <div class="card-image">
+            <img src="/tercer-drop/whitefuture-1.jpeg" alt="Future White" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="FUTURE WHITE" data-price="55">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">TERCER DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>FUTURE WHITE</h3>
+              <span class="price">$55.00</span>
+            </div>
+            <p class="card-desc">Vision Collection</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="FUTURE WHITE" data-price="55"
+                data-img="/tercer-drop/whitefuture-1.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 9 — GTR R35 NISMO -->
+        <div class="product-card reveal-up delay-2" data-category="polo" data-drop="tercer" data-name="gtr r35 nismo">
+          <div class="card-image">
+            <img src="/tercer-drop/gt35-1.jpeg" alt="GTR R35 Nismo" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="GTR R35 NISMO" data-price="55">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 23c-4 0-7-3-7-7 0-2 1-4 2.5-5.5C8 9 10 8 12 5c2 3 4 4 5.5 5.5C19 12 20 14 20 16c0 4-3 7-7 7z"/></svg> HOT</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>GTR R35 NISMO</h3>
+              <span class="price">$55.00</span>
+            </div>
+            <p class="card-desc">Track Beast Edition</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="GTR R35 NISMO" data-price="55"
+                data-img="/tercer-drop/gt35-1.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 10 — SUPRA MK4 -->
+        <div class="product-card reveal-up" data-category="polo" data-drop="tercer" data-name="supra mk4">
+          <div class="card-image">
+            <img src="/tercer-drop/supramk4-1.jpeg" alt="Supra MK4" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="SUPRA MK4" data-price="55">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">NEW DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>SUPRA MK4</h3>
+              <span class="price">$55.00</span>
+            </div>
+            <p class="card-desc">Legendary Turbo</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="SUPRA MK4" data-price="55"
+                data-img="/tercer-drop/supramk4-1.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product 11 — MAZDA RX7 V2 -->
+        <div class="product-card reveal-up delay-1" data-category="polo" data-drop="tercer" data-name="mazda rx7 v2">
+          <div class="card-image">
+            <img src="/tercer-drop/mazdarx7-1.jpeg" alt="Mazda RX7 V2" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="MAZDA RX7 V2" data-price="55">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">TERCER DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>MAZDA RX7 V2</h3>
+              <span class="price">$55.00</span>
+            </div>
+            <p class="card-desc">Rotary Legend</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="MAZDA RX7 V2" data-price="55"
+                data-img="/tercer-drop/mazdarx7-1.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DROP SPACE — SPACE BLACK -->
+        <div class="product-card reveal-up" data-category="polo" data-drop="space" data-name="space black">
+          <div class="card-image">
+            <img src="/drop-space/black-space.jpeg" alt="Space Black" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="SPACE BLACK" data-price="48">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">DROP SPACE</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>SPACE BLACK</h3>
+              <span class="price">$48.00</span>
+            </div>
+            <p class="card-desc">Space Collection</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="SPACE BLACK" data-price="48"
+                data-img="/drop-space/black-space.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DROP SPACE — SPACE WHITE -->
+        <div class="product-card reveal-up delay-1" data-category="polo" data-drop="space" data-name="space white">
+          <div class="card-image">
+            <img src="/drop-space/white-space.jpeg" alt="Space White" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="SPACE WHITE" data-price="48">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">DROP SPACE</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>SPACE WHITE</h3>
+              <span class="price">$48.00</span>
+            </div>
+            <p class="card-desc">Space Collection</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="SPACE WHITE" data-price="48"
+                data-img="/drop-space/white-space.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DROP SPACE — SPACE RED -->
+        <div class="product-card reveal-up delay-2" data-category="polo" data-drop="space" data-name="space red">
+          <div class="card-image">
+            <img src="/drop-space/red-space.jpeg" alt="Space Red" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="SPACE RED" data-price="48">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">DROP SPACE</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>SPACE RED</h3>
+              <span class="price">$48.00</span>
+            </div>
+            <p class="card-desc">Space Collection</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="SPACE RED" data-price="48"
+                data-img="/drop-space/red-space.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card reveal-up" data-category="bividi" data-drop="quinto" data-name="bividi blanco">
+          <div class="card-image">
+            <img src="/quinto-drop/bividi-blanco.jpeg" alt="Bividi Blanco">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="BIVIDI BLANCO" data-price="35">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">NEW DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>BIVIDI BLANCO</h3>
+              <span class="price">$35.00</span>
+            </div>
+            <p class="card-desc">Essential Summer Fit</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="BIVIDI BLANCO" data-price="35"
+                data-img="/quinto-drop/bividi-blanco.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars" data-rating="5">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card reveal-up" data-category="bividi" data-drop="quinto" data-name="bividi gris">
+          <div class="card-image">
+            <img src="/quinto-drop/bividi-gris.jpeg" alt="Bividi Gris">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="BIVIDI GRIS" data-price="35">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">NEW DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>BIVIDI GRIS</h3>
+              <span class="price">$35.00</span>
+            </div>
+            <p class="card-desc">Premium Cotton Blend</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="BIVIDI GRIS" data-price="35"
+                data-img="/quinto-drop/bividi-gris.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars" data-rating="4.8">★★★★☆</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card reveal-up" data-category="bividi" data-drop="quinto" data-name="bividi negro">
+          <div class="card-image">
+            <img src="/quinto-drop/bividi-negro.jpeg" alt="Bividi Negro">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="BIVIDI NEGRO" data-price="35">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new"><svg class="icon-inline" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 23c-4 0-7-3-7-7 0-2 1-4 2.5-5.5C8 9 10 8 12 5c2 3 4 4 5.5 5.5C19 12 20 14 20 16c0 4-3 7-7 7z"/></svg> On Fire</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>BIVIDI NEGRO</h3>
+              <span class="price">$35.00</span>
+            </div>
+            <p class="card-desc">Stealth Mode Activated</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="BIVIDI NEGRO" data-price="35"
+                data-img="/quinto-drop/bividi-negro.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars" data-rating="5">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BIVIDI BLANCO V2 -->
+        <div class="product-card reveal-up" data-category="bividi" data-drop="quinto" data-name="blanco v2">
+          <div class="card-image">
+            <img src="/quinto-drop/blanco-2.jpeg" alt="Blanco V2">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="BLANCO V2" data-price="38">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">QUINTO DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>BLANCO V2</h3>
+              <span class="price">$38.00</span>
+            </div>
+            <p class="card-desc">Summer Essential</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="BLANCO V2" data-price="38"
+                data-img="/quinto-drop/blanco-2.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars" data-rating="5">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BIVIDI GRIS V2 -->
+        <div class="product-card reveal-up" data-category="bividi" data-drop="quinto" data-name="gris v2">
+          <div class="card-image">
+            <img src="/quinto-drop/gris-2.jpeg" alt="Gris V2">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="GRIS V2" data-price="38">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">QUINTO DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>GRIS V2</h3>
+              <span class="price">$38.00</span>
+            </div>
+            <p class="card-desc">Urban Gray</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="GRIS V2" data-price="38"
+                data-img="/quinto-drop/gris-2.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars" data-rating="4.9">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BIVIDI NEGRO V2 -->
+        <div class="product-card reveal-up" data-category="bividi" data-drop="quinto" data-name="negro v2">
+          <div class="card-image">
+            <img src="/quinto-drop/negro-2.jpeg" alt="Negro V2">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="NEGRO V2" data-price="38">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">QUINTO DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>NEGRO V2</h3>
+              <span class="price">$38.00</span>
+            </div>
+            <p class="card-desc">Stealth Edition</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="NEGRO V2" data-price="38"
+                data-img="/quinto-drop/negro-2.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars" data-rating="5">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRES EDICIÓN -->
+        <div class="product-card reveal-up" data-category="bividi" data-drop="quinto" data-name="tres edicion">
+          <div class="card-image">
+            <img src="/quinto-drop/tres.jpeg" alt="Tres Edición">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="TRES EDICIÓN" data-price="40">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">EDICIÓN ESPECIAL</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>TRES EDICIÓN</h3>
+              <span class="price">$40.00</span>
+            </div>
+            <p class="card-desc">Limited Edition</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="TRES EDICIÓN" data-price="40"
+                data-img="/quinto-drop/tres.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars" data-rating="5">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BERMUDAS BAGGY -->
+        <div class="product-card reveal-up" data-category="short" data-drop="cuarto" data-name="bermudas baggy blanco">
+          <div class="card-image">
+            <img src="/cuarto-drop/short-blanco.jpeg" alt="Bermudas Baggy Blanco">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="BERMUDAS BAGGY BLANCO" data-price="42" data-img="/cuarto-drop/short-blanco.jpeg">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">SUMMER VIBE</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>BERMUDAS BAGGY BLANCO</h3>
+              <span class="price">$45.00</span>
+            </div>
+            <p class="card-desc">Relaxed Fit Essential</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="BERMUDAS BAGGY BLANCO" data-price="42"
+                data-img="/cuarto-drop/short-blanco.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars" data-rating="4.9">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card reveal-up" data-category="short" data-drop="cuarto" data-name="bermudas baggy negro">
+          <div class="card-image">
+            <img src="/cuarto-drop/short-negro.jpeg" alt="Bermudas Baggy Negro">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="BERMUDAS BAGGY NEGRO" data-price="42" data-img="/cuarto-drop/short-negro.jpeg">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">BEST SELLER</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>BERMUDAS BAGGY NEGRO</h3>
+              <span class="price">$42.00</span>
+            </div>
+            <p class="card-desc">Everyday Urban Wear</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="BERMUDAS BAGGY NEGRO" data-price="42"
+                data-img="/cuarto-drop/short-negro.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars" data-rating="5">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card reveal-up" data-category="short" data-drop="cuarto" data-name="bermudas baggy cafe">
+          <div class="card-image">
+            <img src="/cuarto-drop/short-cafe.jpeg" alt="Bermudas Baggy Cafe">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="BERMUDAS BAGGY CAFE" data-price="42" data-img="/cuarto-drop/short-cafe.jpeg">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">LIMITED</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>BERMUDAS BAGGY CAFE</h3>
+              <span class="price">$42.00</span>
+            </div>
+            <p class="card-desc">Earth Tone Collection</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="BERMUDAS BAGGY CAFE" data-price="42"
+                data-img="/cuarto-drop/short-cafe.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars" data-rating="4.7">★★★★☆</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Polera 1 -->
+        <div class="product-card reveal-up" data-category="polera" data-drop="poleras" data-name="black polera">
+          <div class="card-image">
+            <img src="/drop-poleras/blackpolera-1.jpeg" alt="Black Polera" loading="lazy">
+            <div class="card-overlay">
+              <button class="quick-view-btn" data-product="BLACK POLERA" data-price="99">QUICK VIEW</button>
+            </div>
+            <div class="card-badge new">LIMITED DROP</div>
+          </div>
+          <div class="card-info">
+            <div class="card-header">
+              <h3>BLACK POLERA</h3>
+              <div class="price-container">
+                <span class="price-strikethrough">$120.00</span>
+                <span class="price price-discount">$99.00</span>
+              </div>
+            </div>
+            <p class="card-desc">Heavyweight Cotton</p>
+            <div class="card-footer">
+              <button class="add-cart-btn" data-product="BLACK POLERA" data-price="99"
+                data-img="/drop-poleras/blackpolera-1.jpeg">
+                <span>ADD TO CART</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+              <div class="rating-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- FEATURED BANNERS -->
+    <section class="featured-banners">
+      <div class="banner-grid">
+        <div class="banner-item large">
+          <img src="/tercer-drop/blackfuture-1.jpeg" alt="Future Collection">
+          <div class="banner-overlay">
+            <span class="banner-tag">COLLECTION</span>
+            <h3>FUTURE VISION</h3>
+            <a href="#polos" class="btn-small">EXPLORAR</a>
+          </div>
+        </div>
+        <div class="banner-item">
+          <img src="/tercer-drop/grayfuture-1.jpeg" alt="Future 2">
+          <div class="banner-overlay">
+            <span class="banner-tag">NUEVO</span>
+            <h3>URBAN NIGHTS</h3>
+          </div>
+        </div>
+        <div class="banner-item">
+          <img src="/tercer-drop/whitefuture-1.jpeg" alt="Future 3">
+          <div class="banner-overlay">
+            <span class="banner-tag">EXCLUSIVO</span>
+            <h3>STREET TECH</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERFUMES SECTION - ALL 8 PRODUCTS -->
+    <section id="perfumes" class="section-container dark-section">
+      <div class="section-header center reveal-up">
+        <div class="section-label">02</div>
+        <h2>ESSENCE OF <span class="text-gradient">NIGHT</span></h2>
+        <p class="section-desc">8 fragancias exclusivas que capturan la esencia de la noche</p>
+      </div>
+
+      <div class="perfumes-grid">
+        <!-- Perfume 1 -->
+        <div class="perfume-card reveal-up" data-glow="red">
+          <div class="perfume-image">
+            <img src="/perfumes-drop/perfume-khamra/product-khamra.png" alt="Khamra" loading="lazy" class="perfume-img-main">
+            <img src="/perfumes-drop/perfume-khamra/khamra.png" alt="Khamra - Vista 2" loading="lazy" class="perfume-img-alt">
+            <div class="perfume-glow"></div>
+            <div class="perfume-overlay">
+              <button class="quick-view-btn" data-product="KHAMRA" data-price="89" data-img="/perfumes-drop/perfume-khamra/product-khamra.png" data-images="/perfumes-drop/perfume-khamra/product-khamra.png,/perfumes-drop/perfume-khamra/khamra.png">QUICK VIEW</button>
+            </div>
+          </div>
+          <div class="perfume-info">
+            <h3>KHAMRA</h3>
+            <p>Ámbar, Vainilla, Especias Orientales</p>
+            <div class="perfume-footer">
+              <span class="perfume-price">$89.00</span>
+              <button class="add-cart-btn" data-product="KHAMRA" data-price="89" data-img="/perfumes-drop/perfume-khamra/product-khamra.png">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfume 2 -->
+        <div class="perfume-card reveal-up delay-1" data-glow="blue">
+          <div class="perfume-image">
+            <img src="/perfumes-drop/perfume-sceptre/product-sceptre.png" alt="Sceptre" loading="lazy" class="perfume-img-main">
+            <img src="/perfumes-drop/perfume-sceptre/sceptre.png" alt="Sceptre - Vista 2" loading="lazy" class="perfume-img-alt">
+            <div class="perfume-glow"></div>
+            <div class="perfume-overlay">
+              <button class="quick-view-btn" data-product="SCEPTRE" data-price="95" data-img="/perfumes-drop/perfume-sceptre/product-sceptre.png" data-images="/perfumes-drop/perfume-sceptre/product-sceptre.png,/perfumes-drop/perfume-sceptre/sceptre.png">QUICK VIEW</button>
+            </div>
+          </div>
+          <div class="perfume-info">
+            <h3>SCEPTRE</h3>
+            <p>Oceanic Breeze, Fresh Notes</p>
+            <div class="perfume-footer">
+              <span class="perfume-price">$95.00</span>
+              <button class="add-cart-btn" data-product="SCEPTRE" data-price="95" data-img="/perfumes-drop/perfume-sceptre/product-sceptre.png">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfume 3 -->
+        <div class="perfume-card reveal-up delay-2" data-glow="gold">
+          <div class="perfume-image">
+            <img src="/perfumes-drop/perfume-mostwanted/product-mostwanted.png" alt="Wanted" loading="lazy" class="perfume-img-main">
+            <img src="/perfumes-drop/perfume-mostwanted/azzaro.png" alt="Wanted - Vista 2" loading="lazy" class="perfume-img-alt">
+            <div class="perfume-glow"></div>
+            <div class="perfume-overlay">
+              <button class="quick-view-btn" data-product="WANTED" data-price="78" data-img="/perfumes-drop/perfume-mostwanted/product-mostwanted.png" data-images="/perfumes-drop/perfume-mostwanted/product-mostwanted.png,/perfumes-drop/perfume-mostwanted/azzaro.png">QUICK VIEW</button>
+            </div>
+          </div>
+          <div class="perfume-info">
+            <h3>WANTED</h3>
+            <p>Rebel Soul, Leather, Spices</p>
+            <div class="perfume-footer">
+              <span class="perfume-price">$78.00</span>
+              <button class="add-cart-btn" data-product="WANTED" data-price="78" data-img="/perfumes-drop/perfume-mostwanted/product-mostwanted.png">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfume 4 -->
+        <div class="perfume-card reveal-up delay-3" data-glow="purple">
+          <div class="perfume-image">
+            <img src="/perfumes-drop/perfume-nuit/product-nuit.png" alt="Nuit" loading="lazy" class="perfume-img-main">
+            <img src="/perfumes-drop/perfume-nuit/nuit.png" alt="Nuit - Vista 2" loading="lazy" class="perfume-img-alt">
+            <div class="perfume-glow"></div>
+            <div class="perfume-overlay">
+              <button class="quick-view-btn" data-product="NUIT" data-price="85" data-img="/perfumes-drop/perfume-nuit/product-nuit.png" data-images="/perfumes-drop/perfume-nuit/product-nuit.png,/perfumes-drop/perfume-nuit/nuit.png">QUICK VIEW</button>
+            </div>
+          </div>
+          <div class="perfume-info">
+            <h3>NUIT</h3>
+            <p>Dark Mystery, Woods, Musk</p>
+            <div class="perfume-footer">
+              <span class="perfume-price">$85.00</span>
+              <button class="add-cart-btn" data-product="NUIT" data-price="85" data-img="/perfumes-drop/perfume-nuit/product-nuit.png">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfume 5 -->
+        <div class="perfume-card reveal-up" data-glow="cyan">
+          <div class="perfume-image">
+            <img src="/perfumes-drop/perfume-aqua/product-aqua.png" alt="Aqua" loading="lazy" class="perfume-img-main">
+            <img src="/perfumes-drop/perfume-aqua/aqua.png" alt="Aqua - Vista 2" loading="lazy" class="perfume-img-alt">
+            <div class="perfume-glow"></div>
+            <div class="perfume-overlay">
+              <button class="quick-view-btn" data-product="AQUA" data-price="72" data-img="/perfumes-drop/perfume-aqua/product-aqua.png" data-images="/perfumes-drop/perfume-aqua/product-aqua.png,/perfumes-drop/perfume-aqua/aqua.png">QUICK VIEW</button>
+            </div>
+          </div>
+          <div class="perfume-info">
+            <h3>AQUA</h3>
+            <p>Fresh Water, Citrus, Marine</p>
+            <div class="perfume-footer">
+              <span class="perfume-price">$72.00</span>
+              <button class="add-cart-btn" data-product="AQUA" data-price="72" data-img="/perfumes-drop/perfume-aqua/product-aqua.png">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfume 6 -->
+        <div class="perfume-card reveal-up delay-1" data-glow="pink">
+          <div class="perfume-image">
+            <img src="/perfumes-drop/perfume-with/product-with.png" alt="With You" loading="lazy" class="perfume-img-main">
+            <img src="/perfumes-drop/perfume-with/with.png" alt="With You - Vista 2" loading="lazy" class="perfume-img-alt">
+            <div class="perfume-glow"></div>
+            <div class="perfume-overlay">
+              <button class="quick-view-btn" data-product="WITH YOU" data-price="82" data-img="/perfumes-drop/perfume-with/product-with.png" data-images="/perfumes-drop/perfume-with/product-with.png,/perfumes-drop/perfume-with/with.png">QUICK VIEW</button>
+            </div>
+          </div>
+          <div class="perfume-info">
+            <h3>WITH YOU</h3>
+            <p>Sweet Romance, Floral, Warm</p>
+            <div class="perfume-footer">
+              <span class="perfume-price">$82.00</span>
+              <button class="add-cart-btn" data-product="WITH YOU" data-price="82" data-img="/perfumes-drop/perfume-with/product-with.png">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfume 7 -->
+        <div class="perfume-card reveal-up delay-2" data-glow="orange">
+          <div class="perfume-image">
+            <img src="/perfumes-drop/perfume-mango/product-mango.png" alt="Mango" loading="lazy" class="perfume-img-main">
+            <img src="/perfumes-drop/perfume-mango/mango.png" alt="Mango - Vista 2" loading="lazy" class="perfume-img-alt">
+            <div class="perfume-glow"></div>
+            <div class="perfume-overlay">
+              <button class="quick-view-btn" data-product="MANGO" data-price="68" data-img="/perfumes-drop/perfume-mango/product-mango.png" data-images="/perfumes-drop/perfume-mango/product-mango.png,/perfumes-drop/perfume-mango/mango.png">QUICK VIEW</button>
+            </div>
+          </div>
+          <div class="perfume-info">
+            <h3>MANGO</h3>
+            <p>Tropical Vibes, Fruity, Sweet</p>
+            <div class="perfume-footer">
+              <span class="perfume-price">$68.00</span>
+              <button class="add-cart-btn" data-product="MANGO" data-price="68" data-img="/perfumes-drop/perfume-mango/product-mango.png">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfume 8 -->
+        <div class="perfume-card reveal-up delay-3" data-glow="green">
+          <div class="perfume-image">
+            <img src="/perfumes-drop/perfume-haramain/producto-haramain.png" alt="Haramain" loading="lazy" class="perfume-img-main">
+            <img src="/perfumes-drop/perfume-haramain/haramain.png" alt="Haramain - Vista 2" loading="lazy" class="perfume-img-alt">
+            <div class="perfume-glow"></div>
+            <div class="perfume-overlay">
+              <button class="quick-view-btn" data-product="HARAMAIN" data-price="98" data-img="/perfumes-drop/perfume-haramain/producto-haramain.png" data-images="/perfumes-drop/perfume-haramain/producto-haramain.png,/perfumes-drop/perfume-haramain/haramain.png">QUICK VIEW</button>
+            </div>
+          </div>
+          <div class="perfume-info">
+            <h3>HARAMAIN</h3>
+            <p>Arabic Oud, Incense, Rose</p>
+            <div class="perfume-footer">
+              <span class="perfume-price">$98.00</span>
+              <button class="add-cart-btn" data-product="HARAMAIN" data-price="98" data-img="/perfumes-drop/perfume-haramain/producto-haramain.png">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOOKBOOK / SPACE SECTION -->
+    <section id="lookbook" class="section-container immersive-section">
+      <canvas id="space-canvas"></canvas>
+      <div class="immersive-content reveal-up">
+        <div class="section-label">03</div>
+        <h2 class="mega-title">BEYOND<br><span class="outline-text">THE ASPHALT</span></h2>
+        <p class="immersive-desc">Nuestra inspiración viene de la velocidad y el infinito.<br>Diseños que desafían la
+          gravedad.</p>
+
+        <div class="space-gallery">
+          <div class="space-item floating">
+            <img src="/drop-space/black-space.jpeg" alt="Space Black">
+            <span class="space-label">SPACE BLACK</span>
+          </div>
+          <div class="space-item floating delay-1">
+            <img src="/drop-space/white-space.jpeg" alt="Space Blue">
+            <span class="space-label">SPACE BLUE</span>
+          </div>
+          <div class="space-item floating delay-2">
+            <img src="/drop-space/red-space.jpeg" alt="Space Red">
+            <span class="space-label">SPACE RED</span>
+          </div>
+        </div>
+
+        <a href="#polos" class="btn-primary">
+          <span>EXPLORAR COLECCIÓN</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- SOBRE NOSOTROS -->
+    <section id="nosotros" class="section-container about-section collapsible-section">
+      <div class="about-content reveal-up">
+        <div class="about-text">
+          <div class="section-label">NUESTRA HISTORIA</div>
+          <h2>SOBRE <span class="text-gradient">NOCTURNA PR</span></h2>
+          <p class="about-preview">Nacimos entre luces rojas y asfalto. NOCTURNA PR es más que ropa: es una declaración de identidad para quienes viven la noche, la velocidad y la cultura motorsport.</p>
+          <div class="about-expanded">
+            <p>Cada diseño está inspirado en iconos JDM, clásicos americanos y la estética urbana nocturna. Ediciones limitadas, calidad premium y una comunidad que comparte la misma pasión.</p>
+            <div class="about-stats">
+            <div class="about-stat"><span class="about-stat-num">3+</span><span>Años en la calle</span></div>
+            <div class="about-stat"><span class="about-stat-num">5</span><span>Drops lanzados</span></div>
+            <div class="about-stat"><span class="about-stat-num">1000+</span><span>Clientes satisfechos</span></div>
+            </div>
+          </div>
+          <button class="section-toggle" id="aboutToggle" type="button"><span class="text-expand">Leer más</span><span class="text-collapse">Leer menos</span></button>
+        </div>
+        <div class="about-visual">
+          <img src="/header-cars/Nissan Skyline GT-R R34.png" alt="Skyline R34" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section id="faq" class="section-container faq-section">
+      <div class="section-header center reveal-up">
+        <div class="section-label">AYUDA</div>
+        <h2>PREGUNTAS <span class="text-gradient">FRECUENTES</span></h2>
+      </div>
+      <div class="faq-list reveal-up">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿A dónde enviamos?</span>
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Enviamos a todo Lima (24-48 hrs) y a todo el Perú (2-5 días hábiles). Envío gratis en pedidos mayores a $50.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿Cómo funcionan los cambios?</span>
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Tienes 7 días para cambiar tu prenda por talla. El producto debe estar sin usar y con etiquetas. Contáctanos por WhatsApp para coordinar.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿Qué métodos de pago aceptan?</span>
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Aceptamos Yape, Plin y transferencia BCP. <a href="#metodos-pago" style="color:var(--color-primary);">Ver datos de pago y QR Yape</a>.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿Cómo contacto con ustedes?</span>
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Por WhatsApp: +51 970 663 060. También en Instagram @nocturna_pr. Respondemos en menos de 24 horas. Atención Lun - Sáb 10:00 - 20:00.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MÉTODOS DE PAGO -->
+    <section id="metodos-pago" class="section-container metodos-pago-section">
+      <div class="section-header center reveal-up">
+        <div class="section-label">PAGO</div>
+        <h2>MÉTODOS <span class="text-gradient">DE PAGO</span></h2>
+        <p class="section-desc">Yape, Plin, transferencia BCP. Pago seguro al confirmar por WhatsApp.</p>
+      </div>
+      <div class="metodos-pago-grid reveal-up">
+        <div class="metodo-card">
+          <h4>YAPE</h4>
+          <div class="metodo-qr">
+            <img src="/metodos-pago/yape-qr.png" alt="QR Yape - Escanea para pagar" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <p class="metodo-qr-placeholder" style="display:none;padding:2rem;background:rgba(255,255,255,0.05);border-radius:8px;">Añade tu QR en /public/metodos-pago/yape-qr.png</p>
+          </div>
+          <p class="metodo-desc">Escanea el QR desde la app Yape</p>
+        </div>
+        <div class="metodo-card">
+          <h4>BCP - Transferencia Soles</h4>
+          <p class="metodo-cuenta">Cuenta: <strong>19109406783099</strong></p>
+          <button class="btn-outline btn-copy" data-copy="19109406783099">Copiar</button>
+        </div>
+        <div class="metodo-card">
+          <h4>BCP - CCI Interbancario</h4>
+          <p class="metodo-cuenta">CCI: <strong>00219110940678309954</strong></p>
+          <button class="btn-outline btn-copy" data-copy="00219110940678309954">Copiar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contacto" class="section-container contact-section">
+      <div class="contact-grid reveal-up">
+        <div class="contact-info">
+          <h2>CONTACTO</h2>
+          <p>¿Tienes dudas? Escríbenos por WhatsApp o redes sociales.</p>
+          <a href="https://wa.me/51970663060" target="_blank" rel="noopener noreferrer" class="btn-primary contact-whatsapp">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span>WHATSAPP</span>
+          </a>
+          <div class="contact-details">
+            <p><strong>Horario:</strong> Lun - Sáb 10:00 - 20:00</p>
+            <p><strong>Tel:</strong> +51 970 663 060</p>
+          </div>
+        </div>
+        <div class="contact-about">
+          <h3>SOBRE NOCTURNA PR</h3>
+          <p>Streetwear premium nacido entre luces rojas y asfalto. Diseños inspirados en la cultura motorsport japonesa y la estética nocturna urbana. Cada pieza es una edición limitada.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER SECTION -->
+    <section id="newsletter" class="newsletter-section">
+      <div class="newsletter-content reveal-up">
+        <h2>ÚNETE AL <span class="text-gradient">CLUB NOCTURNA</span></h2>
+        <p>Sé el primero en conocer los nuevos drops y ofertas exclusivas</p>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" placeholder="Tu email..." required id="emailInput">
+          <button type="submit" class="btn-primary">
+            <span>SUSCRIBIRSE</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+        </form>
+        <div class="newsletter-benefits">
+          <span><svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Acceso anticipado a drops</span>
+          <span><svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Descuentos exclusivos</span>
+          <span><svg class="icon-inline" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Contenido detrás de cámaras</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span>NOCTURNA <span class="accent">PR</span></span>
+        </div>
+        <p>Streetwear premium inspirado en la cultura motorsport y la noche urbana. Diseños exclusivos, ediciones
+          limitadas.</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>TIENDA</h4>
+          <a href="#polos">Colección</a>
+          <a href="#perfumes">Perfumes</a>
+          <a href="#lookbook">Lookbook</a>
+          <a href="#countdown">Próximo Drop</a>
+        </div>
+        <div class="footer-col">
+          <h4>NOSOTROS</h4>
+          <a href="#nosotros">Sobre Nosotros</a>
+        </div>
+        <div class="footer-col">
+          <h4>AYUDA</h4>
+          <a href="#faq">FAQ</a>
+          <a href="#metodos-pago">Métodos de pago</a>
+          <a href="#contacto">Contacto</a>
+          <a href="https://wa.me/51970663060" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        </div>
+        <div class="footer-col">
+          <h4>LEGAL</h4>
+          <a href="/terminos.html">Términos</a>
+          <a href="/privacidad.html">Privacidad</a>
+          <a href="/privacidad.html#cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 NOCTURNA PR. Todos los derechos reservados.</p>
+      <div class="payment-methods">
+        <span>Yape</span>
+        <span>Plin</span>
+        <span>BCP</span>
+        <a href="#metodos-pago" style="color:inherit;text-decoration:none;opacity:0.9;">Ver datos</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>TU CARRITO</h3>
+      <button class="close-cart" id="closeCart" aria-label="Cerrar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="empty-cart">Tu carrito está vacío</p>
+    </div>
+    <div class="cart-coupon" id="cartCoupon">
+      <div class="coupon-input">
+        <input type="text" id="couponInput" placeholder="Código de descuento">
+        <button type="button" class="btn-coupon" id="applyCouponBtn">APLICAR</button>
+      </div>
+      <span class="coupon-message" id="couponMessage"></span>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-totals">
+        <div class="cart-subtotal" id="cartSubtotalRow">
+          <span>Subtotal:</span>
+          <span id="cartSubtotal">$0.00</span>
+        </div>
+        <div class="cart-discount" id="cartDiscountRow" style="display: none;">
+          <span>Descuento (<span id="couponCodeDisplay"></span>):</span>
+          <span id="cartDiscount">-$0.00</span>
+        </div>
+        <div class="cart-total">
+          <span>Total:</span>
+          <span class="total-amount" id="cartTotal">$0.00</span>
+        </div>
+      </div>
+      <button class="btn-primary checkout-btn">
+        <span>CHECKOUT</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <span class="toast-message">Producto agregado al carrito</span>
+  </div>
+
+  <!-- Search Modal -->
+  <div class="search-modal" id="searchModal">
+    <div class="search-modal-content">
+      <button class="close-search" id="closeSearch" aria-label="Cerrar búsqueda">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="search-input-wrapper">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Buscar productos..." autocomplete="off">
+      </div>
+      <div class="search-suggestions">
+        <span class="search-label">BÚSQUEDAS POPULARES</span>
+        <div class="suggestion-tags">
+          <button class="suggestion-tag" data-search="Supra">Supra</button>
+          <button class="suggestion-tag" data-search="Godzilla">Godzilla</button>
+          <button class="suggestion-tag" data-search="Nissan">Nissan</button>
+          <button class="suggestion-tag" data-search="Khamra">Khamra</button>
+          <button class="suggestion-tag" data-search="Bermudas">Bermudas</button>
+          <button class="suggestion-tag" data-search="Bividi">Bividi</button>
+        </div>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+  </div>
+
+  <!-- Quick View Modal -->
+  <div class="quick-view-modal" id="quickViewModal">
+    <div class="quick-view-content">
+      <button class="close-quick-view" id="closeQuickView" aria-label="Cerrar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="quick-view-gallery">
+        <img src="" alt="" id="quickViewImage" class="quick-view-main-img">
+        <div class="qv-thumbnails" id="qvThumbnails"></div>
+      </div>
+      <div class="quick-view-info">
+        <span class="quick-view-category" id="quickViewCategory">COLECCIÓN</span>
+        <h2 id="quickViewTitle">Nombre del Producto</h2>
+        <p class="quick-view-price" id="quickViewPrice">$45.00</p>
+
+        <div class="qv-tabs-container">
+          <div class="qv-tabs-header">
+            <button class="qv-tab active" data-target="desc">Descripción</button>
+            <button class="qv-tab" data-target="shipping">Envíos</button>
+          </div>
+          <div class="qv-tab-content active" id="qv-desc">
+            <p class="quick-view-desc" id="quickViewDesc">Polo de alta calidad con diseño exclusivo inspirado en la cultura motorsport japonesa. Material 100% algodón premium.</p>
+          </div>
+          <div class="qv-tab-content" id="qv-shipping">
+            <ul class="shipping-list">
+              <li><svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1z"/><path d="M16 8h5l3 3v5h-8V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Envíos a todo Lima (24-48 hrs)</li>
+              <li><svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg> Envíos a Provincia (2-4 días hábiles)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="quick-view-stock">
+          <span class="stock-indicator in-stock"></span>
+          <span id="quickViewStock">En stock - Solo quedan 5 unidades</span>
+        </div>
+
+        <div class="quick-view-sizes">
+          <span class="size-label">TALLA:</span>
+          <div class="size-options">
+            <button class="size-option" data-size="S">S</button>
+            <button class="size-option active" data-size="M">M</button>
+            <button class="size-option" data-size="L">L</button>
+            <button class="size-option" data-size="XL">XL</button>
+          </div>
+        </div>
+
+        <div class="quick-view-quantity">
+          <span class="qty-label">CANTIDAD:</span>
+          <div class="qty-controls">
+            <button class="qty-btn" id="qtyMinus">−</button>
+            <input type="number" value="1" min="1" max="10" id="qtyInput">
+            <button class="qty-btn" id="qtyPlus">+</button>
+          </div>
+        </div>
+
+        <div class="quick-view-actions">
+          <button class="btn-primary add-to-cart-modal" id="addToCartModal">
+            <span>AGREGAR AL CARRITO</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+          </button>
+          <button class="btn-outline add-to-wishlist-modal" id="addToWishlistModal">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+              </path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="quick-view-overlay" id="quickViewOverlay"></div>
+
+  <!-- Wishlist Sidebar -->
+  <div class="wishlist-sidebar" id="wishlistSidebar">
+    <div class="wishlist-header">
+      <h3>TUS FAVORITOS</h3>
+      <button class="close-wishlist" id="closeWishlist" aria-label="Cerrar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="wishlist-items" id="wishlistItems">
+      <p class="empty-wishlist">No tienes favoritos aún</p>
+    </div>
+    <div class="wishlist-footer">
+      <button class="btn-primary" id="moveAllToCart">
+        <span>AGREGAR TODOS AL CARRITO</span>
+      </button>
+    </div>
+  </div>
+  <div class="wishlist-overlay" id="wishlistOverlay"></div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="checkout-modal" id="checkoutModal">
+    <div class="checkout-content">
+      <div class="checkout-header">
+        <h2>CHECKOUT</h2>
+        <button class="close-checkout" id="closeCheckout">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="checkout-body">
+        <div class="checkout-steps">
+          <div class="step active" data-step="1">1. ENVÍO</div>
+          <div class="step" data-step="2">2. WHATSAPP</div>
+          <div class="step" data-step="3">3. CONFIRMACIÓN</div>
+        </div>
+
+        <form id="checkoutForm">
+          <!-- Step 1: Shipping -->
+          <div class="checkout-step-content active" id="step1">
+            <div class="form-group">
+              <label>Nombre Completo</label>
+              <input type="text" name="customer_name" required placeholder="Ej: Juan Pérez">
+            </div>
+            <div class="form-group">
+              <label>Teléfono (WhatsApp)</label>
+              <input type="tel" name="customer_phone" required placeholder="+51 999 999 999">
+            </div>
+            <div class="form-group">
+              <label>Email (opcional)</label>
+              <input type="email" name="customer_email" placeholder="tu@email.com">
+            </div>
+            <div class="form-group">
+              <label>Dirección</label>
+              <input type="text" name="customer_address" required placeholder="Calle 123, Distrito">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Ciudad</label>
+                <input type="text" name="customer_city" required placeholder="Lima">
+              </div>
+              <div class="form-group">
+                <label>Código Postal</label>
+                <input type="text" name="customer_postal" placeholder="15001">
+              </div>
+            </div>
+            <button type="button" class="btn-primary next-step" data-next="2">CONTINUAR</button>
+          </div>
+
+          <!-- Step 2: WhatsApp -->
+          <div class="checkout-step-content" id="step2">
+            <div class="whatsapp-checkout-info">
+              <p>Tu pedido se guardará y se abrirá WhatsApp para que confirmes el pago (Yape, Plin o transferencia).</p>
+            </div>
+            <div class="order-summary-mini">
+              <h4>Resumen del pedido</h4>
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="checkoutSubtotal">$0.00</span>
+              </div>
+              <div class="summary-row">
+                <span>Envío</span>
+                <span>GRATIS</span>
+              </div>
+              <div class="summary-row total">
+                <span>Total</span>
+                <span id="checkoutTotal">$0.00</span>
+              </div>
+            </div>
+            <div class="checkout-actions">
+              <button type="button" class="btn-outline prev-step" data-prev="1">ATRÁS</button>
+              <button type="submit" class="btn-primary pay-now" id="whatsappCheckoutBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                <span>COMPRAR POR WHATSAPP</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Success -->
+          <div class="checkout-step-content" id="step3">
+            <div class="success-message">
+              <div class="success-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <h3>¡PEDIDO REGISTRADO!</h3>
+              <p>Tu pedido #<span id="orderId">-</span> ha sido guardado.</p>
+              <p>Se abrió WhatsApp para que confirmes el pago. ¡Gracias por tu compra!</p>
+              <button type="button" class="btn-primary close-checkout-final">SEGUIR COMPRANDO</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="checkout-overlay" id="checkoutOverlay"></div>
+
+  <!-- SIZE GUIDE MODAL -->
+  <div class="size-modal" id="sizeModal">
+    <div class="size-modal-content">
+      <button class="close-size" id="closeSize">✕</button>
+      <h3>GUÍA DE TALLAS</h3>
+      <div class="size-tabs">
+        <button class="size-tab active" data-cat="polos">Polos</button>
+        <button class="size-tab" data-cat="bividis">Bividis</button>
+        <button class="size-tab" data-cat="shorts">Bermudas Baggy</button>
+      </div>
+      <div class="size-table-wrapper">
+        <table class="size-table">
+          <thead>
+            <tr>
+              <th>Talla</th>
+              <th>Pecho (cm)</th>
+              <th>Largo (cm)</th>
+              <th>Hombro (cm)</th>
+            </tr>
+          </thead>
+          <tbody id="sizeTableBody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="size-overlay" id="sizeOverlay"></div>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M18 15l-6-6-6 6" />
+    </svg>
+  </button>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loader">
+      <div class="loader-ring"></div>
+      <span>CARGANDO...</span>
+    </div>
+  </div>
+
+  <!-- Schema.org Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "NOCTURNA PR",
+    "description": "Streetwear premium inspirado en motorsport y cultura nocturna",
+    "url": "https://nocturnapr.com",
+    "logo": "https://nocturnapr.com/logo-tienda/icono-oficial.png",
+    "sameAs": [
+      "https://www.instagram.com/nocturna_pr",
+      "https://www.tiktok.com/@nocturna_pr",
+      "https://www.facebook.com/share/185sDpw3Us/"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+51-970-663-060",
+      "contactType": "customer service",
+      "availableLanguage": "Spanish"
+    }
+  }
+  </script>
+  <!-- Schema.org Product (ItemList) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Colección NOCTURNA PR",
+    "description": "Streetwear premium inspirado en motorsport y cultura nocturna",
+    "url": "https://nocturnapr.com/#polos",
+    "numberOfItems": 34,
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"item":{"@type":"Product","name":"SUPRA BEIGE","image":"https://nocturnapr.com/segundo-drop/supra-beige.jpeg","offers":{"@type":"Offer","price":"45","priceCurrency":"USD"}}},
+      {"@type":"ListItem","position":2,"item":{"@type":"Product","name":"GODZILLA GTR","image":"https://nocturnapr.com/segundo-drop/godzilla.jpeg","offers":{"@type":"Offer","price":"50","priceCurrency":"USD"}}},
+      {"@type":"ListItem","position":3,"item":{"@type":"Product","name":"GTR R35 NISMO","image":"https://nocturnapr.com/tercer-drop/gt35-1.jpeg","offers":{"@type":"Offer","price":"55","priceCurrency":"USD"}}},
+      {"@type":"ListItem","position":4,"item":{"@type":"Product","name":"KHAMRA","image":"https://nocturnapr.com/perfumes-drop/perfume-khamra/product-khamra.png","offers":{"@type":"Offer","price":"89","priceCurrency":"USD"}}},
+      {"@type":"ListItem","position":5,"item":{"@type":"Product","name":"BIVIDI BLANCO","image":"https://nocturnapr.com/quinto-drop/bividi-blanco.jpeg","offers":{"@type":"Offer","price":"35","priceCurrency":"USD"}}},
+      {"@type":"ListItem","position":6,"item":{"@type":"Product","name":"BERMUDAS BAGGY NEGRO","image":"https://nocturnapr.com/cuarto-drop/short-negro.jpeg","offers":{"@type":"Offer","price":"42","priceCurrency":"USD"}}}
+    ]
+  }
+  </script>
+  <script type="module" src="/src/main.js"></script>
+  <!-- Floating Social Stack -->
+  <div class="floating-social-stack">
+    <a href="https://wa.me/51970663060" target="_blank" rel="noopener noreferrer" class="floating-social-btn whatsapp" aria-label="WhatsApp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+      </svg>
+    </a>
+    <a href="https://www.instagram.com/nocturna_pr" target="_blank" rel="noopener noreferrer" class="floating-social-btn instagram"
+      aria-label="Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+      </svg>
+    </a>
+    <a href="https://www.tiktok.com/@nocturna_pr" target="_blank" rel="noopener noreferrer" class="floating-social-btn tiktok"
+      aria-label="TikTok">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.51a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.48 6.3 6.3 0 001.86-4.49V8.76a8.26 8.26 0 004.84 1.56v-3.5a4.84 4.84 0 01-1.12-.13z" />
+      </svg>
+    </a>
+    <a href="https://www.facebook.com/share/185sDpw3Us/" target="_blank" rel="noopener noreferrer" class="floating-social-btn facebook"
+      aria-label="Facebook">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      </svg>
+    </a>
+  </div>
+
+</body>
+
+</html>
