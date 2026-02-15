@@ -1,5 +1,6 @@
 import './style.css'
 import { supabase } from './supabase.js'
+import { escapeHtml } from './utils.js'
 
 const WHATSAPP_PHONE = '51970663060'
 
@@ -558,9 +559,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       total += subtotal;
       return `
         <div class="cart-item" data-index="${index}">
-          <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+          <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" class="cart-item-img">
           <div class="cart-item-details">
-            <span class="cart-item-name">${item.name}</span>
+            <span class="cart-item-name">${escapeHtml(item.name)}</span>
             <span class="cart-item-size">Talla: ${item.size}</span>
             <span class="cart-item-price">$${subtotal.toFixed(2)}</span>
             <div class="cart-item-controls">
@@ -845,20 +846,20 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    searchResults.innerHTML = results.map(product => `
-      <div class="search-result-item" data-product='${JSON.stringify(product)}'>
-        <img src="${product.image}" alt="${product.name}">
+    searchResults.innerHTML = results.map((product, idx) => `
+      <div class="search-result-item" data-index="${idx}">
+        <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">
         <div class="search-result-info">
-          <h4>${product.name}</h4>
+          <h4>${escapeHtml(product.name)}</h4>
           <span>$${product.price.toFixed(2)}</span>
         </div>
       </div>
     `).join('');
 
-    document.querySelectorAll('.search-result-item').forEach(item => {
+    const resultItems = document.querySelectorAll('.search-result-item');
+    resultItems.forEach((item, idx) => {
       item.addEventListener('click', () => {
-        const product = JSON.parse(item.getAttribute('data-product'));
-        openQuickView(product);
+        openQuickView(results[idx]);
         closeSearchFn();
       });
     });

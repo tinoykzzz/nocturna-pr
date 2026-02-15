@@ -32,7 +32,12 @@ body {
   color: var(--color-white);
   font-family: var(--font-body);
   overflow-x: hidden;
-  cursor: none;
+  min-height: 100vh;
+}
+
+/* Custom cursor solo en dispositivos con hover (evita pantalla en blanco en móvil) */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
 }
 
 ::selection {

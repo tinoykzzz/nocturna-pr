@@ -1,53 +1,139 @@
-# Configuración de Supabase para NOCTURNA PR
+# Guía completa de Supabase — NOCTURNA PR
 
-## 1. Crear proyecto en Supabase
+Configuración paso a paso para pedidos, newsletter, productos y panel admin.
 
-1. Ve a [supabase.com](https://supabase.com) e inicia sesión
-2. Clic en **New Project**
-3. Nombre: `nocturna-pr` (o el que prefieras)
-4. Crea una contraseña para la base de datos (guárdala)
-5. Elige la región más cercana (ej: South America)
-6. Clic en **Create new project** (tarda 1-2 min)
+---
 
-## 2. Crear la tabla de pedidos
+## PASO 1: Crear proyecto en Supabase
 
-1. En el dashboard, ve a **SQL Editor**
-2. Clic en **New Query**
-3. Copia y pega todo el contenido de `supabase-setup.sql`
-4. Clic en **Run** (o Ctrl+Enter)
+1. Entra en [supabase.com](https://supabase.com) e inicia sesión.
+2. **New Project**
+3. **Name:** `nocturna-pr` (o el que prefieras)
+4. **Database Password:** crea una contraseña y guárdala.
+5. **Region:** South America (São Paulo) o la más cercana.
+6. **Create new project** (puede tardar 1–2 minutos).
 
-## 3. Obtener las credenciales
+---
 
-1. Ve a **Settings** (icono engranaje) → **API**
+## PASO 2: Ejecutar SQL — Base de datos
+
+### 2.1 Tablas principales (pedidos y newsletter)
+
+1. En el dashboard: **SQL Editor** → **New Query**
+2. Copia todo el contenido de `supabase-setup.sql`
+3. **Run** (o Ctrl+Enter)
+4. Debe aparecer: "Success. No rows returned"
+
+### 2.2 Tablas de admin y productos
+
+1. En **SQL Editor** → **New Query**
+2. Copia todo el contenido de `supabase-admin-setup.sql`
+3. **Antes de ejecutar:** cambia `'tu-email@ejemplo.com'` por tu email real (línea ~37)
+4. **Run**
+5. Debe aparecer: "Success"
+
+---
+
+## PASO 3: Obtener credenciales
+
+1. **Settings** (engranaje) → **API**
 2. Copia:
-   - **Project URL** → será tu `VITE_SUPABASE_URL`
-   - **anon public** (bajo Project API keys) → será tu `VITE_SUPABASE_ANON_KEY`
+   - **Project URL** → `VITE_SUPABASE_URL`
+   - **Project API keys** → **anon public** → `VITE_SUPABASE_ANON_KEY`
 
-## 4. Configurar el proyecto local
+---
 
-1. Copia `.env.example` a `.env`:
-   ```
-   cp .env.example .env
-   ```
-   (En Windows: `copy .env.example .env`)
+## PASO 4: Configurar el proyecto local
 
-2. Edita `.env` y pega tus credenciales:
-   ```
-   VITE_SUPABASE_URL=https://xxxxx.supabase.co
-   VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-   ```
+### 4.1 Crear archivo .env
 
-3. Reinicia el servidor de desarrollo: `npm run dev`
+En la carpeta `web`:
 
-## 5. Ver pedidos y suscriptores
+**Windows (PowerShell):**
+```powershell
+copy .env.example .env
+```
 
-- **Pedidos:** Table Editor → tabla `orders`
-- **Newsletter:** Table Editor → tabla `newsletter_subscribers`
-- Cada pedido incluye: cliente, productos, total, estado, número de orden
-- Puedes filtrar, exportar a CSV, cambiar estado (pendiente → enviado → entregado)
+**Mac/Linux:**
+```bash
+cp .env.example .env
+```
 
-## 6. Políticas de seguridad (RLS)
+### 4.2 Editar .env
 
-- La web puede **insertar** pedidos (clientes completan el checkout)
-- Solo tú (autenticado en Supabase) puedes **leer** los pedidos
-- Los clientes no pueden ver pedidos de otros
+Abre `.env` y pega tus credenciales:
+
+```
+VITE_SUPABASE_URL=https://xxxxxxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxx...
+```
+
+### 4.3 Reiniciar el servidor
+
+```bash
+npm run dev
+```
+
+---
+
+## PASO 5: Crear usuario admin (para el panel)
+
+1. **Authentication** → **Users** → **Add user**
+2. **Create new user**
+3. **Email:** el mismo que pusiste en `admin_emails`
+4. **Password:** crea una contraseña segura
+5. **Create user**
+
+---
+
+## PASO 6: Despliegue (Vercel, Netlify, etc.)
+
+Añade las variables de entorno en tu plataforma:
+
+| Variable | Valor |
+|----------|-------|
+| `VITE_SUPABASE_URL` | https://tu-proyecto.supabase.co |
+| `VITE_SUPABASE_ANON_KEY` | tu anon key |
+
+**Vercel:** Project → Settings → Environment Variables  
+**Netlify:** Site settings → Build & deploy → Environment
+
+---
+
+## Resumen de tablas
+
+| Tabla | Uso |
+|-------|-----|
+| `orders` | Pedidos del checkout (cliente, productos, total, estado) |
+| `newsletter_subscribers` | Emails del newsletter |
+| `products` | Catálogo e inventario (usado por la web y el admin) |
+| `admin_emails` | Emails autorizados para el panel admin |
+
+---
+
+## Ver datos en Supabase
+
+- **Pedidos:** Table Editor → `orders`
+- **Newsletter:** Table Editor → `newsletter_subscribers`
+- **Productos:** Table Editor → `products`
+
+---
+
+## Seguridad (RLS)
+
+- **Pedidos:** solo insert desde la web (anon); lectura y actualización solo para admins autenticados.
+- **Newsletter:** solo insert desde la web; lectura solo para usuarios autenticados.
+- **Productos:** lectura pública; crear/editar/eliminar solo para admins.
+
+---
+
+## Solución de problemas
+
+### "Error: relation 'products' does not exist"
+→ Ejecuta `supabase-admin-setup.sql`.
+
+### "Invalid login credentials" en el admin
+→ Comprueba que el email esté en `admin_emails` y que el usuario exista en Authentication → Users.
+
+### La web no guarda pedidos
+→ Revisa que `.env` tenga las variables correctas y que hayas ejecutado `supabase-setup.sql`.

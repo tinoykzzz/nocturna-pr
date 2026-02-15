@@ -1,5 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 
+function escapeHtml(str) {
+  if (str == null) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
@@ -22,6 +29,7 @@ async function checkAuth() {
   if (session) {
     adminLogin.style.display = 'none';
     adminDashboard.style.display = 'block';
+    loadDashboard();
     loadProducts();
     loadOrders();
     return true;
@@ -56,6 +64,7 @@ document.querySelectorAll('.admin-nav button').forEach(btn => {
     btn.classList.add('active');
     document.getElementById(`section-${btn.dataset.section}`).classList.add('active');
     if (btn.dataset.section === 'orders') loadOrders();
+    if (btn.dataset.section === 'dashboard') loadDashboard();
   });
 });
 
@@ -65,7 +74,7 @@ async function loadProducts() {
   if (!tbody) return;
   const { data, error } = await supabase.from('products').select('*').order('sort_order', { ascending: true });
   if (error) {
-    tbody.innerHTML = `<tr><td colspan="6" style="color:#ff4444;">Error: ${error.message}. ¿Ejecutaste supabase-admin-setup.sql?</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="color:#ff4444;">Error: ${escapeHtml(error.message)}. ¿Ejecutaste supabase-admin-setup.sql?</td></tr>`;
     return;
   }
   if (!data || data.length === 0) {
@@ -74,11 +83,11 @@ async function loadProducts() {
   }
   tbody.innerHTML = data.map(p => `
     <tr>
-      <td><img src="${p.image}" alt="" onerror="this.src='/favicon.svg'"></td>
-      <td>${p.name}</td>
+      <td><img src="${escapeHtml(p.image)}" alt="" onerror="this.src='/favicon.svg'"></td>
+      <td>${escapeHtml(p.name)}</td>
       <td>$${parseFloat(p.price).toFixed(2)}</td>
       <td>
-        <input type="number" class="stock-input" value="${p.stock}" min="0" data-id="${p.id}" data-product="${p.name}">
+        <input type="number" class="stock-input" value="${p.stock}" min="0" data-id="${p.id}" data-product="${escapeHtml(p.name)}">
       </td>
       <td>${p.category}</td>
       <td>
@@ -139,7 +148,7 @@ async function loadOrders() {
   if (!list) return;
   const { data, error } = await supabase.from('orders').select('*').order('created_at', { ascending: false }).limit(50);
   if (error) {
-    list.innerHTML = `<p style="color:#ff4444;">Error: ${error.message}</p>`;
+    list.innerHTML = `<p style="color:#ff4444;">Error: ${escapeHtml(error.message)}</p>`;
     return;
   }
   if (!data || data.length === 0) {
@@ -148,8 +157,8 @@ async function loadOrders() {
   }
   list.innerHTML = data.map(o => `
     <div class="order-card" data-id="${o.id}">
-      <h4>Pedido #${o.order_number} — ${o.customer_name}</h4>
-      <div class="order-meta">${o.customer_phone} | ${o.customer_address}, ${o.customer_city}</div>
+      <h4>Pedido #${o.order_number} — ${escapeHtml(o.customer_name)}</h4>
+      <div class="order-meta">${escapeHtml(o.customer_phone)} | ${escapeHtml(o.customer_address)}, ${escapeHtml(o.customer_city)}</div>
       <div class="order-meta">$${parseFloat(o.total).toFixed(2)} | ${new Date(o.created_at).toLocaleString('es-PE')}</div>
       <div style="margin-top:0.5rem;">
         <select class="order-status" data-id="${o.id}">

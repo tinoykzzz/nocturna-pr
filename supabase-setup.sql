@@ -47,6 +47,12 @@ CREATE POLICY "Solo usuarios autenticados pueden leer"
   TO authenticated
   USING (true);
 
+CREATE POLICY "Solo usuarios autenticados pueden actualizar estado"
+  ON orders FOR UPDATE
+  TO authenticated
+  USING (true)
+  WITH CHECK (true);
+
 -- Función para insertar pedido y devolver el número (evita problemas de RLS con SELECT)
 CREATE OR REPLACE FUNCTION create_order(
   p_customer_name TEXT,
