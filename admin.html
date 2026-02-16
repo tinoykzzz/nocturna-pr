@@ -7,7 +7,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/style.css">
   <link rel="stylesheet" href="/src/admin.css">
 </head>
@@ -43,29 +43,37 @@
         <button data-section="products">Productos</button>
         <button data-section="orders">Ventas</button>
       </nav>
+      <a href="/" class="sidebar-link" target="_blank" rel="noopener noreferrer">Ver tienda →</a>
     </aside>
     <main class="admin-main">
       <header class="admin-header">
         <h1>Panel de empleados</h1>
-        <button class="logout" id="logoutBtn">CERRAR SESIÓN</button>
+        <div class="header-right">
+          <span class="header-date" id="headerDate"></span>
+          <button class="logout" id="logoutBtn">CERRAR SESIÓN</button>
+        </div>
       </header>
       <div class="admin-content">
       <section id="section-dashboard" class="admin-section active">
         <h2>Registro de ventas</h2>
         <div class="dashboard-stats" id="dashboardStats">
           <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">$</div>
             <span class="stat-value" id="statTotalVentas">$0</span>
             <span class="stat-label">Total ventas</span>
           </div>
           <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">#</div>
             <span class="stat-value" id="statPedidos">0</span>
             <span class="stat-label">Pedidos</span>
           </div>
           <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">○</div>
             <span class="stat-value" id="statPendientes">0</span>
             <span class="stat-label">Pendientes</span>
           </div>
           <div class="stat-card">
+            <div class="stat-icon" aria-hidden="true">✓</div>
             <span class="stat-value" id="statEntregados">0</span>
             <span class="stat-label">Entregados</span>
           </div>

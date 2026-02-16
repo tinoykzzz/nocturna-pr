@@ -24,11 +24,20 @@ const loginForm = document.getElementById('loginForm');
 const loginError = document.getElementById('loginError');
 const logoutBtn = document.getElementById('logoutBtn');
 
+function updateHeaderDate() {
+  const el = document.getElementById('headerDate');
+  if (el) {
+    const d = new Date();
+    el.textContent = d.toLocaleDateString('es-PE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+}
+
 async function checkAuth() {
   const { data: { session } } = await supabase.auth.getSession();
   if (session) {
     adminLogin.style.display = 'none';
     adminDashboard.style.display = 'block';
+    updateHeaderDate();
     loadDashboard();
     loadProducts();
     loadOrders();
