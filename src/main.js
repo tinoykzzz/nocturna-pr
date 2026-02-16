@@ -547,7 +547,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (cart.length === 0) {
       if (cartItems) cartItems.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
-      if (cartTotal) cartTotal.textContent = '$0.00';
+      if (cartTotal) cartTotal.textContent = 'S/0.00';
       if (cartSubtotalRow) cartSubtotalRow.style.display = 'none';
       if (cartDiscountRow) cartDiscountRow.style.display = 'none';
       return;
@@ -563,7 +563,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div class="cart-item-details">
             <span class="cart-item-name">${escapeHtml(item.name)}</span>
             <span class="cart-item-size">Talla: ${item.size}</span>
-            <span class="cart-item-price">$${subtotal.toFixed(2)}</span>
+            <span class="cart-item-price">S/${subtotal.toFixed(2)}</span>
             <div class="cart-item-controls">
               <button class="qty-btn qty-minus" data-index="${index}">−</button>
               <span class="cart-item-qty">${item.quantity}</span>
@@ -592,14 +592,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     total = Math.max(0, subtotal - discountAmount);
 
-    if (cartSubtotal) cartSubtotal.textContent = '$' + subtotal.toFixed(2);
+    if (cartSubtotal) cartSubtotal.textContent = 'S/' + subtotal.toFixed(2);
     if (cartSubtotalRow) cartSubtotalRow.style.display = activeCoupon ? 'flex' : 'none';
     if (cartDiscountRow) {
       cartDiscountRow.style.display = activeCoupon ? 'flex' : 'none';
       if (couponCodeDisplay) couponCodeDisplay.textContent = activeCoupon?.code || '';
-      if (cartDiscount) cartDiscount.textContent = '-$' + discountAmount.toFixed(2);
+      if (cartDiscount) cartDiscount.textContent = '-S/' + discountAmount.toFixed(2);
     }
-    if (cartTotal) cartTotal.textContent = '$' + total.toFixed(2);
+    if (cartTotal) cartTotal.textContent = 'S/' + total.toFixed(2);
 
     // Event delegation for cart controls
     if (cartItems) cartItems.onclick = (e) => {
@@ -664,7 +664,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const coupon = VALID_COUPONS[code];
       if (coupon) {
         activeCoupon = { code, ...coupon };
-        couponMessage.textContent = `¡Descuento aplicado! (${coupon.discount}${coupon.type === 'percent' ? '%' : '$'})`;
+        couponMessage.textContent = `¡Descuento aplicado! (${coupon.discount}${coupon.type === 'percent' ? '%' : 'S/'})`;
         couponMessage.className = 'coupon-message success';
         updateCartUI();
       } else {
@@ -743,7 +743,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <img src="${item.image}" alt="${item.name}">
         <div class="wishlist-item-info">
           <h4>${item.name}</h4>
-          <span>$${item.price.toFixed(2)}</span>
+          <span>S/${item.price.toFixed(2)}</span>
           <div class="wishlist-item-actions">
             <button class="move-to-cart-btn" data-index="${index}">AL CARRITO</button>
             <button class="remove-wishlist-btn" data-index="${index}">×</button>
@@ -851,7 +851,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}">
         <div class="search-result-info">
           <h4>${escapeHtml(product.name)}</h4>
-          <span>$${product.price.toFixed(2)}</span>
+          <span>S/${product.price.toFixed(2)}</span>
         </div>
       </div>
     `).join('');
@@ -946,7 +946,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     quickViewImage.src = product.image;
     quickViewImage.alt = product.name;
     quickViewTitle.textContent = product.name;
-    quickViewPrice.textContent = '$' + product.price.toFixed(2);
+    quickViewPrice.textContent = 'S/' + product.price.toFixed(2);
     if (quickViewDesc) quickViewDesc.textContent = getProductDescription(product);
     if (quickViewCategory) quickViewCategory.textContent = getProductCategoryLabel(product);
 
@@ -1553,27 +1553,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   const isDropsPage = window.location.pathname.includes('drops');
   const sections = isDropsPage
     ? [
-        { id: 'drop-primer', label: 'Primer Drop' },
-        { id: 'drop-segundo', label: 'Segundo Drop' },
-        { id: 'drop-tercer', label: 'Tercer Drop' },
-        { id: 'drop-cuarto', label: 'Cuarto Drop' },
-        { id: 'drop-quinto', label: 'Quinto Drop' },
-        { id: 'drop-poleras', label: 'Drop Poleras' },
-        { id: 'drop-space', label: 'Drop Space' },
-        { id: 'drop-perfumes', label: 'Esencias' },
-      ]
+      { id: 'drop-primer', label: 'Primer Drop' },
+      { id: 'drop-segundo', label: 'Segundo Drop' },
+      { id: 'drop-tercer', label: 'Tercer Drop' },
+      { id: 'drop-cuarto', label: 'Cuarto Drop' },
+      { id: 'drop-quinto', label: 'Quinto Drop' },
+      { id: 'drop-poleras', label: 'Drop Poleras' },
+      { id: 'drop-space', label: 'Drop Space' },
+      { id: 'drop-perfumes', label: 'Esencias' },
+    ]
     : [
-        { id: 'hero', label: 'Inicio' },
-        { id: 'countdown', label: 'Próximo Drop' },
-        { id: 'fresh-drops', label: 'Drops' },
-        { id: 'polos', label: 'Colección' },
-        { id: 'perfumes', label: 'Esencias' },
-        { id: 'lookbook', label: 'Lookbook' },
-        { id: 'nosotros', label: 'Nosotros' },
-        { id: 'faq', label: 'FAQ' },
-        { id: 'contacto', label: 'Contacto' },
-        { id: 'newsletter', label: 'Newsletter' }
-      ];
+      { id: 'hero', label: 'Inicio' },
+      { id: 'countdown', label: 'Próximo Drop' },
+      { id: 'fresh-drops', label: 'Drops' },
+      { id: 'polos', label: 'Colección' },
+      { id: 'perfumes', label: 'Esencias' },
+      { id: 'lookbook', label: 'Lookbook' },
+      { id: 'nosotros', label: 'Nosotros' },
+      { id: 'faq', label: 'FAQ' },
+      { id: 'contacto', label: 'Contacto' },
+      { id: 'newsletter', label: 'Newsletter' }
+    ];
   if (breadcrumbCurrent) {
     const updateBreadcrumb = () => {
       const scrollY = window.scrollY + 150;
@@ -1822,13 +1822,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (success) {
-          const itemsText = cart.map(i => `• ${i.name} x${i.quantity} (Talla ${i.size}) - $${(i.price * i.quantity).toFixed(2)}`).join('\n');
+          const itemsText = cart.map(i => `• ${i.name} x${i.quantity} (Talla ${i.size}) - S/${(i.price * i.quantity).toFixed(2)}`).join('\n');
           const msg = `Hola! Quiero confirmar mi pedido #${orderNumber}
 
 *Productos:*
 ${itemsText}
 
-*Total:* $${total.toFixed(2)}
+*Total:* S/${total.toFixed(2)}
 
 *Datos de envío:*
 Nombre: ${customer.name}
