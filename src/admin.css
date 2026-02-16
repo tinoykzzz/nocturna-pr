@@ -1,5 +1,5 @@
 /* ============================================
-   NOCTURNA PR — Admin Panel
+   NOCTURNA PR — Admin Panel v2
    Premium Dark Theme + Glassmorphism
    ============================================ */
 
@@ -23,6 +23,8 @@
   --admin-amber-soft: rgba(245, 158, 11, 0.12);
   --admin-blue: #3b82f6;
   --admin-blue-soft: rgba(59, 130, 246, 0.12);
+  --admin-purple: #8b5cf6;
+  --admin-purple-soft: rgba(139, 92, 246, 0.12);
   --admin-radius: 12px;
   --admin-radius-sm: 8px;
   --admin-radius-xs: 6px;
@@ -373,7 +375,6 @@ body.admin-wrap {
   padding: 1rem 2rem;
   background: rgba(18, 18, 26, 0.8);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--admin-border);
   position: sticky;
   top: 0;
@@ -513,6 +514,14 @@ body.admin-wrap {
   margin: 0;
 }
 
+.section-title-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 /* ================================================
    STAT CARDS
    ================================================ */
@@ -604,13 +613,18 @@ body.admin-wrap {
 .stat-trend {
   font-size: 0.7rem;
   font-weight: 600;
-  padding: 0.2rem 0.4rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 4px;
 }
 
 .stat-trend.up {
   color: var(--admin-green);
   background: var(--admin-green-soft);
+}
+
+.stat-trend.down {
+  color: var(--admin-primary);
+  background: var(--admin-primary-soft);
 }
 
 .stat-value {
@@ -627,6 +641,125 @@ body.admin-wrap {
   color: var(--admin-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* ================================================
+   CHARTS
+   ================================================ */
+.charts-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  flex: 2;
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 1.25rem;
+}
+
+.chart-card-sm {
+  flex: 1;
+}
+
+.chart-card-header {
+  margin-bottom: 1rem;
+}
+
+.chart-card-header h3 {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--admin-text);
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 260px;
+}
+
+.chart-container-doughnut {
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================================================
+   SEARCH BAR
+   ================================================ */
+.search-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  margin-bottom: 1.5rem;
+  transition: border-color 0.2s;
+}
+
+.search-bar-wrap:focus-within {
+  border-color: var(--admin-primary);
+}
+
+.search-bar-wrap svg {
+  color: var(--admin-text-dim);
+  flex-shrink: 0;
+}
+
+.search-bar-wrap input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--admin-text);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  outline: none;
+}
+
+.search-bar-wrap input::placeholder {
+  color: var(--admin-text-dim);
+}
+
+/* ================================================
+   ORDER FILTERS
+   ================================================ */
+.order-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.4rem 0.85rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text-muted);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  border-color: var(--admin-border-hover);
+  color: var(--admin-text);
+}
+
+.filter-btn.active {
+  background: var(--admin-primary-soft);
+  border-color: var(--admin-primary);
+  color: var(--admin-primary);
+  font-weight: 600;
 }
 
 /* ================================================
@@ -654,11 +787,13 @@ body.admin-wrap {
   border: 1px solid var(--admin-border);
   border-radius: var(--admin-radius);
   overflow: hidden;
+  overflow-x: auto;
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 600px;
 }
 
 .admin-table th {
@@ -671,6 +806,7 @@ body.admin-wrap {
   color: var(--admin-text-muted);
   background: rgba(255, 255, 255, 0.02);
   border-bottom: 1px solid var(--admin-border);
+  white-space: nowrap;
 }
 
 .admin-table td {
@@ -701,8 +837,8 @@ body.admin-wrap {
 }
 
 .admin-table .btn-sm {
-  padding: 0.4rem 0.75rem;
-  font-size: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.7rem;
   font-weight: 500;
   font-family: var(--font-body);
   background: rgba(255, 255, 255, 0.04);
@@ -710,7 +846,7 @@ body.admin-wrap {
   border-radius: var(--admin-radius-xs);
   color: var(--admin-text-muted);
   cursor: pointer;
-  margin-right: 0.5rem;
+  margin-right: 0.35rem;
   transition: all 0.2s;
 }
 
@@ -718,6 +854,12 @@ body.admin-wrap {
   background: var(--admin-primary-soft);
   border-color: var(--admin-primary);
   color: var(--admin-primary);
+}
+
+.admin-table .btn-edit:hover {
+  background: var(--admin-blue-soft);
+  border-color: var(--admin-blue);
+  color: var(--admin-blue);
 }
 
 .admin-table .btn-danger:hover {
@@ -779,44 +921,86 @@ body.admin-wrap {
 }
 
 /* ================================================
-   ADD PRODUCT FORM
+   MODAL
    ================================================ */
-.add-product-form {
-  max-width: 560px;
-  margin-bottom: 2rem;
-  background: var(--admin-card);
-  border: 1px solid var(--admin-border);
-  border-radius: var(--admin-radius);
-  padding: 1.5rem;
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
 }
 
-.form-card-header {
+.modal-overlay.open {
   display: flex;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  animation: modalEnter 0.25s ease;
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.6rem;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--admin-border);
 }
 
-.form-card-header svg {
-  color: var(--admin-primary);
-}
-
-.form-card-header h3 {
+.modal-header h3 {
   font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 600;
   color: #fff;
   letter-spacing: 1px;
   margin: 0;
 }
 
-.form-group {
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--admin-text-muted);
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: var(--admin-radius-xs);
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.modal-content .form-group {
   margin-bottom: 1rem;
 }
 
-.add-product-form label {
+.modal-content label {
   display: block;
   font-size: 0.8rem;
   font-weight: 500;
@@ -826,8 +1010,8 @@ body.admin-wrap {
   letter-spacing: 0.5px;
 }
 
-.add-product-form input,
-.add-product-form select {
+.modal-content input,
+.modal-content select {
   width: 100%;
   padding: 0.7rem 0.85rem;
   background: rgba(255, 255, 255, 0.04);
@@ -839,18 +1023,18 @@ body.admin-wrap {
   transition: all 0.2s;
 }
 
-.add-product-form input:focus,
-.add-product-form select:focus {
+.modal-content input:focus,
+.modal-content select:focus {
   outline: none;
   border-color: var(--admin-primary);
   box-shadow: 0 0 0 2px var(--admin-primary-soft);
 }
 
-.add-product-form input::placeholder {
+.modal-content input::placeholder {
   color: var(--admin-text-dim);
 }
 
-.add-product-form select {
+.modal-content select {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -858,7 +1042,7 @@ body.admin-wrap {
   padding-right: 2.5rem;
 }
 
-.add-product-form select option {
+.modal-content select option {
   background: var(--admin-card);
   color: var(--admin-text);
 }
@@ -874,6 +1058,7 @@ body.admin-wrap {
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+  text-transform: none !important;
 }
 
 .checkbox-group input[type="checkbox"] {
@@ -882,19 +1067,28 @@ body.admin-wrap {
   accent-color: var(--admin-primary);
 }
 
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--admin-border);
+}
+
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.65rem 1.25rem;
   background: var(--admin-primary);
   color: #fff;
   border: none;
   border-radius: var(--admin-radius-sm);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s;
@@ -904,6 +1098,28 @@ body.admin-wrap {
   background: #cc0030;
   box-shadow: 0 0 20px var(--admin-primary-soft);
   transform: translateY(-1px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--admin-text-muted);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius-sm);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--admin-border-hover);
+  color: var(--admin-text);
 }
 
 /* ================================================
@@ -925,6 +1141,14 @@ body.admin-wrap {
 
 .order-card:hover {
   border-color: var(--admin-border-hover);
+}
+
+.order-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .order-card h4 {
@@ -950,7 +1174,6 @@ body.admin-wrap {
   border-radius: var(--admin-radius-xs);
   font-size: 0.8rem;
   font-family: var(--font-body);
-  margin-top: 0.5rem;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -966,11 +1189,95 @@ body.admin-wrap {
 }
 
 /* ================================================
+   ANALYTICS KPI
+   ================================================ */
+.analytics-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.kpi-card {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: var(--admin-radius);
+  padding: 1.25rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.kpi-card:hover {
+  border-color: var(--admin-border-hover);
+  transform: translateY(-2px);
+}
+
+.kpi-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--admin-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.kpi-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ================================================
+   TOAST
+   ================================================ */
+.admin-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 0.85rem 1.5rem;
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-green);
+  color: var(--admin-green);
+  border-radius: var(--admin-radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  transform: translateY(120%);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.admin-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.admin-toast.error {
+  border-color: var(--admin-primary);
+  color: var(--admin-primary);
+}
+
+/* ================================================
    RESPONSIVE
    ================================================ */
 @media (max-width: 1100px) {
-  .dashboard-stats {
+
+  .dashboard-stats,
+  .analytics-kpi-row {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .charts-row {
+    flex-direction: column;
+  }
+
+  .chart-card-sm {
+    flex: unset;
   }
 }
 
@@ -1014,13 +1321,15 @@ body.admin-wrap {
     padding: 0.75rem 1rem;
   }
 
-  .dashboard-stats {
+  .dashboard-stats,
+  .analytics-kpi-row {
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
   }
 
-  .stat-value {
-    font-size: 1.25rem;
+  .stat-value,
+  .kpi-value {
+    font-size: 1.15rem;
   }
 
   .header-title h1 {
@@ -1029,6 +1338,19 @@ body.admin-wrap {
 
   .admin-content {
     padding: 1rem 0.75rem;
+  }
+
+  .modal-content {
+    padding: 1.25rem;
+  }
+
+  .order-filters {
+    gap: 0.35rem;
+  }
+
+  .filter-btn {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.6rem;
   }
 }
 

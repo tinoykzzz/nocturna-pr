@@ -11,6 +11,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="/src/admin.css">
 </head>
 
@@ -55,8 +56,7 @@
           <span>INICIAR SESIÓN</span>
         </button>
       </form>
-      <p class="help-text">¿Primera vez? Crea tu cuenta en Supabase Dashboard → Authentication → Users → Add user. Luego
-        añade tu email en la tabla admin_emails.</p>
+      <p class="help-text">Ingresa con tu cuenta de administrador autorizada.</p>
     </div>
   </div>
 
@@ -92,7 +92,14 @@
             <line x1="16" y1="13" x2="8" y2="13" />
             <line x1="16" y1="17" x2="8" y2="17" />
           </svg>
-          <span>Ventas</span>
+          <span>Pedidos</span>
+        </button>
+        <button data-section="analytics">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 21H4.6c-.56 0-.84 0-1.05-.11a1 1 0 0 1-.44-.44C3 20.24 3 19.96 3 19.4V3" />
+            <path d="m7 14 4-4 4 4 6-6" />
+          </svg>
+          <span>Analítica</span>
         </button>
       </nav>
       <div class="sidebar-footer">
@@ -143,7 +150,7 @@
         <!-- ========== DASHBOARD SECTION ========== -->
         <section id="section-dashboard" class="admin-section active">
           <div class="section-title-row">
-            <h2>Registro de ventas</h2>
+            <h2>Resumen general</h2>
           </div>
           <div class="dashboard-stats" id="dashboardStats">
             <div class="stat-card stat-ventas">
@@ -154,12 +161,7 @@
                     <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                   </svg>
                 </div>
-                <span class="stat-trend up">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                    <polyline points="17 6 23 6 23 12" />
-                  </svg>
-                </span>
+                <span class="stat-trend up" id="trendVentas">↑</span>
               </div>
               <span class="stat-value" id="statTotalVentas">S/0</span>
               <span class="stat-label">Total ventas</span>
@@ -175,7 +177,7 @@
                 </div>
               </div>
               <span class="stat-value" id="statPedidos">0</span>
-              <span class="stat-label">Pedidos</span>
+              <span class="stat-label">Pedidos totales</span>
             </div>
             <div class="stat-card stat-pendientes">
               <div class="stat-card-header">
@@ -203,6 +205,27 @@
             </div>
           </div>
 
+          <!-- Charts Row -->
+          <div class="charts-row">
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <h3>Ventas últimos 7 días</h3>
+              </div>
+              <div class="chart-container">
+                <canvas id="salesChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card chart-card-sm">
+              <div class="chart-card-header">
+                <h3>Ventas por categoría</h3>
+              </div>
+              <div class="chart-container chart-container-doughnut">
+                <canvas id="categoryChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Sales Table -->
           <div class="table-section">
             <div class="table-header">
               <h3>Últimas ventas</h3>
@@ -226,72 +249,25 @@
 
         <!-- ========== PRODUCTS SECTION ========== -->
         <section id="section-products" class="admin-section">
-          <div class="section-title-row">
+          <div class="section-title-row section-title-flex">
             <h2>Inventario</h2>
-          </div>
-          <div class="add-product-form" id="addProductForm">
-            <div class="form-card-header">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <button class="btn-primary" id="btnOpenAddProduct">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="12" y1="5" x2="12" y2="19" />
                 <line x1="5" y1="12" x2="19" y2="12" />
               </svg>
-              <h3>Agregar producto</h3>
-            </div>
-            <form id="productForm">
-              <div class="form-group">
-                <label>Nombre</label>
-                <input type="text" name="name" required placeholder="Ej: POLO SUPRA BEIGE">
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Precio (S/)</label>
-                  <input type="number" name="price" step="0.01" required placeholder="45">
-                </div>
-                <div class="form-group">
-                  <label>Stock</label>
-                  <input type="number" name="stock" min="0" required placeholder="10">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>Categoría</label>
-                  <select name="category">
-                    <option value="polo">Polo</option>
-                    <option value="bividi">Bividi</option>
-                    <option value="short">Bermudas</option>
-                    <option value="perfume">Perfume</option>
-                    <option value="polera">Polera</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Drop</label>
-                  <input type="text" name="drop_name" placeholder="segundo, tercer, cuarto...">
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Imagen principal (ruta)</label>
-                <input type="text" name="image" required placeholder="/segundo-drop/producto.jpeg">
-              </div>
-              <div class="form-group">
-                <label>Imágenes adicionales (separadas por coma)</label>
-                <input type="text" name="images" placeholder="/img1.jpeg, /img2.jpeg">
-              </div>
-              <div class="form-group checkbox-group">
-                <label><input type="checkbox" name="new_item"> Producto nuevo</label>
-              </div>
-              <button type="submit" class="btn-primary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-                <span>AGREGAR PRODUCTO</span>
-              </button>
-            </form>
+              <span>NUEVO PRODUCTO</span>
+            </button>
+          </div>
+          <!-- Search bar -->
+          <div class="search-bar-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input type="text" id="productSearch" placeholder="Buscar producto por nombre...">
           </div>
           <div class="table-section">
-            <div class="table-header">
-              <h3>Productos registrados</h3>
-            </div>
             <div class="admin-table-wrap">
               <table class="admin-table" id="productsTable">
                 <thead>
@@ -312,14 +288,145 @@
 
         <!-- ========== ORDERS SECTION ========== -->
         <section id="section-orders" class="admin-section">
-          <div class="section-title-row">
-            <h2>Pedidos recientes</h2>
+          <div class="section-title-row section-title-flex">
+            <h2>Gestión de pedidos</h2>
+            <div class="order-filters">
+              <button class="filter-btn active" data-filter="all">Todos</button>
+              <button class="filter-btn" data-filter="pendiente">Pendientes</button>
+              <button class="filter-btn" data-filter="confirmado">Confirmados</button>
+              <button class="filter-btn" data-filter="enviado">Enviados</button>
+              <button class="filter-btn" data-filter="entregado">Entregados</button>
+            </div>
           </div>
           <div class="orders-list" id="ordersList"></div>
+        </section>
+
+        <!-- ========== ANALYTICS SECTION ========== -->
+        <section id="section-analytics" class="admin-section">
+          <div class="section-title-row">
+            <h2>Analítica & Reportes</h2>
+          </div>
+          <div class="analytics-kpi-row">
+            <div class="kpi-card">
+              <span class="kpi-label">Ticket promedio</span>
+              <span class="kpi-value" id="kpiAvgTicket">S/0</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label">Tasa de entrega</span>
+              <span class="kpi-value" id="kpiDeliveryRate">0%</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label">Pedidos este mes</span>
+              <span class="kpi-value" id="kpiMonthOrders">0</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-label">Ingresos este mes</span>
+              <span class="kpi-value" id="kpiMonthRevenue">S/0</span>
+            </div>
+          </div>
+          <div class="charts-row">
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <h3>Ingresos mensual</h3>
+              </div>
+              <div class="chart-container">
+                <canvas id="monthlyRevenueChart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card chart-card-sm">
+              <div class="chart-card-header">
+                <h3>Estado de pedidos</h3>
+              </div>
+              <div class="chart-container chart-container-doughnut">
+                <canvas id="orderStatusChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="charts-row" style="margin-top: 1.5rem;">
+            <div class="chart-card" style="flex: 1;">
+              <div class="chart-card-header">
+                <h3>Productos más vendidos</h3>
+              </div>
+              <div class="chart-container">
+                <canvas id="topProductsChart"></canvas>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </main>
   </div>
+
+  <!-- ========== PRODUCT MODAL ========== -->
+  <div class="modal-overlay" id="productModalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Agregar producto</h3>
+        <button class="modal-close" id="modalClose">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <form id="productForm">
+        <input type="hidden" id="editProductId" value="">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" name="name" id="pName" required placeholder="Ej: POLO SUPRA BEIGE">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Precio (S/)</label>
+            <input type="number" name="price" id="pPrice" step="0.01" required placeholder="45">
+          </div>
+          <div class="form-group">
+            <label>Stock</label>
+            <input type="number" name="stock" id="pStock" min="0" required placeholder="10">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Categoría</label>
+            <select name="category" id="pCategory">
+              <option value="polo">Polo</option>
+              <option value="bividi">Bividi</option>
+              <option value="short">Bermudas</option>
+              <option value="perfume">Perfume</option>
+              <option value="polera">Polera</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Drop</label>
+            <input type="text" name="drop_name" id="pDrop" placeholder="segundo, tercer, cuarto...">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Imagen principal (ruta)</label>
+          <input type="text" name="image" id="pImage" required placeholder="/segundo-drop/producto.jpeg">
+        </div>
+        <div class="form-group">
+          <label>Imágenes adicionales (separadas por coma)</label>
+          <input type="text" name="images" id="pImages" placeholder="/img1.jpeg, /img2.jpeg">
+        </div>
+        <div class="form-group checkbox-group">
+          <label><input type="checkbox" name="new_item" id="pNewItem"> Producto nuevo</label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="modalCancel">Cancelar</button>
+          <button type="submit" class="btn-primary" id="modalSubmitBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span id="modalSubmitText">GUARDAR</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== TOAST ========== -->
+  <div class="admin-toast" id="adminToast"></div>
 
   <script type="module" src="/src/admin.js"></script>
 </body>
