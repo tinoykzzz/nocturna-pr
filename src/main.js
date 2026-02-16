@@ -1411,7 +1411,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
 
-      if (supabase) {
+      const btn = newsletterForm.querySelector('button[type="submit"]');
+      const originalText = btn?.textContent || 'Suscribirse';
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Enviando...';
+      }
+
+      try {
+        if (!supabase) {
+          showToast('Servicio temporalmente no disponible. Intenta más tarde.');
+          return;
+        }
+
         const { error } = await supabase
           .from('newsletter_subscribers')
           .insert({ email });
@@ -1419,15 +1431,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (error) {
           if (error.code === '23505') {
             showToast('Este email ya está suscrito');
+          } else if (error.code === '42P01') {
+            showToast('Configura la base de datos. Ejecuta supabase-setup.sql');
+            console.error('Newsletter error:', error);
           } else {
             showToast('Error al suscribir. Intenta de nuevo.');
+            console.error('Newsletter error:', error);
           }
           return;
         }
-      }
 
-      showToast('¡Gracias por suscribirte!');
-      newsletterForm.reset();
+        showToast('¡Gracias por suscribirte!');
+        newsletterForm.reset();
+      } catch (err) {
+        showToast('Error de conexión. Intenta más tarde.');
+        console.error('Newsletter error:', err);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }
+      }
     });
   }
 
