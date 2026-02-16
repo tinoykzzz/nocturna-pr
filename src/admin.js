@@ -75,27 +75,50 @@ if (sidebarToggle && sidebar) {
   });
 }
 
+// ========== LOCAL ADMIN CREDENTIALS ==========
+const LOCAL_ADMINS = [
+  { email: 'richard@nocturna.com', password: 'NocturnaPR2026' },
+  { email: 'patrick@nocturna.com', password: 'NocturnaPR2026' }
+];
+
+let isOfflineMode = false;
+
+function localAuth(email, password) {
+  return LOCAL_ADMINS.find(a => a.email === email && a.password === password) || null;
+}
+
 // ========== AUTH ==========
 async function checkAuth() {
-  if (!supabase) {
-    loginError.textContent = 'Error: No se pudo conectar a Supabase.';
-    return;
-  }
-  const { data: { user }, error } = await supabase.auth.getUser();
-
-  if (user) {
-    const { data: adminCheck } = await supabase
-      .from('admin_emails')
-      .select('email')
-      .eq('email', user.email)
-      .single();
-
-    if (adminCheck) {
+  // Check local session first
+  const localSession = localStorage.getItem('nocturna_admin');
+  if (localSession) {
+    try {
+      const user = JSON.parse(localSession);
+      isOfflineMode = true;
       showDashboard(user);
-    } else {
-      loginError.textContent = 'No tienes permisos de administrador.';
-      await supabase.auth.signOut();
+      return;
+    } catch { localStorage.removeItem('nocturna_admin'); }
+  }
+
+  if (!supabase) return;
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (user) {
+      const { data: adminCheck } = await supabase
+        .from('admin_emails')
+        .select('email')
+        .eq('email', user.email)
+        .single();
+
+      if (adminCheck) {
+        showDashboard(user);
+      } else {
+        loginError.textContent = 'No tienes permisos de administrador.';
+        await supabase.auth.signOut();
+      }
     }
+  } catch (err) {
+    console.error('checkAuth error:', err);
   }
 }
 
@@ -104,25 +127,40 @@ async function handleLogin(e) {
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) {
-    loginError.textContent = error.message;
-    return;
+  // Try Supabase first
+  if (supabase) {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (!error) {
+        const { data: adminCheck } = await supabase
+          .from('admin_emails')
+          .select('email')
+          .eq('email', email)
+          .single();
+
+        if (!adminCheck) {
+          loginError.textContent = 'No tienes permisos de administrador.';
+          await supabase.auth.signOut();
+          return;
+        }
+        showDashboard(data.user);
+        return;
+      }
+    } catch (err) {
+      console.warn('Supabase no disponible, usando login local...');
+    }
   }
 
-  const { data: adminCheck } = await supabase
-    .from('admin_emails')
-    .select('email')
-    .eq('email', email)
-    .single();
-
-  if (!adminCheck) {
-    loginError.textContent = 'No tienes permisos de administrador.';
-    await supabase.auth.signOut();
-    return;
+  // Fallback: local credentials
+  const admin = localAuth(email, password);
+  if (admin) {
+    isOfflineMode = true;
+    const user = { email: admin.email };
+    localStorage.setItem('nocturna_admin', JSON.stringify(user));
+    showDashboard(user);
+  } else {
+    loginError.textContent = 'Email o contraseña incorrectos.';
   }
-
-  showDashboard(data.user);
 }
 
 function showDashboard(user) {
@@ -141,7 +179,11 @@ function showDashboard(user) {
 
 loginForm?.addEventListener('submit', handleLogin);
 logoutBtn?.addEventListener('click', async () => {
-  await supabase.auth.signOut();
+  localStorage.removeItem('nocturna_admin');
+  if (supabase) {
+    try { await supabase.auth.signOut(); } catch { }
+  }
+  isOfflineMode = false;
   dashboardScreen.style.display = 'none';
   loginScreen.style.display = '';
   loginForm?.reset();
