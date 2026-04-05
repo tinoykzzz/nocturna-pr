@@ -55,6 +55,8 @@ main {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+  position: relative;
+  z-index: 1;
 }
 
 /* Custom cursor solo en dispositivos con hover (evita pantalla en blanco en móvil) */

@@ -83,28 +83,36 @@ document.addEventListener('DOMContentLoaded', async () => {
   let products = [...CATALOG_FALLBACK];
   let catalogFromDb = false;
   if (supabase) {
-    const { data } = await supabase.from('products').select('*').order('sort_order', { ascending: true });
-    if (data?.length > 0) {
-      catalogFromDb = true;
-      products = data.map((p) => ({
-        id: p.id,
-        name: p.name,
-        price: parseFloat(p.price),
-        image: p.image,
-        images: (Array.isArray(p.images) && p.images.length) ? p.images : [p.image],
-        category: p.category,
-        stock: p.stock ?? 0,
-        drop: p.drop_name || '',
-        newItem: p.new_item ?? false
-      }));
+    try {
+      const { data, error } = await supabase.from('products').select('*').order('sort_order', { ascending: true });
+      if (!error && data?.length > 0) {
+        catalogFromDb = true;
+        products = data.map((p) => ({
+          id: p.id,
+          name: p.name,
+          price: parseFloat(p.price),
+          image: p.image,
+          images: (Array.isArray(p.images) && p.images.length) ? p.images : [p.image],
+          category: p.category,
+          stock: p.stock ?? 0,
+          drop: p.drop_name || '',
+          newItem: p.new_item ?? false
+        }));
+      }
+    } catch (e) {
+      console.warn('[NOCTURNA] Catálogo Supabase no disponible, usando datos locales.', e);
     }
   }
   if (!catalogFromDb) {
     const stored = loadShopCatalogFromStorage();
     if (stored?.length) products = stored;
   }
-  products = normalizeCatalogProducts(products);
-  applyStandardPricesToDom();
+  try {
+    products = normalizeCatalogProducts(products);
+    applyStandardPricesToDom();
+  } catch (e) {
+    console.warn('[NOCTURNA] Error al normalizar catálogo.', e);
+  }
 
   // =========== CUSTOM CURSOR ===========
   const cursor = document.querySelector('.cursor');
@@ -163,9 +171,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.style.overflow = '';
   }
 
-  if (menuBtn) {
+  if (menuBtn && mobileMenu && mobileMenuOverlay) {
     menuBtn.addEventListener('click', openMobileMenu);
-    closeMenu.addEventListener('click', closeMobileMenu);
+    closeMenu?.addEventListener('click', closeMobileMenu);
     mobileMenuOverlay.addEventListener('click', closeMobileMenu);
     mobileNavLinks.forEach(link => {
       link.addEventListener('click', closeMobileMenu);
@@ -501,6 +509,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   revealElements.forEach(el => revealObserver.observe(el));
 
+  requestAnimationFrame(() => {
+    document.querySelectorAll('#hero .reveal-up').forEach((el) => el.classList.add('visible'));
+  });
+
   // =========== MODERN MOTION SYSTEM ===========
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reducedMotion) {
@@ -558,6 +570,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, { passive: true });
     window.setTimeout(ensureMotionSectionsVisible, 400);
     window.setTimeout(ensureMotionSectionsVisible, 2500);
+
+    const unstickHiddenSections = () => {
+      document.querySelectorAll('.motion-section:not(.motion-in)').forEach((section) => {
+        section.classList.add('motion-in');
+        section.querySelectorAll('.reveal-up').forEach((el) => {
+          el.classList.add('visible');
+        });
+      });
+      document.querySelectorAll('.reveal-up:not(.visible)').forEach((el) => el.classList.add('visible'));
+    };
+    window.setTimeout(unstickHiddenSections, 3200);
+    window.addEventListener('load', () => window.setTimeout(unstickHiddenSections, 600), { once: true });
 
     if (window.innerWidth > 900) {
       motionCards.forEach((card) => {
