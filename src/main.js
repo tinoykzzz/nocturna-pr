@@ -1,62 +1,92 @@
 import './style.css'
 import { supabase } from './supabase.js'
 import { escapeHtml } from './utils.js'
+import { isDropsPage, isLightweightPage } from './modules/pageContext.js'
+import { initLegalPageLite } from './modules/legalPage.js'
+import {
+  STANDARD_PRICES,
+  POLERA_COMPARE_AT_PRICE,
+  normalizeCatalogProducts,
+} from './modules/catalog.js'
+import { CATALOG_FALLBACK } from './data/catalogFallback.js'
+import { loadShopCatalogFromStorage } from './modules/catalogStorage.js'
+import {
+  CART_STORAGE_KEY,
+  WISHLIST_STORAGE_KEY,
+  COUPON_STORAGE_KEY,
+  VALID_COUPONS,
+  sanitizeQuantity,
+  sanitizeSize,
+  parseMoney,
+  saveJsonInStorage,
+  readJsonFromStorage,
+} from './modules/commerce.js'
+import { runIfMotionAllowed } from './modules/effects.js'
 
 const WHATSAPP_PHONE = '51970663060'
 
 document.addEventListener('DOMContentLoaded', async () => {
+  if (isLightweightPage()) {
+    initLegalPageLite();
+    return;
+  }
 
-  // =========== PRODUCT DATA ===========
-  const productsFallback = [
-    // SEGUNDO DROP — POLOS JDM
-    { id: 1, name: 'SUPRA BEIGE', price: 45, image: '/segundo-drop/supra-beige.jpeg', images: ['/segundo-drop/supra-beige.jpeg', '/segundo-drop/supra2-beige.jpeg'], category: 'polo', stock: 5, drop: 'segundo' },
-    { id: 2, name: 'GODZILLA GTR', price: 50, image: '/segundo-drop/godzilla.jpeg', images: ['/segundo-drop/godzilla.jpeg', '/segundo-drop/godzilla-2.jpeg'], category: 'polo', stock: 7, drop: 'segundo' },
-    { id: 3, name: 'SILVIA S15', price: 45, image: '/segundo-drop/silvias15-1.jpeg', images: ['/segundo-drop/silvias15-1.jpeg', '/segundo-drop/silvias15-2.jpeg'], category: 'polo', stock: 10, drop: 'segundo' },
-    { id: 4, name: 'NISSAN 180SX', price: 48, image: '/segundo-drop/nissanlust-1.jpeg', images: ['/segundo-drop/nissanlust-1.jpeg', '/segundo-drop/nissanlust-2.jpeg'], category: 'polo', stock: 4, drop: 'segundo' },
-    { id: 5, name: 'MAZDA RX7', price: 50, image: '/segundo-drop/mazdarx7-1.jpeg', images: ['/segundo-drop/mazdarx7-1.jpeg', '/segundo-drop/mazdarx7-2.jpeg'], category: 'polo', stock: 6, drop: 'segundo' },
-    // TERCER DROP — COLECCIÓN ESPECIAL
-    { id: 6, name: 'FUTURE BLACK', price: 55, image: '/tercer-drop/blackfuture-1.jpeg', category: 'polo', stock: 8, drop: 'tercer', newItem: true },
-    { id: 7, name: 'FUTURE GRAY', price: 55, image: '/tercer-drop/grayfuture-1.jpeg', category: 'polo', stock: 10, drop: 'tercer', newItem: true },
-    { id: 8, name: 'FUTURE WHITE', price: 55, image: '/tercer-drop/whitefuture-1.jpeg', category: 'polo', stock: 12, drop: 'tercer', newItem: true },
-    { id: 9, name: 'GTR R35 NISMO', price: 55, image: '/tercer-drop/gt35-1.jpeg', category: 'polo', stock: 5, drop: 'tercer', newItem: true },
-    { id: 10, name: 'SUPRA MK4', price: 55, image: '/tercer-drop/supramk4-1.jpeg', category: 'polo', stock: 6, drop: 'tercer', newItem: true },
-    { id: 11, name: 'MAZDA RX7 V2', price: 55, image: '/tercer-drop/mazdarx7-1.jpeg', category: 'polo', stock: 7, drop: 'tercer', newItem: true },
-    // PRIMER DROP — CHOPPERS
-    { id: 12, name: 'WEST COAST CHOPPERS', price: 50, image: '/primer-drop/producto-principal.jpeg', category: 'polo', stock: 3, drop: 'primer' },
-    // PERFUMES (nueva estructura con subcarpetas e imágenes múltiples)
-    { id: 13, name: 'KHAMRA', price: 89, image: '/perfumes-drop/perfume-khamra/product-khamra.png', images: ['/perfumes-drop/perfume-khamra/product-khamra.png', '/perfumes-drop/perfume-khamra/khamra.png'], category: 'perfume', stock: 15 },
-    { id: 14, name: 'SCEPTRE', price: 95, image: '/perfumes-drop/perfume-sceptre/product-sceptre.png', images: ['/perfumes-drop/perfume-sceptre/product-sceptre.png', '/perfumes-drop/perfume-sceptre/sceptre.png'], category: 'perfume', stock: 8 },
-    { id: 15, name: 'WANTED', price: 78, image: '/perfumes-drop/perfume-mostwanted/product-mostwanted.png', images: ['/perfumes-drop/perfume-mostwanted/product-mostwanted.png', '/perfumes-drop/perfume-mostwanted/azzaro.png'], category: 'perfume', stock: 20 },
-    { id: 16, name: 'NUIT', price: 85, image: '/perfumes-drop/perfume-nuit/product-nuit.png', images: ['/perfumes-drop/perfume-nuit/product-nuit.png', '/perfumes-drop/perfume-nuit/nuit.png'], category: 'perfume', stock: 11 },
-    { id: 17, name: 'AQUA', price: 72, image: '/perfumes-drop/perfume-aqua/product-aqua.png', images: ['/perfumes-drop/perfume-aqua/product-aqua.png', '/perfumes-drop/perfume-aqua/aqua.png'], category: 'perfume', stock: 25 },
-    { id: 18, name: 'WITH YOU', price: 82, image: '/perfumes-drop/perfume-with/product-with.png', images: ['/perfumes-drop/perfume-with/product-with.png', '/perfumes-drop/perfume-with/with.png'], category: 'perfume', stock: 6 },
-    { id: 19, name: 'MANGO', price: 68, image: '/perfumes-drop/perfume-mango/product-mango.png', images: ['/perfumes-drop/perfume-mango/product-mango.png', '/perfumes-drop/perfume-mango/mango.png'], category: 'perfume', stock: 30 },
-    { id: 20, name: 'HARAMAIN', price: 98, image: '/perfumes-drop/perfume-haramain/producto-haramain.png', images: ['/perfumes-drop/perfume-haramain/producto-haramain.png', '/perfumes-drop/perfume-haramain/haramain.png'], category: 'perfume', stock: 5 },
-    // BIVIDIS COLLECTION
-    { id: 21, name: 'BIVIDI BLANCO', price: 35, image: '/quinto-drop/bividi-blanco.jpeg', category: 'bividi', stock: 12, newItem: true },
-    { id: 22, name: 'BIVIDI GRIS', price: 35, image: '/quinto-drop/bividi-gris.jpeg', category: 'bividi', stock: 15, newItem: true },
-    { id: 23, name: 'BIVIDI NEGRO', price: 35, image: '/quinto-drop/bividi-negro.jpeg', category: 'bividi', stock: 10, newItem: true },
-    { id: 24, name: 'BLANCO V2', price: 38, image: '/quinto-drop/blanco-2.jpeg', category: 'bividi', stock: 8, newItem: true },
-    { id: 25, name: 'GRIS V2', price: 38, image: '/quinto-drop/gris-2.jpeg', category: 'bividi', stock: 9, newItem: true },
-    { id: 26, name: 'NEGRO V2', price: 38, image: '/quinto-drop/negro-2.jpeg', category: 'bividi', stock: 14, newItem: true },
-    { id: 27, name: 'TRES EDICIÓN', price: 40, image: '/quinto-drop/tres.jpeg', category: 'bividi', stock: 5, newItem: true },
-    // BERMUDAS BAGGY COLLECTION
-    { id: 28, name: 'BERMUDAS BAGGY BLANCO', price: 42, image: '/cuarto-drop/short-blanco.jpeg', category: 'short', stock: 18, drop: 'cuarto', newItem: true },
-    { id: 29, name: 'BERMUDAS BAGGY CAFÉ', price: 42, image: '/cuarto-drop/short-cafe.jpeg', category: 'short', stock: 16, drop: 'cuarto', newItem: true },
-    { id: 30, name: 'BERMUDAS BAGGY NEGRO', price: 42, image: '/cuarto-drop/short-negro.jpeg', category: 'short', stock: 20, drop: 'cuarto', newItem: true },
-    // DROP SPACE
-    { id: 31, name: 'SPACE BLACK', price: 48, image: '/drop-space/black-space.jpeg', category: 'polo', stock: 10, drop: 'space' },
-    { id: 32, name: 'SPACE WHITE', price: 48, image: '/drop-space/white-space.jpeg', category: 'polo', stock: 12, drop: 'space' },
-    { id: 33, name: 'SPACE RED', price: 48, image: '/drop-space/red-space.jpeg', category: 'polo', stock: 8, drop: 'space' },
-    // POLERAS
-    { id: 34, name: 'BLACK POLERA', price: 99, image: '/drop-poleras/blackpolera-1.jpeg', category: 'polera', stock: 5, drop: 'poleras' },
-  ];
+  function applyStandardPricesToDom() {
+    const setPriceForCardCategory = (category, price) => {
+      document.querySelectorAll(`.product-card[data-category="${category}"]`).forEach((card) => {
+        card.querySelectorAll('[data-price]').forEach((el) => el.setAttribute('data-price', String(price)));
+        const cardPrice = card.querySelector('.card-header .price');
+        if (cardPrice && !cardPrice.classList.contains('price-discount')) {
+          cardPrice.textContent = `S/${price.toFixed(2)}`;
+        }
+      });
+    };
 
-  let products = [...productsFallback];
+    setPriceForCardCategory('polo', STANDARD_PRICES.polo);
+    setPriceForCardCategory('bividi', STANDARD_PRICES.bividi);
+    setPriceForCardCategory('short', STANDARD_PRICES.short);
+
+    document.querySelectorAll('.product-card[data-category="polera"]').forEach((card) => {
+      card.querySelectorAll('[data-price]').forEach((el) => el.setAttribute('data-price', String(STANDARD_PRICES.polera)));
+      const compareAt = card.querySelector('.price-strikethrough');
+      if (compareAt) compareAt.textContent = `S/${POLERA_COMPARE_AT_PRICE.toFixed(2)}`;
+      const discountPrice = card.querySelector('.price.price-discount');
+      if (discountPrice) discountPrice.textContent = `S/${STANDARD_PRICES.polera.toFixed(2)}`;
+      const basePrice = card.querySelector('.card-header .price:not(.price-discount)');
+      if (basePrice) basePrice.textContent = `S/${STANDARD_PRICES.polera.toFixed(2)}`;
+    });
+
+    // Fresh drops cards (bividis + bermudas) at fixed price.
+    document.querySelectorAll('.drop-card').forEach((card) => {
+      const name = (card.querySelector('h3')?.textContent || '').toUpperCase();
+      const isBividi = name.includes('BIVIDI');
+      const isBaggy = name.includes('BERMUDAS BAGGY');
+      if (!isBividi && !isBaggy) return;
+
+      const price = 45;
+      card.querySelectorAll('[data-price]').forEach((el) => el.setAttribute('data-price', String(price)));
+      const dropPrice = card.querySelector('.drop-info .price');
+      if (dropPrice) dropPrice.textContent = `S/${price.toFixed(2)}`;
+    });
+
+    // Featured strip polos at fixed price.
+    document.querySelectorAll('.featured-strip .featured-item').forEach((item) => {
+      item.setAttribute('data-price', String(STANDARD_PRICES.polo));
+      const featuredPrice = item.querySelector('.featured-price');
+      if (featuredPrice) featuredPrice.textContent = `S/${STANDARD_PRICES.polo}`;
+    });
+
+    const heroPrice = document.querySelector('.car-polo-price');
+    if (heroPrice) heroPrice.textContent = `S/${STANDARD_PRICES.polo}`;
+  }
+
+  let products = [...CATALOG_FALLBACK];
+  let catalogFromDb = false;
   if (supabase) {
     const { data } = await supabase.from('products').select('*').order('sort_order', { ascending: true });
     if (data?.length > 0) {
-      products = data.map((p, i) => ({
+      catalogFromDb = true;
+      products = data.map((p) => ({
         id: p.id,
         name: p.name,
         price: parseFloat(p.price),
@@ -69,6 +99,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       }));
     }
   }
+  if (!catalogFromDb) {
+    const stored = loadShopCatalogFromStorage();
+    if (stored?.length) products = stored;
+  }
+  products = normalizeCatalogProducts(products);
+  applyStandardPricesToDom();
 
   // =========== CUSTOM CURSOR ===========
   const cursor = document.querySelector('.cursor');
@@ -99,7 +135,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     animateCursor();
 
-    const interactiveElements = document.querySelectorAll('a, button, .product-card, .perfume-card');
+    const interactiveElements = document.querySelectorAll('a, button, .product-card, .perfume-card, .hero-car-btn');
     interactiveElements.forEach(el => {
       el.addEventListener('mouseenter', () => follower.classList.add('hover'));
       el.addEventListener('mouseleave', () => follower.classList.remove('hover'));
@@ -138,52 +174,87 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // =========== HERO BG CAROUSEL ===========
   const carSlides = document.querySelectorAll('.car-slide');
-  const carDots = document.querySelectorAll('.car-dot');
-  const carYearEl = document.querySelector('.car-year');
-  const carModelEl = document.querySelector('.car-model');
+  const heroCarPrev = document.getElementById('heroCarPrev');
+  const heroCarNext = document.getElementById('heroCarNext');
+  const carVehicleHintEl = document.querySelector('.car-vehicle-hint');
+  const carPoloNameEl = document.querySelector('.car-polo-name');
+  const carPoloPriceEl = document.querySelector('.car-polo-price');
   let carIndex = 0;
+  let carSlideTimer = null;
 
-  const carNames = [
-    { year: 'R34', model: 'SKYLINE GT-R' },
-    { year: 'MKIV', model: 'SUPRA' },
-    { year: 'FD', model: 'RX-7' },
-    { year: 'S15', model: 'SILVIA' },
-    { year: '69', model: 'CHARGER R/T' },
-    { year: '69', model: 'MUSTANG BOSS' },
-    { year: 'GSX', model: 'ECLIPSE' },
-    { year: 'SS', model: 'MONTE CARLO' },
+  /** Vehículo del hero + polo de la tienda asociado (precio alineado al catálogo) */
+  const heroCars = [
+    { year: 'R34', model: 'SKYLINE GT-R', poloName: 'GODZILLA GTR', price: 45 },
+    { year: 'MKIV', model: 'SUPRA', poloName: 'SUPRA MK4', price: 45 },
+    { year: 'FD', model: 'RX-7', poloName: 'MAZDA RX7', price: 45 },
+    { year: 'S15', model: 'SILVIA', poloName: 'SILVIA S15', price: 45 },
+    { year: '69', model: 'CHARGER R/T', poloName: 'WEST COAST CHOPPERS', price: 45 },
+    { year: '69', model: 'MUSTANG BOSS', poloName: 'FUTURE BLACK', price: 45 },
+    { year: 'GSX', model: 'ECLIPSE', poloName: 'NISSAN 180SX', price: 45 },
+    { year: 'SS', model: 'MONTE CARLO', poloName: 'SPACE BLACK', price: 45 },
   ];
 
+  function formatVehicleHint(entry) {
+    if (!entry) return '';
+    return `${entry.year} · ${entry.model}`;
+  }
+
   function updateCarSlide(index) {
+    const total = carSlides.length;
+    if (total === 0) return;
+    carIndex = ((index % total) + total) % total;
+
     carSlides.forEach((slide, i) => {
-      slide.classList.toggle('active', i === index);
+      slide.classList.toggle('active', i === carIndex);
     });
-    carDots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
-    });
-    if (carYearEl && carModelEl && carNames[index]) {
-      carYearEl.style.opacity = '0';
-      carModelEl.style.opacity = '0';
+
+    const entry = heroCars[carIndex];
+    const fade = (el, text) => {
+      if (!el || entry == null) return;
+      el.style.opacity = '0';
       setTimeout(() => {
-        carYearEl.textContent = carNames[index].year;
-        carModelEl.textContent = carNames[index].model;
-        carYearEl.style.opacity = '1';
-        carModelEl.style.opacity = '1';
-      }, 300);
+        el.textContent = text;
+        el.style.opacity = '1';
+      }, 200);
+    };
+
+    if (entry) {
+      fade(carVehicleHintEl, formatVehicleHint(entry));
+      fade(carPoloNameEl, entry.poloName);
+      fade(carPoloPriceEl, `S/${entry.price}`);
     }
   }
 
-  if (carSlides.length > 0) {
-    setInterval(() => {
-      carIndex = (carIndex + 1) % carSlides.length;
-      updateCarSlide(carIndex);
+  function resetCarSlideTimer() {
+    if (carSlideTimer) clearInterval(carSlideTimer);
+    carSlideTimer = setInterval(() => {
+      updateCarSlide(carIndex + 1);
     }, 5000);
+  }
 
-    carDots.forEach((dot, i) => {
-      dot.addEventListener('click', () => {
-        carIndex = i;
-        updateCarSlide(carIndex);
-      });
+  if (carSlides.length > 0 && heroCars.length >= carSlides.length) {
+    updateCarSlide(0);
+
+    heroCarPrev?.addEventListener('click', () => {
+      updateCarSlide(carIndex - 1);
+      resetCarSlideTimer();
+    });
+    heroCarNext?.addEventListener('click', () => {
+      updateCarSlide(carIndex + 1);
+      resetCarSlideTimer();
+    });
+
+    resetCarSlideTimer();
+
+    document.addEventListener('keydown', (e) => {
+      if (e.target.closest('input, textarea, select')) return;
+      if (e.key === 'ArrowLeft' && heroCarPrev) {
+        updateCarSlide(carIndex - 1);
+        resetCarSlideTimer();
+      } else if (e.key === 'ArrowRight' && heroCarNext) {
+        updateCarSlide(carIndex + 1);
+        resetCarSlideTimer();
+      }
     });
   }
 
@@ -296,6 +367,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  // =========== FRESH DROPS HORIZONTAL SCROLL ===========
+  const freshDropsScroller = document.getElementById('freshDropsScroller');
+  const freshDropsPrev = document.getElementById('freshDropsPrev');
+  const freshDropsNext = document.getElementById('freshDropsNext');
+
+  function updateFreshDropsNavState() {
+    if (!freshDropsScroller || !freshDropsPrev || !freshDropsNext) return;
+    const { scrollLeft, scrollWidth, clientWidth } = freshDropsScroller;
+    const maxScroll = scrollWidth - clientWidth;
+    const eps = 2;
+    freshDropsPrev.disabled = scrollLeft <= eps;
+    freshDropsNext.disabled = scrollLeft >= maxScroll - eps;
+  }
+
+  function scrollFreshDrops(direction) {
+    if (!freshDropsScroller) return;
+    const firstCard = freshDropsScroller.querySelector('.drop-card');
+    const track = freshDropsScroller.querySelector('.fresh-drops-track');
+    const gap = track ? (parseFloat(getComputedStyle(track).gap) || 32) : 32;
+    const cardW = firstCard ? firstCard.offsetWidth : 280;
+    const step = cardW + gap;
+    freshDropsScroller.scrollBy({
+      left: direction === 'next' ? step : -step,
+      behavior: 'smooth',
+    });
+  }
+
+  if (freshDropsScroller && freshDropsPrev && freshDropsNext) {
+    freshDropsPrev.addEventListener('click', () => scrollFreshDrops('prev'));
+    freshDropsNext.addEventListener('click', () => scrollFreshDrops('next'));
+    freshDropsScroller.addEventListener('scroll', () => {
+      window.requestAnimationFrame(updateFreshDropsNavState);
+    });
+    window.addEventListener('resize', updateFreshDropsNavState);
+    updateFreshDropsNavState();
+    const freshDropsRo = new ResizeObserver(() => updateFreshDropsNavState());
+    freshDropsRo.observe(freshDropsScroller);
+  }
+
   // =========== PRODUCTS CAROUSEL ===========
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
@@ -387,9 +497,86 @@ document.addEventListener('DOMContentLoaded', async () => {
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  }, { threshold: 0, rootMargin: '0px 0px -24px 0px' });
 
   revealElements.forEach(el => revealObserver.observe(el));
+
+  // =========== MODERN MOTION SYSTEM ===========
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reducedMotion) {
+    const motionSections = document.querySelectorAll('.section-container, .drops-hero-section, .timeline, .drops-cta-section');
+    const motionCards = document.querySelectorAll('.product-card, .perfume-card, .drop-card, .timeline-content');
+
+    motionSections.forEach((section, index) => {
+      section.classList.add('motion-section');
+      section.style.setProperty('--motion-delay', `${index * 40}ms`);
+    });
+
+    /** Tall sections (e.g. #polos) rarely reach 16% intersection ratio; threshold 0 + fallback avoids stuck opacity:0 */
+    let sectionObserver;
+    const activateMotionSection = (section) => {
+      if (!section.classList.contains('motion-section')) return;
+      section.classList.add('motion-in');
+      sectionObserver.unobserve(section);
+      section.querySelectorAll('.reveal-up').forEach((el) => {
+        el.classList.add('visible');
+        revealObserver.unobserve(el);
+      });
+    };
+
+    const ensureMotionSectionsVisible = () => {
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      motionSections.forEach((section) => {
+        if (section.classList.contains('motion-in')) return;
+        const rect = section.getBoundingClientRect();
+        if (rect.top < vh && rect.bottom > 0) {
+          activateMotionSection(section);
+        }
+      });
+    };
+
+    sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          activateMotionSection(entry.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+
+    motionSections.forEach((section) => sectionObserver.observe(section));
+
+    ensureMotionSectionsVisible();
+    requestAnimationFrame(ensureMotionSectionsVisible);
+    window.addEventListener('load', ensureMotionSectionsVisible, { once: true });
+    let motionScrollRaf = null;
+    window.addEventListener('scroll', () => {
+      if (motionScrollRaf != null) return;
+      motionScrollRaf = requestAnimationFrame(() => {
+        motionScrollRaf = null;
+        ensureMotionSectionsVisible();
+      });
+    }, { passive: true });
+    window.setTimeout(ensureMotionSectionsVisible, 400);
+    window.setTimeout(ensureMotionSectionsVisible, 2500);
+
+    if (window.innerWidth > 900) {
+      motionCards.forEach((card) => {
+        card.classList.add('motion-card');
+        card.addEventListener('mousemove', (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width;
+          const y = (event.clientY - rect.top) / rect.height;
+          const rotateX = (0.5 - y) * 8;
+          const rotateY = (x - 0.5) * 10;
+          card.style.transform = `translateY(-6px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+    }
+  }
 
   // =========== PRODUCT FILTER ===========
   const filterBtns = document.querySelectorAll('.filter-btn');
@@ -473,6 +660,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   applyFilters();
 
+  function applyDropFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const drop = params.get('drop');
+    if (!drop || drop === 'all') return;
+    const opts = document.getElementById('dropDropdownOptions');
+    if (!opts) return;
+    const opt = opts.querySelector(`.drop-dropdown-option[data-drop="${drop}"]`);
+    if (!opt) return;
+    opt.click();
+    const polos = document.getElementById('polos');
+    if (polos) {
+      requestAnimationFrame(() => {
+        polos.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }
+
+  applyDropFromQuery();
+
   // =========== TOAST ===========
   const toast = document.getElementById('toast');
 
@@ -487,8 +693,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelectorAll('.btn-copy').forEach(btn => {
     btn.addEventListener('click', () => {
       const text = btn.getAttribute('data-copy');
+      const label = btn.querySelector('.btn-copy-label');
+      const prevLabel = label ? label.textContent : null;
+      const afterCopy = () => {
+        showToast('Copiado al portapapeles');
+        if (label && prevLabel) {
+          label.textContent = 'Copiado';
+          setTimeout(() => {
+            label.textContent = prevLabel;
+          }, 2000);
+        }
+      };
       if (navigator.clipboard?.writeText) {
-        navigator.clipboard.writeText(text).then(() => showToast('Copiado al portapapeles'));
+        navigator.clipboard.writeText(text).then(afterCopy);
       } else {
         const ta = document.createElement('textarea');
         ta.value = text;
@@ -496,7 +713,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ta.select();
         document.execCommand('copy');
         document.body.removeChild(ta);
-        showToast('Copiado al portapapeles');
+        afterCopy();
       }
     });
   });
@@ -515,19 +732,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   const cartDiscount = document.getElementById('cartDiscount');
   const couponCodeDisplay = document.getElementById('couponCodeDisplay');
 
-  const CART_STORAGE_KEY = 'nocturna_cart'
-  let cart = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || '[]')
-  let activeCoupon = null; // { code, discount: 10, type: 'percent' } or { code, discount: 5, type: 'fixed' }
+  let cart = readJsonFromStorage(CART_STORAGE_KEY, [])
+  let activeCoupon = readJsonFromStorage(COUPON_STORAGE_KEY, null)
 
   function saveCartToStorage() {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart))
+    saveJsonInStorage(CART_STORAGE_KEY, cart)
   }
 
-  const VALID_COUPONS = {
-    'NOCTURNA10': { discount: 10, type: 'percent' },
-    'BIENVENIDO15': { discount: 15, type: 'percent' },
-    'ENVIO5': { discount: 5, type: 'fixed' }
-  };
+  function saveCouponToStorage() {
+    saveJsonInStorage(COUPON_STORAGE_KEY, activeCoupon)
+  }
 
   function openCart() {
     if (cartSidebar) cartSidebar.classList.add('open');
@@ -609,14 +823,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (btn.classList.contains('qty-minus')) {
         if (cart[index].quantity > 1) {
-          cart[index].quantity--;
+          cart[index].quantity = sanitizeQuantity(cart[index].quantity - 1, 1, 99);
         } else {
           cart.splice(index, 1);
         }
         saveCartToStorage();
         updateCartUI();
       } else if (btn.classList.contains('qty-plus')) {
-        cart[index].quantity++;
+        cart[index].quantity = sanitizeQuantity(cart[index].quantity + 1, 1, 99);
         saveCartToStorage();
         updateCartUI();
       } else if (btn.classList.contains('cart-item-remove')) {
@@ -629,11 +843,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function addToCart(name, price, image, quantity = 1, size = 'M') {
-    const existingItem = cart.find(item => item.name === name && item.size === size);
+    const safeQuantity = sanitizeQuantity(quantity);
+    const safeSize = sanitizeSize(size);
+    const safePrice = parseMoney(price, 45);
+    const existingItem = cart.find(item => item.name === name && item.size === safeSize);
     if (existingItem) {
-      existingItem.quantity += quantity;
+      existingItem.quantity = sanitizeQuantity(existingItem.quantity + safeQuantity, 1, 99);
     } else {
-      cart.push({ name, price: parseFloat(price), image, quantity, size });
+      cart.push({ name, price: safePrice, image, quantity: safeQuantity, size: safeSize });
     }
     saveCartToStorage();
     updateCartUI();
@@ -653,6 +870,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   const applyCouponBtn = document.getElementById('applyCouponBtn');
   const couponMessage = document.getElementById('couponMessage');
 
+  if (activeCoupon && !VALID_COUPONS[activeCoupon.code]) {
+    activeCoupon = null;
+    saveCouponToStorage();
+  }
+  if (activeCoupon && couponInput && couponMessage) {
+    couponInput.value = activeCoupon.code;
+    couponMessage.textContent = `Cupón activo: ${activeCoupon.code}`;
+    couponMessage.className = 'coupon-message success';
+  }
+
   if (applyCouponBtn && couponInput && couponMessage) {
     applyCouponBtn.addEventListener('click', () => {
       const code = couponInput.value.trim().toUpperCase();
@@ -664,11 +891,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       const coupon = VALID_COUPONS[code];
       if (coupon) {
         activeCoupon = { code, ...coupon };
+        saveCouponToStorage();
         couponMessage.textContent = `¡Descuento aplicado! (${coupon.discount}${coupon.type === 'percent' ? '%' : 'S/'})`;
         couponMessage.className = 'coupon-message success';
         updateCartUI();
       } else {
         activeCoupon = null;
+        saveCouponToStorage();
         couponMessage.textContent = 'Código inválido o expirado';
         couponMessage.className = 'coupon-message error';
         updateCartUI();
@@ -711,38 +940,58 @@ document.addEventListener('DOMContentLoaded', async () => {
   const wishlistCount = document.querySelector('.wishlist-count');
   const moveAllToCart = document.getElementById('moveAllToCart');
 
-  const WISHLIST_STORAGE_KEY = 'nocturna_wishlist'
-  let wishlist = JSON.parse(localStorage.getItem(WISHLIST_STORAGE_KEY) || '[]')
+  let wishlist = readJsonFromStorage(WISHLIST_STORAGE_KEY, [])
+
+  let currentQuickViewProduct = null;
+  let selectedSize = 'M';
 
   function saveWishlistToStorage() {
-    localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist))
+    saveJsonInStorage(WISHLIST_STORAGE_KEY, wishlist)
   }
 
   function openWishlist() {
-    wishlistSidebar.classList.add('open');
-    wishlistOverlay.classList.add('open');
+    wishlistSidebar?.classList.add('open');
+    wishlistOverlay?.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 
   function closeWishlistFn() {
-    wishlistSidebar.classList.remove('open');
-    wishlistOverlay.classList.remove('open');
+    wishlistSidebar?.classList.remove('open');
+    wishlistOverlay?.classList.remove('open');
     document.body.style.overflow = '';
+  }
+
+  function syncQuickViewWishlistButton() {
+    const btn = document.getElementById('addToWishlistModal');
+    if (!btn) return;
+    if (!currentQuickViewProduct) {
+      btn.classList.remove('in-wishlist');
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('aria-label', 'Agregar a favoritos');
+      return;
+    }
+    const inList = wishlist.some((item) => item.name === currentQuickViewProduct.name);
+    btn.classList.toggle('in-wishlist', inList);
+    btn.setAttribute('aria-pressed', inList ? 'true' : 'false');
+    btn.setAttribute('aria-label', inList ? 'Quitar de favoritos' : 'Agregar a favoritos');
   }
 
   function updateWishlistUI() {
     if (wishlistCount) wishlistCount.textContent = wishlist.length;
+    if (wishlistBtn) wishlistBtn.classList.toggle('has-favorites', wishlist.length > 0);
 
     if (wishlist.length === 0) {
-      wishlistItems.innerHTML = '<p class="empty-wishlist">No tienes favoritos aún</p>';
+      if (wishlistItems) wishlistItems.innerHTML = '<p class="empty-wishlist">No tienes favoritos aún</p>';
+      syncQuickViewWishlistButton();
       return;
     }
 
+    if (!wishlistItems) return;
     wishlistItems.innerHTML = wishlist.map((item, index) => `
       <div class="wishlist-item">
-        <img src="${item.image}" alt="${item.name}">
+        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}">
         <div class="wishlist-item-info">
-          <h4>${item.name}</h4>
+          <h4>${escapeHtml(item.name)}</h4>
           <span>S/${item.price.toFixed(2)}</span>
           <div class="wishlist-item-actions">
             <button class="move-to-cart-btn" data-index="${index}">AL CARRITO</button>
@@ -772,6 +1021,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         showToast('Eliminado de favoritos');
       });
     });
+
+    syncQuickViewWishlistButton();
   }
 
   function addToWishlist(name, price, image) {
@@ -901,9 +1152,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const qtyPlus = document.getElementById('qtyPlus');
   const sizeOptions = document.querySelectorAll('.size-option');
 
-  let currentQuickViewProduct = null;
-  let selectedSize = 'M';
-
   const PRODUCT_DESCRIPTIONS = {
     perfume: {
       KHAMRA: 'Fragancia oriental amaderada con notas de ámbar, vainilla y especias. Duración prolongada para la noche.',
@@ -988,6 +1236,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     quickViewModal.classList.add('open');
     quickViewOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
+    syncQuickViewWishlistButton();
   }
 
   function closeQuickViewFn() {
@@ -995,6 +1244,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     quickViewOverlay.classList.remove('open');
     document.body.style.overflow = '';
     currentQuickViewProduct = null;
+    syncQuickViewWishlistButton();
   }
 
   // Quick view buttons
@@ -1054,7 +1304,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (addToCartModal) {
     addToCartModal.addEventListener('click', () => {
       if (currentQuickViewProduct) {
-        const qty = parseInt(qtyInput?.value || 1);
+        const qty = sanitizeQuantity(qtyInput?.value || 1);
         addToCart(
           currentQuickViewProduct.name,
           currentQuickViewProduct.price,
@@ -1067,16 +1317,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Add to wishlist from quick view
+  // Add to wishlist from quick view (clic de nuevo quita de favoritos)
   if (addToWishlistModal) {
     addToWishlistModal.addEventListener('click', () => {
-      if (currentQuickViewProduct) {
-        addToWishlist(
-          currentQuickViewProduct.name,
-          currentQuickViewProduct.price,
-          currentQuickViewProduct.image
-        );
+      if (!currentQuickViewProduct) return;
+      const { name, price, image } = currentQuickViewProduct;
+      const idx = wishlist.findIndex((item) => item.name === name);
+      if (idx !== -1) {
+        wishlist.splice(idx, 1);
+        saveWishlistToStorage();
+        updateWishlistUI();
+        showToast('Quitado de favoritos');
+        return;
       }
+      addToWishlist(name, price, image);
     });
   }
 
@@ -1219,6 +1473,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     let gWidth = window.innerWidth;
     let gHeight = window.innerHeight;
     let globalStars = [];
+    const starsLiteMq = window.matchMedia('(max-width: 768px)');
+    const starsReducedMq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const starsLiteMode = () => starsLiteMq.matches || starsReducedMq.matches;
+    let globalStarsAnimId = null;
 
     function gResize() {
       gWidth = window.innerWidth;
@@ -1259,30 +1517,61 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function initGlobalStars() {
       globalStars = [];
-      const count = Math.min(300, Math.floor((gWidth * gHeight) / 4000));
+      const area = gWidth * gHeight;
+      const lite = starsLiteMode();
+      const count = lite
+        ? Math.min(42, Math.max(18, Math.floor(area / 22000)))
+        : Math.min(300, Math.floor(area / 4000));
       for (let i = 0; i < count; i++) {
         globalStars.push(new GlobalStar());
       }
     }
 
-    function animateGlobalStars() {
+    function drawGlobalStarsFrame() {
       gCtx.fillStyle = 'rgba(10, 10, 10, 0.1)';
       gCtx.fillRect(0, 0, gWidth, gHeight);
-      globalStars.forEach(star => {
+      globalStars.forEach((star) => {
         star.update();
         star.draw();
       });
-      requestAnimationFrame(animateGlobalStars);
     }
 
-    window.addEventListener('resize', () => {
+    function animateGlobalStars() {
+      drawGlobalStarsFrame();
+      globalStarsAnimId = requestAnimationFrame(animateGlobalStars);
+    }
+
+    function paintGlobalStarsStatic() {
+      gCtx.fillStyle = '#0a0a0a';
+      gCtx.fillRect(0, 0, gWidth, gHeight);
+      globalStars.forEach((star) => star.draw());
+    }
+
+    function stopGlobalStarsAnim() {
+      if (globalStarsAnimId != null) {
+        cancelAnimationFrame(globalStarsAnimId);
+        globalStarsAnimId = null;
+      }
+    }
+
+    function applyGlobalStarsMode() {
+      stopGlobalStarsAnim();
       gResize();
       initGlobalStars();
-    });
+      if (starsLiteMode()) {
+        globalCanvas.classList.add('global-stars-canvas--static');
+        paintGlobalStarsStatic();
+      } else {
+        globalCanvas.classList.remove('global-stars-canvas--static');
+        animateGlobalStars();
+      }
+    }
 
-    gResize();
-    initGlobalStars();
-    animateGlobalStars();
+    window.addEventListener('resize', applyGlobalStarsMode);
+    starsLiteMq.addEventListener('change', applyGlobalStarsMode);
+    starsReducedMq.addEventListener('change', applyGlobalStarsMode);
+
+    applyGlobalStarsMode();
   }
 
   // =========== SPACE CANVAS ===========
@@ -1550,8 +1839,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // =========== BREADCRUMBS ===========
   const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
-  const isDropsPage = window.location.pathname.includes('drops');
-  const sections = isDropsPage
+  const dropsViewActive = isDropsPage();
+  const sections = dropsViewActive
     ? [
       { id: 'drop-primer', label: 'Primer Drop' },
       { id: 'drop-segundo', label: 'Segundo Drop' },
@@ -1577,7 +1866,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (breadcrumbCurrent) {
     const updateBreadcrumb = () => {
       const scrollY = window.scrollY + 150;
-      let current = isDropsPage ? 'Drops' : 'Inicio';
+      let current = dropsViewActive ? 'Drops' : 'Inicio';
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i].id);
         if (el && el.offsetTop <= scrollY) {
@@ -1598,6 +1887,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (aboutToggle && aboutSection) {
     aboutToggle.addEventListener('click', () => {
       aboutSection.classList.toggle('expanded');
+      const open = aboutSection.classList.contains('expanded');
+      aboutToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   }
 
@@ -1620,8 +1911,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     btn.addEventListener('click', () => {
       const item = btn.closest('.faq-item');
       const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
+      const answer = item.querySelector('.faq-answer');
+      document.querySelectorAll('.faq-item').forEach((i) => {
+        i.classList.remove('open');
+        const q = i.querySelector('.faq-question');
+        const a = i.querySelector('.faq-answer');
+        if (q) q.setAttribute('aria-expanded', 'false');
+        if (a) a.setAttribute('aria-hidden', 'true');
+      });
+      if (!wasOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        if (answer) answer.setAttribute('aria-hidden', 'false');
+      }
     });
   });
 
@@ -1738,6 +2040,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     nextStepBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const next = btn.getAttribute('data-next');
+        if (next === '2' && checkoutForm) {
+          const requiredStep1 = checkoutForm.querySelectorAll('#step1 [required]');
+          const hasInvalid = Array.from(requiredStep1).some((input) => !input.checkValidity());
+          if (hasInvalid) {
+            requiredStep1.forEach((input) => input.reportValidity());
+            showToast('Completa los datos de envío antes de continuar');
+            return;
+          }
+        }
         switchStep(next);
       });
     });
@@ -1776,7 +2087,22 @@ document.addEventListener('DOMContentLoaded', async () => {
           postal: formData.get('customer_postal') || ''
         };
 
-        let subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        if (cart.length === 0) {
+          showToast('Tu carrito está vacío');
+          btn.innerHTML = originalHTML;
+          btn.disabled = false;
+          return;
+        }
+
+        const phoneDigits = String(customer.phone).replace(/\D/g, '');
+        if (phoneDigits.length < 9) {
+          showToast('Ingresa un teléfono válido');
+          btn.innerHTML = originalHTML;
+          btn.disabled = false;
+          return;
+        }
+
+        let subtotal = cart.reduce((sum, item) => sum + parseMoney(item.price) * sanitizeQuantity(item.quantity, 1, 99), 0);
         let discountAmount = 0;
         if (activeCoupon) {
           discountAmount = activeCoupon.type === 'percent'
@@ -1786,9 +2112,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const total = Math.max(0, subtotal - discountAmount);
         const items = cart.map(item => ({
           name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          size: item.size
+          price: parseMoney(item.price),
+          quantity: sanitizeQuantity(item.quantity, 1, 99),
+          size: sanitizeSize(item.size)
         }));
 
         let orderNumber = '-';
@@ -1841,6 +2167,7 @@ Dirección: ${customer.address}, ${customer.city}${customer.postal ? ' ' + custo
           switchStep(3);
           cart = [];
           activeCoupon = null;
+          saveCouponToStorage();
           if (couponInput) couponInput.value = '';
           if (couponMessage) { couponMessage.textContent = ''; couponMessage.className = 'coupon-message'; }
           saveCartToStorage();
@@ -1953,40 +2280,44 @@ Dirección: ${customer.address}, ${customer.city}${customer.postal ? ' ' + custo
   const heroContent = document.querySelector('.hero-content');
   const scrollIndicator = document.querySelector('.scroll-indicator');
 
-  window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    if (heroBg && scrolled < window.innerHeight) {
-      heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
-    }
-    if (heroContent && scrolled < window.innerHeight) {
-      heroContent.style.transform = `translateY(${scrolled * 0.2}px)`;
-      heroContent.style.opacity = 1 - scrolled / 800;
-    }
-    if (scrollIndicator) {
-      scrollIndicator.style.opacity = 1 - scrolled / 300;
-    }
+  runIfMotionAllowed(() => {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      if (heroBg && scrolled < window.innerHeight) {
+        heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+      }
+      if (heroContent && scrolled < window.innerHeight) {
+        heroContent.style.transform = `translateY(${scrolled * 0.2}px)`;
+        heroContent.style.opacity = 1 - scrolled / 800;
+      }
+      if (scrollIndicator) {
+        scrollIndicator.style.opacity = 1 - scrolled / 300;
+      }
+    });
   });
 
   // 2. Glitch Trigger
   const glitchTitle = document.querySelector('.glitch-title');
   if (glitchTitle) {
-    setInterval(() => {
-      if (Math.random() > 0.92) {
-        const lines = glitchTitle.querySelectorAll('.line');
-        lines.forEach(line => {
-          line.style.animation = 'none';
-          void line.offsetWidth;
-          line.style.animation = 'glitch-anim 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both';
-          setTimeout(() => {
-            line.style.animation = '';
-          }, 200);
-        });
-      }
-    }, 3000);
+    runIfMotionAllowed(() => {
+      setInterval(() => {
+        if (Math.random() > 0.92) {
+          const lines = glitchTitle.querySelectorAll('.line');
+          lines.forEach(line => {
+            line.style.animation = 'none';
+            void line.offsetWidth;
+            line.style.animation = 'glitch-anim 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both';
+            setTimeout(() => {
+              line.style.animation = '';
+            }, 200);
+          });
+        }
+      }, 3000);
+    });
   }
 
   // 3. Magnetic Buttons
-  if (window.innerWidth > 768) {
+  if (window.innerWidth > 768 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const magneticBtns = document.querySelectorAll('.btn-primary, .btn-outline, .icon-button, .filter-btn');
 
     magneticBtns.forEach(btn => {

@@ -5,11 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin | NOCTURNA PR</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/logo-tienda/icono-oficial.png?v=1" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="/src/admin.css">
@@ -27,13 +27,14 @@
       </div>
       <form class="admin-form" id="loginForm">
         <div class="form-group">
-          <label>Email</label>
+          <label for="loginEmail">Usuario</label>
           <div class="input-icon-wrap">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
               <path d="m22 6-10 7L2 6" />
             </svg>
-            <input type="email" id="loginEmail" required placeholder="admin@nocturnapr.com">
+            <input type="text" id="loginEmail" name="username" autocomplete="username" required placeholder="admin"
+              inputmode="text">
           </div>
         </div>
         <div class="form-group">
@@ -56,7 +57,9 @@
           <span>INICIAR SESIÓN</span>
         </button>
       </form>
-      <p class="help-text">Ingresa con tu cuenta de administrador autorizada.</p>
+      <p class="help-text">Modo vista previa: usuario <strong>admin</strong>, contraseña <strong>123</strong>. Con
+        <code>.env</code> y <code>VITE_ADMIN_MODE=production</code> usás Supabase Auth y la tabla
+        <code>admin_emails</code>.</p>
     </div>
   </div>
 
@@ -79,11 +82,26 @@
           </svg>
           <span>Dashboard</span>
         </button>
-        <button data-section="products">
+        <button data-section="add-product" title="Alta de nuevas prendas">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          <span>Agregar producto</span>
+        </button>
+        <button data-section="inventory" title="Ajustar stock por producto">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+            <line x1="12" y1="22.08" x2="12" y2="12" />
+          </svg>
+          <span>Stock</span>
+        </button>
+        <button data-section="products" title="Listado y edición del catálogo">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
-          <span>Productos</span>
+          <span>Catálogo</span>
         </button>
         <button data-section="orders">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -93,6 +111,13 @@
             <line x1="16" y1="17" x2="8" y2="17" />
           </svg>
           <span>Pedidos</span>
+        </button>
+        <button data-section="subscribers" title="Suscriptores al newsletter y avisos">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          <span>Avisos</span>
         </button>
         <button data-section="analytics">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -149,8 +174,10 @@
       <div class="admin-content">
         <!-- ========== DASHBOARD SECTION ========== -->
         <section id="section-dashboard" class="admin-section active">
+          <div class="dashboard-overview">
           <div class="section-title-row">
             <h2>Resumen general</h2>
+            <p class="section-subtitle">Indicadores de pedidos, ventas de la última semana y desglose por categoría. Debajo, las ventas más recientes.</p>
           </div>
           <div class="dashboard-stats" id="dashboardStats">
             <div class="stat-card stat-ventas">
@@ -224,6 +251,27 @@
               </div>
             </div>
           </div>
+          </div>
+
+          <div class="dashboard-quick-actions">
+            <p class="dashboard-quick-label">Catálogo</p>
+            <div class="dashboard-quick-btns">
+              <button type="button" class="btn-primary btn-dashboard-cta" id="btnDashboardAddProduct">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+                <span>Nueva prenda</span>
+              </button>
+              <button type="button" class="btn-secondary btn-dashboard-cta" id="btnDashboardStock">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                </svg>
+                <span>Ajustar stock</span>
+              </button>
+            </div>
+            <p class="dashboard-quick-hint">Usá <strong>Agregar producto</strong> para altas con fotos; <strong>Stock</strong> para sumar o corregir unidades; <strong>Catálogo</strong> para editar o borrar. En modo demo el catálogo se guarda en el navegador.</p>
+          </div>
 
           <!-- Recent Sales Table -->
           <div class="table-section">
@@ -247,10 +295,79 @@
           </div>
         </section>
 
+        <!-- ========== ADD PRODUCT ========== -->
+        <section id="section-add-product" class="admin-section">
+          <div class="section-title-row">
+            <h2>Agregar producto</h2>
+            <p class="section-subtitle section-subtitle-tight">Creá una nueva prenda con nombre, precio, categoría, imágenes (subida a Storage o URL) y stock inicial. El formulario es el mismo que en <strong>Catálogo</strong> → Nuevo producto.</p>
+          </div>
+          <div class="admin-cta-card">
+            <button type="button" class="btn-primary btn-cta-large" id="btnSectionAddProduct">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              <span>Abrir formulario — nuevo producto</span>
+            </button>
+            <ul class="admin-hint-list">
+              <li>Subí la foto principal y la galería al bucket de Supabase desde el mismo formulario.</li>
+              <li>Marcá <em>Producto nuevo</em> si querés destacarlo en la tienda.</li>
+              <li>Tras guardar, el producto aparece en <strong>Catálogo</strong> y en la web si las políticas RLS lo permiten.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- ========== INVENTORY (STOCK) ========== -->
+        <section id="section-inventory" class="admin-section">
+          <div class="section-title-row">
+            <h2>Ajustar inventario (stock)</h2>
+            <p class="section-subtitle section-subtitle-tight">Actualizá unidades sin abrir el formulario completo. Indicá el <strong>stock final</strong> y guardá por producto.</p>
+          </div>
+          <div class="bulk-stock-card">
+            <h3 class="bulk-stock-title">Importación masiva de stock (CSV)</h3>
+            <p class="form-hint">Formato: primera fila <code>id,stock</code> (o <code>id;cantidad</code> con Excel regional). El <code>id</code> es el UUID del producto en Supabase (copialo desde Table Editor → <code>products</code>).</p>
+            <div class="bulk-stock-actions">
+              <a href="/plantilla-stock-nocturna.csv" download class="btn-secondary btn-sm-pad">Descargar plantilla</a>
+              <label class="btn-secondary btn-sm-pad bulk-file-label">
+                Elegir CSV
+                <input type="file" id="stockCsvInput" accept=".csv,text/csv" class="sr-only">
+              </label>
+              <button type="button" class="btn-primary btn-sm-pad" id="btnApplyStockCsv">Aplicar archivo</button>
+            </div>
+            <p class="form-hint" id="stockCsvFileName"></p>
+          </div>
+          <div class="search-bar-wrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input type="text" id="inventorySearch" placeholder="Filtrar por nombre...">
+          </div>
+          <div class="table-section">
+            <div class="admin-table-wrap">
+              <table class="admin-table" id="inventoryTable">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Stock actual</th>
+                    <th>Nuevo stock</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="inventoryTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
         <!-- ========== PRODUCTS SECTION ========== -->
         <section id="section-products" class="admin-section">
           <div class="section-title-row section-title-flex">
-            <h2>Inventario</h2>
+            <div>
+              <h2>Catálogo</h2>
+              <p class="section-subtitle section-subtitle-tight">Listado completo: edición, baja y búsqueda. Las imágenes son rutas públicas o URLs de Storage. Con Supabase, los datos viven en la tabla <code>products</code>.</p>
+            </div>
             <button class="btn-primary" id="btnOpenAddProduct">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="12" y1="5" x2="12" y2="19" />
@@ -299,6 +416,55 @@
             </div>
           </div>
           <div class="orders-list" id="ordersList"></div>
+        </section>
+
+        <!-- ========== SUBSCRIBERS / BROADCAST ========== -->
+        <section id="section-subscribers" class="admin-section">
+          <div class="section-title-row">
+            <h2>Avisos a suscriptores</h2>
+            <p class="section-subtitle section-subtitle-tight">Emails captados desde el formulario “Avisos / newsletter” de la tienda (tabla <code>newsletter_subscribers</code>). La lectura requiere sesión Supabase Auth y permisos de admin.</p>
+          </div>
+          <div class="subscriber-toolbar">
+            <div class="subscriber-stat">
+              <span class="subscriber-stat-label">Suscriptores</span>
+              <span class="subscriber-stat-value" id="subscriberCount">0</span>
+            </div>
+            <div class="subscriber-actions">
+              <button type="button" class="btn-secondary" id="btnSubscribersRefresh">Actualizar lista</button>
+              <button type="button" class="btn-secondary" id="btnCopyEmailsList">Copiar emails</button>
+              <button type="button" class="btn-secondary" id="btnExportSubscribersCsv">Exportar CSV</button>
+            </div>
+          </div>
+          <p class="form-hint" id="subscribersModeHint"></p>
+          <div class="table-section">
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Email</th>
+                    <th>Fecha alta</th>
+                  </tr>
+                </thead>
+                <tbody id="subscribersBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="broadcast-card">
+            <h3 class="broadcast-card-title">Borrador de correo masivo</h3>
+            <p class="section-subtitle section-subtitle-tight" style="margin-top:0;">Desde el navegador no se puede enviar correo de forma fiable (límites de SPAM y claves API). Redactá aquí el mensaje y copiálo a tu herramienta (Gmail, Brevo, Resend, etc.) o exportá los emails.</p>
+            <div class="form-group">
+              <label for="broadcastSubject">Asunto</label>
+              <input type="text" id="broadcastSubject" placeholder="Ej: Nuevo drop — viernes 22:00">
+            </div>
+            <div class="form-group">
+              <label for="broadcastBody">Mensaje</label>
+              <textarea id="broadcastBody" rows="8" placeholder="Escribí el aviso para tus suscriptores..."></textarea>
+            </div>
+            <div class="broadcast-actions">
+              <button type="button" class="btn-secondary" id="btnCopyBroadcastDraft">Copiar asunto + mensaje</button>
+            </div>
+            <p class="form-hint" id="broadcastEdgeHint"></p>
+          </div>
         </section>
 
         <!-- ========== ANALYTICS SECTION ========== -->
@@ -401,13 +567,28 @@
             <input type="text" name="drop_name" id="pDrop" placeholder="segundo, tercer, cuarto...">
           </div>
         </div>
-        <div class="form-group">
-          <label>Imagen principal (ruta)</label>
-          <input type="text" name="image" id="pImage" required placeholder="/segundo-drop/producto.jpeg">
+        <div class="form-group form-group-upload">
+          <label>Imagen principal</label>
+          <div class="upload-toolbar">
+            <input type="file" id="pImageFile" accept="image/jpeg,image/png,image/webp,image/gif" class="admin-file-input">
+            <button type="button" class="btn-secondary btn-upload-action" id="btnUploadMainImage" disabled>Subir a Supabase</button>
+          </div>
+          <p class="form-hint" id="pImageUploadHint"></p>
+          <div class="image-preview-box" id="pImagePreviewBox" hidden>
+            <img id="pImagePreview" alt="Vista previa">
+          </div>
+          <label class="form-label-secondary">URL pública (se completa al subir; o pega ruta manual)</label>
+          <input type="text" name="image" id="pImage" placeholder="https://…supabase.co/storage/… o /segundo-drop/foto.jpeg">
         </div>
-        <div class="form-group">
-          <label>Imágenes adicionales (separadas por coma)</label>
-          <input type="text" name="images" id="pImages" placeholder="/img1.jpeg, /img2.jpeg">
+        <div class="form-group form-group-upload">
+          <label>Imágenes adicionales (galería)</label>
+          <div class="upload-toolbar">
+            <input type="file" id="pImagesFiles" accept="image/jpeg,image/png,image/webp,image/gif" multiple class="admin-file-input">
+            <button type="button" class="btn-secondary btn-upload-action" id="btnUploadGalleryImages" disabled>Subir selección</button>
+          </div>
+          <p class="form-hint">Opcional: varias fotos; se suben y se añaden las URLs abajo.</p>
+          <label class="form-label-secondary">URLs (separadas por coma)</label>
+          <input type="text" name="images" id="pImages" placeholder="https://…, https://…">
         </div>
         <div class="form-group checkbox-group">
           <label><input type="checkbox" name="new_item" id="pNewItem"> Producto nuevo</label>

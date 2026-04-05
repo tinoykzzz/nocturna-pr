@@ -4,6 +4,38 @@ Configuración paso a paso para pedidos, newsletter, productos y panel admin.
 
 ---
 
+## Conectar tu proyecto en resumen
+
+1. Crea un proyecto en [supabase.com](https://supabase.com) y espera a que esté listo.
+2. En **SQL Editor**, ejecuta en orden: `supabase-setup.sql` y luego `supabase-admin-setup.sql` (edita el email de admin en el segundo archivo).
+3. En **Settings → API**, copia **Project URL** y **anon public key**.
+4. En la carpeta del proyecto, `copy .env.example .env` y rellena `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`.
+5. En **Authentication → Users**, crea un usuario con el mismo email que pusiste en `admin_emails`.
+6. Para producción en la intranet, define `VITE_ADMIN_MODE=production` (en local, `npm run dev` sigue en modo demo salvo que cambies esto).
+7. Reiniciá `npm run dev` tras cambiar `.env`.
+
+La tienda (`index.html`) y la intranet (`admin.html`) usan las mismas variables `VITE_*`.
+
+### Storage (fotos del catálogo)
+
+- **Nombre del bucket:** `product-images` (es el valor por defecto en código; puedes cambiarlo con `VITE_SUPABASE_STORAGE_BUCKET` en `.env`).
+- En **Storage → New bucket:** nombre `product-images`, **público** (para que la tienda cargue URLs sin firmar).
+- Luego ejecuta en SQL Editor el archivo `supabase-storage-bucket.sql` (ajusta el nombre en el script si usaste otro bucket).
+
+### Vaciar pedidos de prueba en la base
+
+Si en el dashboard ya hay filas de prueba en `orders` y quieres empezar en cero, en **SQL Editor** ejecuta el contenido de `supabase-clear-orders.sql` (**irreversible**; haz copia antes si lo necesitas). En el panel admin, el modo local sin Supabase ya no incluye pedidos de muestra.
+
+### Importación masiva de stock (intranet)
+
+En **Stock → Importación masiva**, el CSV debe tener cabecera `id,stock` (o `id;cantidad` si Excel usa `;`). El `id` es el **UUID** de cada fila en Table Editor → `products`. Plantilla descargable: `/plantilla-stock-nocturna.csv`.
+
+### Enlace al panel admin en la web pública
+
+El acceso ya no está en el header. Los enlaces discretos son **“Acceso equipo”** en el pie de página y **“Equipo”** en el menú móvil; siguen llevando a `/admin.html` (el login sigue protegido por Supabase Auth).
+
+---
+
 ## PASO 1: Crear proyecto en Supabase
 
 1. Entra en [supabase.com](https://supabase.com) e inicia sesión.
@@ -47,7 +79,7 @@ Configuración paso a paso para pedidos, newsletter, productos y panel admin.
 
 ### 4.1 Crear archivo .env
 
-En la carpeta `web`:
+En la raíz del proyecto:
 
 **Windows (PowerShell):**
 ```powershell
@@ -93,7 +125,9 @@ Añade las variables de entorno en tu plataforma:
 | Variable | Valor |
 |----------|-------|
 | `VITE_SUPABASE_URL` | https://tu-proyecto.supabase.co |
-| `VITE_SUPABASE_ANON_KEY` | tu anon key |
+| `VITE_SUPABASE_ANON_KEY` | clave pública (anon o publishable) |
+| `VITE_ADMIN_MODE` | `production` para intranet con login real |
+| `VITE_SUPABASE_STORAGE_BUCKET` | (opcional) si no usas el nombre por defecto `product-images` |
 
 **Vercel:** Project → Settings → Environment Variables  
 **Netlify:** Site settings → Build & deploy → Environment

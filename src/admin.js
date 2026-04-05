@@ -1,7 +1,19 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+import { createClient } from '@supabase/supabase-js';
+import { getDefaultAdminCatalog, loadPersistedAdminCatalog, savePersistedAdminCatalog } from './modules/catalogStorage.js';
+import { uploadCatalogImage, STORAGE_BUCKET } from './modules/supabaseStorage.js';
 
-const SUPABASE_URL = 'https://pjjhmsezxedamwxcjwvy.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBqamhtc2V6eGVkYW13eGNqd3Z5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg0NDUyMDUsImV4cCI6MjA1NDAyMTIwNX0.n8sFx04LxuBN4JUh4bm5TzlhEpkb1wf6k_HsLT75h-0';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON = import.meta.env.VITE_SUPABASE_ANON_KEY;
+/** En `vite` (dev) por defecto demo UI; en build de producción hace falta Supabase salvo VITE_ADMIN_MODE=demo */
+const ADMIN_MODE = (
+  import.meta.env.VITE_ADMIN_MODE
+  || (import.meta.env.DEV ? 'demo' : 'production')
+).toLowerCase();
+/** Opcional: URL de una Edge Function u otro backend que envíe el broadcast (POST JSON con JWT). */
+const NEWSLETTER_BROADCAST_URL = (import.meta.env.VITE_NEWSLETTER_BROADCAST_URL || '').trim();
+const DEMO_ADMIN_EMAIL = import.meta.env.VITE_DEMO_ADMIN_EMAIL || 'admin';
+const DEMO_ADMIN_PASSWORD = import.meta.env.VITE_DEMO_ADMIN_PASSWORD || '123';
+const IS_DEMO_MODE = ADMIN_MODE === 'demo';
 
 let supabase;
 try { supabase = createClient(SUPABASE_URL, SUPABASE_ANON); } catch { supabase = null; }
@@ -11,27 +23,169 @@ function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[c] || c);
 }
 
-// ========== SAMPLE DATA (offline) ==========
-const SAMPLE_PRODUCTS = [
-  { id: 1, name: 'POLO NOCTURNA ELITE', price: 55, stock: 25, category: 'polo', image: '/segundo-drop/polo-elite.jpeg', new_item: true },
-  { id: 2, name: 'BIVIDI STEALTH BLACK', price: 38, stock: 30, category: 'bividi', image: '/segundo-drop/bividi-black.jpeg', new_item: false },
-  { id: 3, name: 'BERMUDAS BAGGY BLANCO', price: 42, stock: 18, category: 'short', image: '/segundo-drop/bermudas-blanco.jpeg', new_item: true },
-  { id: 4, name: 'POLERA SHADOW NEGRA', price: 65, stock: 12, category: 'polera', image: '/segundo-drop/polera-shadow.jpeg', new_item: false },
-  { id: 5, name: 'POLO SUPRA BEIGE', price: 50, stock: 20, category: 'polo', image: '/segundo-drop/polo-supra.jpeg', new_item: true },
-  { id: 6, name: 'PERFUME NOCTURNA 100ML', price: 120, stock: 15, category: 'perfume', image: '/segundo-drop/perfume.jpeg', new_item: true },
-  { id: 7, name: 'BIVIDI STEALTH WHITE', price: 38, stock: 22, category: 'bividi', image: '/segundo-drop/bividi-white.jpeg', new_item: false },
-  { id: 8, name: 'BERMUDAS CARGO NEGRO', price: 48, stock: 14, category: 'short', image: '/segundo-drop/bermudas-cargo.jpeg', new_item: true },
-];
+const STORE_BRAND = 'NOCTURNA PR';
+const STORE_TAGLINE = 'Urban Machine — Streetwear premium';
+const STORE_SITE = 'https://nocturnapr.com';
 
-const SAMPLE_ORDERS = [
-  { id: 1, order_number: 1001, customer_name: 'Carlos Mendoza', customer_phone: '987654321', customer_address: 'Av. Arequipa 1234', customer_city: 'Lima', total: 155, status: 'entregado', created_at: '2026-02-10T10:30:00Z', items: [{ name: 'POLO NOCTURNA ELITE', qty: 1, price: 55 }, { name: 'BERMUDAS BAGGY BLANCO', qty: 1, price: 42 }, { name: 'BIVIDI STEALTH BLACK', qty: 1, price: 38 }] },
-  { id: 2, order_number: 1002, customer_name: 'María García', customer_phone: '912345678', customer_address: 'Jr. Cusco 456', customer_city: 'Trujillo', total: 120, status: 'entregado', created_at: '2026-02-11T14:15:00Z', items: [{ name: 'PERFUME NOCTURNA 100ML', qty: 1, price: 120 }] },
-  { id: 3, order_number: 1003, customer_name: 'Juan Pérez', customer_phone: '945678912', customer_address: 'Calle Tacna 789', customer_city: 'Arequipa', total: 93, status: 'enviado', created_at: '2026-02-12T09:45:00Z', items: [{ name: 'POLO SUPRA BEIGE', qty: 1, price: 50 }, { name: 'BERMUDAS BAGGY BLANCO', qty: 1, price: 42 }] },
-  { id: 4, order_number: 1004, customer_name: 'Ana Torres', customer_phone: '978123456', customer_address: 'Av. La Marina 321', customer_city: 'Lima', total: 65, status: 'confirmado', created_at: '2026-02-13T16:20:00Z', items: [{ name: 'POLERA SHADOW NEGRA', qty: 1, price: 65 }] },
-  { id: 5, order_number: 1005, customer_name: 'Luis Ramírez', customer_phone: '956789123', customer_address: 'Jr. Puno 654', customer_city: 'Cusco', total: 210, status: 'pendiente', created_at: '2026-02-14T11:10:00Z', items: [{ name: 'PERFUME NOCTURNA 100ML', qty: 1, price: 120 }, { name: 'POLO SUPRA BEIGE', qty: 1, price: 50 }, { name: 'BIVIDI STEALTH BLACK', qty: 1, price: 38 }] },
-  { id: 6, order_number: 1006, customer_name: 'Sofia López', customer_phone: '934567891', customer_address: 'Av. Brasil 987', customer_city: 'Lima', total: 88, status: 'pendiente', created_at: '2026-02-15T08:30:00Z', items: [{ name: 'POLO NOCTURNA ELITE', qty: 1, price: 55 }, { name: 'BIVIDI STEALTH WHITE', qty: 1, price: 38 }] },
-  { id: 7, order_number: 1007, customer_name: 'Diego Vargas', customer_phone: '923456789', customer_address: 'Jr. Huancavelica 159', customer_city: 'Huancayo', total: 48, status: 'pendiente', created_at: '2026-02-15T14:50:00Z', items: [{ name: 'BERMUDAS CARGO NEGRO', qty: 1, price: 48 }] },
-];
+function parseOrderItems(raw) {
+  if (Array.isArray(raw)) return raw;
+  if (raw == null) return [];
+  if (typeof raw === 'string') {
+    try {
+      const p = JSON.parse(raw);
+      return Array.isArray(p) ? p : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+/** Chart.js (CDN UMD) vive en `globalThis`; en módulos ES `Chart` no es un identificador global. */
+function getChartConstructor() {
+  return typeof globalThis !== 'undefined' ? globalThis.Chart : undefined;
+}
+
+function normalizeOrdersForAdmin(rows) {
+  if (!Array.isArray(rows)) return [];
+  return rows.map((o) => ({ ...o, items: parseOrderItems(o.items) }));
+}
+
+function resizeAllAdminCharts() {
+  salesChartInstance?.resize();
+  categoryChartInstance?.resize();
+  monthlyRevenueInstance?.resize();
+  orderStatusInstance?.resize();
+  topProductsInstance?.resize();
+}
+
+/** Abre una ventana imprimible: nota de venta con logo y detalle de ítems (documento informativo, no SUNAT). */
+function printNotaVenta(order) {
+  const logoUrl = `${window.location.origin}/logo-tienda/icono-oficial.png`;
+  const items = parseOrderItems(order.items);
+  const rows = items.map((i) => {
+    const qty = Number(i.qty) || 1;
+    const price = Number(i.price) || 0;
+    const sub = qty * price;
+    return `<tr>
+      <td>${escapeHtml(i.name || 'Ítem')}</td>
+      <td style="text-align:center">${qty}</td>
+      <td style="text-align:right">S/${price.toFixed(2)}</td>
+      <td style="text-align:right">S/${sub.toFixed(2)}</td>
+    </tr>`;
+  }).join('');
+  const computedTotal = items.reduce((s, i) => s + (Number(i.price) || 0) * (Number(i.qty) || 1), 0);
+  const total = Number.parseFloat(order.total) || computedTotal;
+  const num = order.order_number ?? order.id;
+  const dateStr = order.created_at
+    ? new Date(order.created_at).toLocaleString('es-PE', { dateStyle: 'long', timeStyle: 'short' })
+    : '—';
+  const addr = [order.customer_address, order.customer_city].filter(Boolean).join(', ');
+  const html = `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Nota ${num}</title>
+<style>
+  @page { margin: 14mm; }
+  * { box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: #111; font-size: 12px; line-height: 1.45; max-width: 720px; margin: 0 auto; padding: 16px; }
+  .head { display: flex; align-items: flex-start; gap: 16px; border-bottom: 2px solid #111; padding-bottom: 14px; margin-bottom: 16px; }
+  .head img { width: 76px; height: 76px; object-fit: contain; }
+  h1 { font-size: 18px; margin: 0 0 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .tag { color: #444; font-size: 11px; margin: 0 0 6px; }
+  .doc { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #666; margin: 0 0 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+  th, td { padding: 8px 6px; border-bottom: 1px solid #ddd; }
+  th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #555; text-align: left; }
+  th:nth-child(2), td:nth-child(2) { text-align: center; }
+  th:nth-child(3), th:nth-child(4), td:nth-child(3), td:nth-child(4) { text-align: right; }
+  .tot { text-align: right; font-size: 15px; font-weight: 700; margin: 12px 0 0; }
+  .meta { margin: 12px 0; font-size: 11px; color: #333; }
+  .foot { margin-top: 22px; padding-top: 12px; border-top: 1px solid #ccc; font-size: 9px; color: #666; line-height: 1.5; }
+</style></head><body>
+<div class="head">
+  <img src="${logoUrl}" alt="${STORE_BRAND}">
+  <div>
+    <h1>${STORE_BRAND}</h1>
+    <p class="tag">${STORE_TAGLINE}</p>
+    <p class="doc">Nota de venta — documento informativo (no constituye comprobante fiscal SUNAT)</p>
+    <p style="margin:6px 0 0;font-size:11px;"><a href="${STORE_SITE}">${STORE_SITE}</a></p>
+  </div>
+</div>
+<p><strong>Pedido N.º</strong> ${escapeHtml(String(num))} &nbsp;·&nbsp; <strong>Fecha:</strong> ${escapeHtml(dateStr)}</p>
+<div class="meta">
+  <strong>Cliente:</strong> ${escapeHtml(order.customer_name || '—')}<br>
+  <strong>Teléfono:</strong> ${escapeHtml(order.customer_phone || '—')}<br>
+  <strong>Entrega / dirección:</strong> ${escapeHtml(addr || '—')}
+</div>
+<table>
+  <thead><tr><th>Descripción</th><th>Cant.</th><th>P. unit.</th><th>Subtotal</th></tr></thead>
+  <tbody>${rows || '<tr><td colspan="4">Sin detalle de ítems</td></tr>'}</tbody>
+</table>
+<p class="tot">Total: S/${total.toFixed(2)}</p>
+<p style="font-size:11px;margin-top:10px;"><strong>Estado:</strong> ${escapeHtml(order.status || '—')}</p>
+<div class="foot">
+  Gracias por tu compra. Este documento se genera desde la intranet de ${STORE_BRAND} como referencia del pedido. Para factura o boleta según normativa vigente, solicítalo al equipo de ventas.
+</div>
+</body></html>`;
+  // Blob + URL evita pantalla en blanco con about:blank + document.write (Chrome/Edge).
+  // No usar noopener en window.open: en varios navegadores anula la referencia y rompe el documento.
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+  const blobUrl = URL.createObjectURL(blob);
+  const w = window.open(blobUrl, '_blank');
+  if (!w) {
+    URL.revokeObjectURL(blobUrl);
+    showToast('Permite ventanas emergentes para abrir la nota de venta', true);
+    return;
+  }
+  let printed = false;
+  const runPrint = () => {
+    if (printed) return;
+    printed = true;
+    try {
+      w.focus();
+      w.print();
+    } finally {
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
+    }
+  };
+  w.addEventListener('load', runPrint, { once: true });
+  // Respaldo si `load` no dispara (p. ej. algunos navegadores con blob:).
+  setTimeout(runPrint, 750);
+}
+
+function normalizeProductRecord(record) {
+  let images = record.images;
+  if (typeof images === 'string') {
+    try { images = JSON.parse(images); } catch { images = images.split(',').map((s) => s.trim()).filter(Boolean); }
+  }
+  return {
+    ...record,
+    images: Array.isArray(images) ? images : [],
+    drop_name: record.drop_name ?? record.drop ?? null,
+    drop: record.drop ?? record.drop_name ?? null,
+    stock: Number.parseInt(record.stock, 10) || 0,
+    price: Number.parseFloat(record.price) || 0,
+  };
+}
+
+/** URL de imagen para tabla (misma ruta pública que la tienda) */
+function productImageUrl(p) {
+  const main = p.image && String(p.image).trim();
+  if (main) return main;
+  if (p.images?.length) return p.images[0];
+  return '/logo-tienda/icono-oficial.png';
+}
+
+const PLACEHOLDER_IMG = '/logo-tienda/icono-oficial.png';
+
+function initLocalProducts() {
+  const persisted = loadPersistedAdminCatalog();
+  if (persisted?.length) return persisted.map(normalizeProductRecord);
+  return getDefaultAdminCatalog().map(normalizeProductRecord);
+}
+
+function persistLocalCatalogIfNeeded() {
+  if (!isOfflineMode) return;
+  savePersistedAdminCatalog(localProducts);
+}
 
 // ========== DOM ==========
 const loginScreen = document.getElementById('adminLogin');
@@ -58,6 +212,12 @@ const salesBody = document.getElementById('salesBody');
 const ordersList = document.getElementById('ordersList');
 const productForm = document.getElementById('productForm');
 const productSearch = document.getElementById('productSearch');
+const inventorySearch = document.getElementById('inventorySearch');
+const inventoryTableBody = document.getElementById('inventoryTableBody');
+const subscribersBody = document.getElementById('subscribersBody');
+const subscriberCountEl = document.getElementById('subscriberCount');
+const subscribersModeHint = document.getElementById('subscribersModeHint');
+const broadcastEdgeHint = document.getElementById('broadcastEdgeHint');
 const toastEl = document.getElementById('adminToast');
 
 // Modal elements
@@ -68,11 +228,12 @@ const modalCancel = document.getElementById('modalCancel');
 const modalSubmitText = document.getElementById('modalSubmitText');
 const editProductId = document.getElementById('editProductId');
 
-// In-memory store for offline mode
-let localProducts = [...SAMPLE_PRODUCTS];
-let localOrders = [...SAMPLE_ORDERS];
+// In-memory store for offline / demo (persistido en localStorage → misma fuente que la tienda sin Supabase)
+let localProducts = initLocalProducts();
+let localOrders = [];
 let allOrders = [];
 let allProducts = [];
+let newsletterRows = [];
 
 // ========== TOAST ==========
 function showToast(message, isError = false) {
@@ -81,6 +242,184 @@ function showToast(message, isError = false) {
   toastEl.className = 'admin-toast' + (isError ? ' error' : '');
   requestAnimationFrame(() => toastEl.classList.add('show'));
   setTimeout(() => toastEl.classList.remove('show'), 3000);
+}
+
+function setBroadcastHints() {
+  if (broadcastEdgeHint) {
+    broadcastEdgeHint.textContent = NEWSLETTER_BROADCAST_URL
+      ? 'Tenés VITE_NEWSLETTER_BROADCAST_URL: podés enlazar una Edge Function que reciba POST con { subject, body } y el JWT del usuario para enviar con Resend u otro proveedor.'
+      : 'Para envío automático desde servidor, creá una Supabase Edge Function + proveedor de email (Resend, SendGrid) y asigná la URL a VITE_NEWSLETTER_BROADCAST_URL en .env.';
+  }
+}
+
+async function loadNewsletterSubscribers() {
+  if (subscribersModeHint) {
+    if (isOfflineMode) {
+      subscribersModeHint.textContent = 'Modo demo: los suscriptores en la base solo se ven con Supabase conectado y VITE_ADMIN_MODE=production (login real).';
+    } else if (!supabase) {
+      subscribersModeHint.textContent = 'Configura VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en .env.';
+    } else {
+      subscribersModeHint.textContent = '';
+    }
+  }
+
+  if (!subscribersBody) return;
+
+  if (isOfflineMode || !supabase) {
+    newsletterRows = [];
+    subscribersBody.innerHTML = '<tr><td colspan="2" style="color:var(--admin-text-dim);padding:1.25rem;">Conectá Supabase y usá login de admin para listar suscriptores.</td></tr>';
+    if (subscriberCountEl) subscriberCountEl.textContent = '0';
+    return;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('newsletter_subscribers')
+      .select('email, created_at')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    newsletterRows = data || [];
+  } catch (e) {
+    console.error(e);
+    newsletterRows = [];
+    showToast('No se pudieron cargar suscriptores. ¿Sesión de admin y tabla newsletter_subscribers?', true);
+  }
+
+  if (subscriberCountEl) subscriberCountEl.textContent = String(newsletterRows.length);
+  subscribersBody.innerHTML = newsletterRows.length
+    ? newsletterRows.map((r) => `
+    <tr>
+      <td>${escapeHtml(r.email)}</td>
+      <td>${r.created_at ? new Date(r.created_at).toLocaleString('es-PE') : '—'}</td>
+    </tr>`).join('')
+    : '<tr><td colspan="2" style="color:var(--admin-text-dim);padding:1.25rem;">Aún no hay suscriptores.</td></tr>';
+}
+
+function getInventoryProductList() {
+  const q = (inventorySearch?.value || '').toLowerCase().trim();
+  let list = [...allProducts];
+  if (q) list = list.filter((p) => (p.name || '').toLowerCase().includes(q));
+  return list.sort((a, b) => (a.name || '').localeCompare(b.name || '', 'es'));
+}
+
+function renderInventoryPanel() {
+  if (!inventoryTableBody) return;
+  const list = getInventoryProductList();
+  const ph = escapeHtml(PLACEHOLDER_IMG);
+  if (!list.length) {
+    inventoryTableBody.innerHTML = '<tr><td colspan="5" style="color:var(--admin-text-dim);padding:1.25rem;">No hay productos. Agregá uno en <strong>Agregar producto</strong> o <strong>Catálogo</strong>.</td></tr>';
+    return;
+  }
+  inventoryTableBody.innerHTML = list.map((p) => `
+    <tr data-id="${escapeHtml(String(p.id))}">
+      <td>
+        <div class="inv-row-name">
+          <img class="admin-product-thumb inv-thumb" src="${escapeHtml(productImageUrl(p))}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${ph}'">
+          <span>${escapeHtml(p.name)}</span>
+        </div>
+      </td>
+      <td><span class="status-badge status-confirmado">${escapeHtml(p.category)}</span></td>
+      <td><span class="stock-badge ${p.stock <= 5 ? 'low' : ''}">${p.stock}</span></td>
+      <td><input type="number" class="inv-stock-input" min="0" step="1" value="${Number(p.stock) || 0}" aria-label="Nuevo stock"></td>
+      <td><button type="button" class="btn-sm btn-primary inv-save-stock">Guardar</button></td>
+    </tr>
+  `).join('');
+
+  inventoryTableBody.querySelectorAll('.inv-save-stock').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const tr = btn.closest('tr');
+      const id = tr?.dataset.id;
+      const input = tr?.querySelector('.inv-stock-input');
+      if (!id || !input) return;
+      saveProductStock(id, input.value);
+    });
+  });
+}
+
+async function saveProductStock(productId, newStockRaw) {
+  const n = Math.max(0, parseInt(String(newStockRaw), 10) || 0);
+
+  if (!isOfflineMode && supabase) {
+    try {
+      const { error } = await supabase.from('products').update({ stock: n }).eq('id', productId);
+      if (error) {
+        showToast('Error: ' + error.message, true);
+        return;
+      }
+    } catch {
+      showToast('No se pudo guardar el stock', true);
+      return;
+    }
+  } else {
+    const idx = localProducts.findIndex((p) => String(p.id) === String(productId));
+    if (idx >= 0) {
+      localProducts[idx] = { ...localProducts[idx], stock: n };
+      persistLocalCatalogIfNeeded();
+    }
+  }
+
+  showToast('Stock actualizado ✓');
+  await loadProducts();
+  if (document.getElementById('section-inventory')?.classList.contains('active')) renderInventoryPanel();
+}
+
+function splitCsvCells(line) {
+  const delim = line.includes(';') && line.split(';').length > 1 ? ';' : ',';
+  return line.split(delim).map((s) => s.trim().replace(/^"|"$/g, ''));
+}
+
+function parseStockCsv(text) {
+  const raw = String(text).replace(/^\uFEFF/, '');
+  const lines = raw.split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith('#'));
+  if (!lines.length) return { rows: [], error: 'Archivo vacío' };
+  const header = splitCsvCells(lines[0]).map((h) => h.toLowerCase());
+  const idIdx = header.findIndex((h) => h === 'id' || h === 'product_id');
+  const stockIdx = header.findIndex((h) => h === 'stock' || h === 'cantidad' || h === 'qty');
+  if (idIdx < 0 || stockIdx < 0) {
+    return { rows: [], error: 'La primera fila debe tener columnas id y stock (separador , o ;)' };
+  }
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const cells = splitCsvCells(lines[i]);
+    if (cells.length <= Math.max(idIdx, stockIdx)) continue;
+    const id = cells[idIdx];
+    const stock = parseInt(String(cells[stockIdx]), 10);
+    if (!id || Number.isNaN(stock)) continue;
+    rows.push({ id: String(id).trim(), stock: Math.max(0, stock) });
+  }
+  if (!rows.length) return { rows: [], error: 'No hay filas válidas (¿ids y números correctos?)' };
+  return { rows, error: null };
+}
+
+async function applyBulkStockRows(rows) {
+  let ok = 0;
+  let skip = 0;
+  for (const { id, stock } of rows) {
+    if (!isOfflineMode && supabase) {
+      try {
+        const { error } = await supabase.from('products').update({ stock }).eq('id', id);
+        if (error) {
+          skip++;
+          continue;
+        }
+        ok++;
+      } catch {
+        skip++;
+      }
+    } else {
+      const idx = localProducts.findIndex((p) => String(p.id) === String(id));
+      if (idx < 0) {
+        skip++;
+        continue;
+      }
+      localProducts[idx] = { ...localProducts[idx], stock };
+      persistLocalCatalogIfNeeded();
+      ok++;
+    }
+  }
+  showToast(`Stock masivo: ${ok} actualizados${skip ? ` · ${skip} omitidos` : ''}`);
+  await loadProducts();
+  if (document.getElementById('section-inventory')?.classList.contains('active')) renderInventoryPanel();
 }
 
 // ========== DATE DISPLAY ==========
@@ -102,6 +441,11 @@ navBtns.forEach(btn => {
     });
     sidebar?.classList.remove('open');
     document.querySelector('.sidebar-overlay')?.classList.remove('active');
+    if (target === 'inventory') renderInventoryPanel();
+    if (target === 'subscribers') loadNewsletterSubscribers();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => resizeAllAdminCharts());
+    });
   });
 });
 
@@ -122,20 +466,31 @@ if (sidebarToggle && sidebar) {
   });
 }
 
-// ========== LOCAL ADMIN CREDENTIALS ==========
-const LOCAL_ADMINS = [
-  { email: 'richard@nocturna.com', password: 'NocturnaPR2026' },
-  { email: 'patrick@nocturna.com', password: 'NocturnaPR2026' }
-];
-
-let isOfflineMode = false;
-
-function localAuth(email, password) {
-  return LOCAL_ADMINS.find(a => a.email === email && a.password === password) || null;
-}
+let isOfflineMode = IS_DEMO_MODE;
 
 // ========== AUTH ==========
 async function checkAuth() {
+  if (!supabase && !IS_DEMO_MODE) {
+    loginError.textContent = 'Configura VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY para usar intranet.';
+    return;
+  }
+
+  if (IS_DEMO_MODE) {
+    const demoSession = localStorage.getItem('nocturna_admin_demo');
+    if (demoSession) {
+      try {
+        const user = JSON.parse(demoSession);
+        isOfflineMode = true;
+        showDashboard(user);
+        return;
+      } catch {
+        localStorage.removeItem('nocturna_admin_demo');
+      }
+    }
+  }
+
+  if (!supabase) return;
+
   const localSession = localStorage.getItem('nocturna_admin');
   if (localSession) {
     try {
@@ -173,37 +528,44 @@ async function handleLogin(e) {
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
-  if (supabase) {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (!error) {
-        const { data: adminCheck } = await supabase
-          .from('admin_emails')
-          .select('email')
-          .eq('email', email)
-          .single();
-
-        if (!adminCheck) {
-          loginError.textContent = 'No tienes permisos de administrador.';
-          await supabase.auth.signOut();
-          return;
-        }
-        showDashboard(data.user);
-        return;
-      }
-    } catch (err) {
-      console.warn('Supabase no disponible, usando login local...');
+  if (IS_DEMO_MODE) {
+    if (email === DEMO_ADMIN_EMAIL && password === DEMO_ADMIN_PASSWORD) {
+      isOfflineMode = true;
+      const user = { email };
+      localStorage.setItem('nocturna_admin_demo', JSON.stringify(user));
+      showDashboard(user);
+      return;
     }
+    loginError.textContent = 'Credenciales demo incorrectas.';
+    return;
   }
 
-  const admin = localAuth(email, password);
-  if (admin) {
-    isOfflineMode = true;
-    const user = { email: admin.email };
-    localStorage.setItem('nocturna_admin', JSON.stringify(user));
-    showDashboard(user);
-  } else {
+  if (!supabase) {
+    loginError.textContent = 'Intranet no configurada. Falta conexión segura.';
+    return;
+  }
+
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (!error) {
+      const { data: adminCheck } = await supabase
+        .from('admin_emails')
+        .select('email')
+        .eq('email', email)
+        .single();
+
+      if (!adminCheck) {
+        loginError.textContent = 'No tienes permisos de administrador.';
+        await supabase.auth.signOut();
+        return;
+      }
+      showDashboard(data.user);
+      return;
+    }
     loginError.textContent = 'Email o contraseña incorrectos.';
+  } catch (err) {
+    console.error('Login error:', err);
+    loginError.textContent = 'No se pudo iniciar sesión. Revisa la configuración.';
   }
 }
 
@@ -219,15 +581,18 @@ function showDashboard(user) {
 
   loadProducts();
   loadOrders();
+  loadNewsletterSubscribers();
+  setBroadcastHints();
 }
 
 loginForm?.addEventListener('submit', handleLogin);
 logoutBtn?.addEventListener('click', async () => {
   localStorage.removeItem('nocturna_admin');
+  localStorage.removeItem('nocturna_admin_demo');
   if (supabase) {
     try { await supabase.auth.signOut(); } catch { }
   }
-  isOfflineMode = false;
+  isOfflineMode = IS_DEMO_MODE;
   dashboardScreen.style.display = 'none';
   loginScreen.style.display = '';
   loginForm?.reset();
@@ -237,10 +602,46 @@ logoutBtn?.addEventListener('click', async () => {
 checkAuth();
 
 // ========== PRODUCT MODAL ==========
+function resetProductImageUploadUi() {
+  const mainFile = document.getElementById('pImageFile');
+  const galFiles = document.getElementById('pImagesFiles');
+  const btnMain = document.getElementById('btnUploadMainImage');
+  const btnGal = document.getElementById('btnUploadGalleryImages');
+  const box = document.getElementById('pImagePreviewBox');
+  const prev = document.getElementById('pImagePreview');
+  if (mainFile) mainFile.value = '';
+  if (galFiles) galFiles.value = '';
+  if (btnMain) {
+    btnMain.disabled = true;
+    btnMain.textContent = 'Subir a Supabase';
+  }
+  if (btnGal) {
+    btnGal.disabled = true;
+    btnGal.textContent = 'Subir selección';
+  }
+  if (box) box.hidden = true;
+  if (prev) {
+    prev.removeAttribute('src');
+    prev.alt = '';
+  }
+}
+
+function setImageUploadHints() {
+  const el = document.getElementById('pImageUploadHint');
+  if (!el) return;
+  if (!supabase) {
+    el.textContent = 'Sin Supabase en .env: solo puedes pegar URL o ruta. Configura VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY para subir archivos.';
+  } else {
+    el.textContent = `Bucket «${STORAGE_BUCKET}». Crea el bucket y políticas (ver supabase-storage-bucket.sql). Si la subida falla por permisos, inicia sesión con Supabase Auth (intranet en producción) o añade la política de desarrollo para anon.`;
+  }
+}
+
 function openModal(mode = 'add', product = null) {
   if (!modalOverlay) return;
   modalOverlay.classList.add('open');
   editProductId.value = '';
+  resetProductImageUploadUi();
+  setImageUploadHints();
 
   if (mode === 'edit' && product) {
     modalTitle.textContent = 'Editar producto';
@@ -250,14 +651,24 @@ function openModal(mode = 'add', product = null) {
     document.getElementById('pPrice').value = product.price || '';
     document.getElementById('pStock').value = product.stock || '';
     document.getElementById('pCategory').value = product.category || 'polo';
-    document.getElementById('pDrop').value = product.drop || '';
+    document.getElementById('pDrop').value = product.drop_name || product.drop || '';
     document.getElementById('pImage').value = product.image || '';
     document.getElementById('pImages').value = (product.images || []).join(', ');
     document.getElementById('pNewItem').checked = product.new_item || false;
+    const url = productImageUrl(product);
+    const prev = document.getElementById('pImagePreview');
+    const box = document.getElementById('pImagePreviewBox');
+    if (url && prev && box) {
+      prev.src = url;
+      prev.alt = product.name || '';
+      box.hidden = false;
+    }
   } else {
     modalTitle.textContent = 'Agregar producto';
     modalSubmitText.textContent = 'GUARDAR';
     productForm?.reset();
+    resetProductImageUploadUi();
+    setImageUploadHints();
   }
 }
 
@@ -265,12 +676,106 @@ function closeModal() {
   modalOverlay?.classList.remove('open');
   productForm?.reset();
   editProductId.value = '';
+  resetProductImageUploadUi();
 }
 
 document.getElementById('btnOpenAddProduct')?.addEventListener('click', () => openModal('add'));
+document.getElementById('btnSectionAddProduct')?.addEventListener('click', () => openModal('add'));
+document.getElementById('btnDashboardAddProduct')?.addEventListener('click', () => {
+  document.querySelector('.admin-nav button[data-section="add-product"]')?.click();
+  openModal('add');
+});
+document.getElementById('btnDashboardStock')?.addEventListener('click', () => {
+  document.querySelector('.admin-nav button[data-section="inventory"]')?.click();
+});
 modalClose?.addEventListener('click', closeModal);
 modalCancel?.addEventListener('click', closeModal);
 modalOverlay?.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+
+const pImageFileEl = document.getElementById('pImageFile');
+const pImagesFilesEl = document.getElementById('pImagesFiles');
+const btnUploadMainImage = document.getElementById('btnUploadMainImage');
+const btnUploadGalleryImages = document.getElementById('btnUploadGalleryImages');
+
+pImageFileEl?.addEventListener('change', () => {
+  if (btnUploadMainImage) btnUploadMainImage.disabled = !pImageFileEl.files?.length || !supabase;
+});
+
+pImagesFilesEl?.addEventListener('change', () => {
+  if (btnUploadGalleryImages) btnUploadGalleryImages.disabled = !pImagesFilesEl.files?.length || !supabase;
+});
+
+btnUploadMainImage?.addEventListener('click', async () => {
+  const file = pImageFileEl?.files?.[0];
+  if (!supabase) {
+    showToast('Configura VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en .env', true);
+    return;
+  }
+  if (!file) {
+    showToast('Elige un archivo de imagen', true);
+    return;
+  }
+  btnUploadMainImage.disabled = true;
+  const prevLabel = btnUploadMainImage.textContent;
+  btnUploadMainImage.textContent = 'Subiendo...';
+  const { url, error } = await uploadCatalogImage(supabase, file, 'catalog');
+  btnUploadMainImage.textContent = prevLabel;
+  btnUploadMainImage.disabled = !pImageFileEl.files?.length || !supabase;
+  if (error) {
+    const msg = error.message || String(error);
+    const hint = /row-level security|RLS|Unauthorized|permission|policy/i.test(msg)
+      ? `${msg} — Ajusta políticas del bucket (supabase-storage-bucket.sql) o usa sesión Supabase Auth.`
+      : msg;
+    showToast(hint, true);
+    return;
+  }
+  const pImageInput = document.getElementById('pImage');
+  if (pImageInput && url) pImageInput.value = url;
+  const prev = document.getElementById('pImagePreview');
+  const box = document.getElementById('pImagePreviewBox');
+  if (prev && box && url) {
+    prev.src = url;
+    prev.alt = 'Vista previa';
+    box.hidden = false;
+  }
+  showToast('Imagen principal subida ✓');
+});
+
+btnUploadGalleryImages?.addEventListener('click', async () => {
+  const files = [...(pImagesFilesEl?.files || [])];
+  if (!supabase) {
+    showToast('Configura Supabase en .env', true);
+    return;
+  }
+  if (!files.length) {
+    showToast('Selecciona una o más imágenes', true);
+    return;
+  }
+  btnUploadGalleryImages.disabled = true;
+  const prevLabel = btnUploadGalleryImages.textContent;
+  btnUploadGalleryImages.textContent = 'Subiendo...';
+  const urls = [];
+  for (const f of files) {
+    const { url, error } = await uploadCatalogImage(supabase, f, 'catalog/gallery');
+    if (error) {
+      btnUploadGalleryImages.textContent = prevLabel;
+      btnUploadGalleryImages.disabled = !pImagesFilesEl.files?.length || !supabase;
+      const msg = error.message || String(error);
+      showToast(/RLS|row-level security/i.test(msg) ? `${msg} — Revisa políticas de Storage.` : msg, true);
+      return;
+    }
+    if (url) urls.push(url);
+  }
+  const ta = document.getElementById('pImages');
+  if (ta) {
+    const existing = ta.value.trim() ? ta.value.split(',').map((s) => s.trim()).filter(Boolean) : [];
+    ta.value = [...existing, ...urls].join(', ');
+  }
+  if (pImagesFilesEl) pImagesFilesEl.value = '';
+  btnUploadGalleryImages.textContent = prevLabel;
+  btnUploadGalleryImages.disabled = true;
+  showToast(`${urls.length} imagen(es) añadidas a la galería ✓`);
+});
 
 // ========== PRODUCTS ==========
 async function loadProducts() {
@@ -284,22 +789,27 @@ async function loadProducts() {
     } catch { }
   }
   if (!data) data = localProducts;
-  allProducts = data;
+  allProducts = data.map(normalizeProductRecord);
 
-  renderProducts(data);
+  renderProducts(allProducts);
+  if (document.getElementById('section-inventory')?.classList.contains('active')) renderInventoryPanel();
 }
 
 function renderProducts(data) {
   if (!productsBody) return;
+  const ph = escapeHtml(PLACEHOLDER_IMG);
   productsBody.innerHTML = data.map(p => `
     <tr>
-      <td><img src="${escapeHtml(p.image)}" alt="" onerror="this.src='/favicon.svg'" loading="lazy"></td>
+      <td class="admin-table-img-cell">
+        <img class="admin-product-thumb" src="${escapeHtml(productImageUrl(p))}" alt="" loading="lazy"
+          onerror="this.onerror=null;this.src='${ph}'">
+      </td>
       <td><strong>${escapeHtml(p.name)}</strong></td>
-      <td style="font-weight:600;color:#fff;">S/${parseFloat(p.price).toFixed(2)}</td>
+      <td style="font-weight:600;color:#fff;">S/${(Number.parseFloat(p.price) || 0).toFixed(2)}</td>
       <td>
         <span class="stock-badge ${p.stock <= 5 ? 'low' : ''}">${p.stock}</span>
       </td>
-      <td><span class="status-badge status-${p.category === 'polo' ? 'confirmado' : p.category === 'perfume' ? 'enviado' : p.category === 'short' ? 'pendiente' : 'entregado'}">${escapeHtml(p.category)}</span></td>
+      <td><span class="status-badge status-confirmado">${escapeHtml(p.category)}</span></td>
       <td>
         <button class="btn-sm btn-edit" data-id="${p.id}" title="Editar">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -332,6 +842,7 @@ function renderProducts(data) {
       }
 
       localProducts = localProducts.filter(p => String(p.id) !== btn.dataset.id);
+      persistLocalCatalogIfNeeded();
       showToast(`"${btn.dataset.name}" eliminado`);
       loadProducts();
     });
@@ -345,19 +856,102 @@ productSearch?.addEventListener('input', () => {
   renderProducts(filtered);
 });
 
+inventorySearch?.addEventListener('input', () => renderInventoryPanel());
+
+document.getElementById('btnSubscribersRefresh')?.addEventListener('click', () => loadNewsletterSubscribers());
+
+document.getElementById('btnCopyEmailsList')?.addEventListener('click', async () => {
+  if (!newsletterRows.length) {
+    showToast('No hay emails para copiar', true);
+    return;
+  }
+  const text = newsletterRows.map((r) => r.email).join(', ');
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast('Emails copiados al portapapeles');
+  } catch {
+    showToast('No se pudo copiar (permisos del navegador)', true);
+  }
+});
+
+document.getElementById('btnExportSubscribersCsv')?.addEventListener('click', () => {
+  if (!newsletterRows.length) {
+    showToast('No hay datos para exportar', true);
+    return;
+  }
+  const header = 'email,created_at\n';
+  const rows = newsletterRows.map((r) => `"${String(r.email).replace(/"/g, '""')}",${r.created_at || ''}`).join('\n');
+  const blob = new Blob([`\ufeff${header}${rows}`], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `nocturna-suscriptores-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('CSV descargado ✓');
+});
+
+document.getElementById('btnCopyBroadcastDraft')?.addEventListener('click', async () => {
+  const sub = document.getElementById('broadcastSubject')?.value || '';
+  const body = document.getElementById('broadcastBody')?.value || '';
+  const text = `Asunto: ${sub}\n\n${body}`;
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast('Borrador copiado');
+  } catch {
+    showToast('No se pudo copiar', true);
+  }
+});
+
+const stockCsvInput = document.getElementById('stockCsvInput');
+const stockCsvFileName = document.getElementById('stockCsvFileName');
+stockCsvInput?.addEventListener('change', () => {
+  const f = stockCsvInput.files?.[0];
+  if (stockCsvFileName) stockCsvFileName.textContent = f ? `Archivo: ${f.name}` : '';
+});
+
+document.getElementById('btnApplyStockCsv')?.addEventListener('click', async () => {
+  const file = stockCsvInput?.files?.[0];
+  if (!file) {
+    showToast('Elegí un archivo CSV', true);
+    return;
+  }
+  let text;
+  try {
+    text = await file.text();
+  } catch {
+    showToast('No se pudo leer el archivo', true);
+    return;
+  }
+  const { rows, error } = parseStockCsv(text);
+  if (error) {
+    showToast(error, true);
+    return;
+  }
+  await applyBulkStockRows(rows);
+});
+
 // ========== ADD / EDIT PRODUCT ==========
 productForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = editProductId.value;
+  const imagesList = document.getElementById('pImages').value
+    ? document.getElementById('pImages').value.split(',').map((s) => s.trim()).filter(Boolean)
+    : [];
+  const imageUrl = document.getElementById('pImage').value.trim();
+  if (!imageUrl) {
+    showToast('Agrega imagen principal: súbela a Supabase o pega la URL / ruta', true);
+    return;
+  }
+
   const product = {
     name: document.getElementById('pName').value,
     price: parseFloat(document.getElementById('pPrice').value),
-    stock: parseInt(document.getElementById('pStock').value),
+    stock: parseInt(document.getElementById('pStock').value, 10),
     category: document.getElementById('pCategory').value,
-    image: document.getElementById('pImage').value,
-    drop: document.getElementById('pDrop').value || null,
+    image: imageUrl,
+    drop_name: document.getElementById('pDrop').value || null,
     new_item: document.getElementById('pNewItem').checked,
-    images: document.getElementById('pImages').value ? document.getElementById('pImages').value.split(',').map(s => s.trim()) : null
+    images: imagesList.length ? imagesList : [],
   };
 
   if (id) {
@@ -369,7 +963,7 @@ productForm?.addEventListener('submit', async (e) => {
       } catch { }
     }
     const idx = localProducts.findIndex(p => String(p.id) === id);
-    if (idx >= 0) localProducts[idx] = { ...localProducts[idx], ...product };
+    if (idx >= 0) localProducts[idx] = normalizeProductRecord({ ...localProducts[idx], ...product });
     showToast(`"${product.name}" actualizado ✓`);
   } else {
     // Add mode
@@ -380,12 +974,13 @@ productForm?.addEventListener('submit', async (e) => {
       } catch { }
     }
     product.id = Date.now();
-    localProducts.push(product);
+    localProducts.push(normalizeProductRecord(product));
     showToast(`"${product.name}" agregado ✓`);
   }
 
   closeModal();
   loadProducts();
+  persistLocalCatalogIfNeeded();
 });
 
 // ========== ORDERS ==========
@@ -398,13 +993,17 @@ async function loadOrders() {
     } catch { }
   }
   if (!data) data = localOrders;
-  allOrders = data;
+  allOrders = normalizeOrdersForAdmin(data);
 
-  updateDashboardStats(data);
-  renderSalesTable(data);
-  renderOrdersList(data);
-  renderCharts(data);
-  renderAnalytics(data);
+  updateDashboardStats(allOrders);
+  renderSalesTable(allOrders);
+  renderOrdersList(allOrders);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      renderCharts(allOrders);
+      renderAnalytics(allOrders);
+    });
+  });
 }
 
 function renderSalesTable(data) {
@@ -424,14 +1023,19 @@ function renderOrdersList(data, filter = 'all') {
   if (!ordersList) return;
   const filtered = filter === 'all' ? data : data.filter(o => o.status === filter);
 
-  ordersList.innerHTML = filtered.length ? filtered.map(o => `
+  ordersList.innerHTML = filtered.length ? filtered.map((o) => {
+    const lineItems = parseOrderItems(o.items);
+    const itemsLine = lineItems.length
+      ? `<div class="order-meta" style="margin-top:0.35rem;">📦 ${lineItems.map(i => `${i.name} x${i.qty}`).join(', ')}</div>`
+      : '';
+    return `
     <div class="order-card" data-id="${o.id}">
       <div class="order-card-top">
         <div>
           <h4>Pedido #${o.order_number} — ${escapeHtml(o.customer_name)}</h4>
           <div class="order-meta">📱 ${escapeHtml(o.customer_phone)} | 📍 ${escapeHtml(o.customer_address)}, ${escapeHtml(o.customer_city)}</div>
           <div class="order-meta">💰 <strong>S/${parseFloat(o.total).toFixed(2)}</strong> | 📅 ${new Date(o.created_at).toLocaleString('es-PE')}</div>
-          ${o.items ? `<div class="order-meta" style="margin-top:0.35rem;">📦 ${o.items.map(i => `${i.name} x${i.qty}`).join(', ')}</div>` : ''}
+          ${itemsLine}
         </div>
         <select class="order-status" data-id="${o.id}">
           <option value="pendiente" ${o.status === 'pendiente' ? 'selected' : ''}>Pendiente</option>
@@ -440,8 +1044,19 @@ function renderOrdersList(data, filter = 'all') {
           <option value="entregado" ${o.status === 'entregado' ? 'selected' : ''}>Entregado</option>
         </select>
       </div>
+      <div class="order-card-actions">
+        <button type="button" class="btn-nota-venta" data-order-id="${escapeHtml(String(o.id))}">Nota de venta</button>
+      </div>
     </div>
-  `).join('') : '<p style="color:var(--admin-text-dim);text-align:center;padding:2rem;">No hay pedidos con este filtro.</p>';
+  `;
+  }).join('') : '<p style="color:var(--admin-text-dim);text-align:center;padding:2rem;">No hay pedidos con este filtro.</p>';
+
+  ordersList.querySelectorAll('.btn-nota-venta').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const order = allOrders.find((o) => String(o.id) === btn.dataset.orderId);
+      if (order) printNotaVenta(order);
+    });
+  });
 
   ordersList.querySelectorAll('.order-status').forEach(sel => {
     sel.addEventListener('change', async () => {
@@ -490,7 +1105,8 @@ let orderStatusInstance = null;
 let topProductsInstance = null;
 
 function renderCharts(orders) {
-  if (typeof Chart === 'undefined') return;
+  const Chart = getChartConstructor();
+  if (!Chart) return;
 
   // --- Sales last 7 days (line chart on dashboard) ---
   const salesCtx = document.getElementById('salesChart')?.getContext('2d');
@@ -500,7 +1116,7 @@ function renderCharts(orders) {
       const d = new Date(); d.setDate(d.getDate() - i);
       const key = d.toISOString().slice(0, 10);
       const label = d.toLocaleDateString('es-PE', { weekday: 'short', day: 'numeric' });
-      const total = orders.filter(o => o.created_at.slice(0, 10) === key).reduce((s, o) => s + (parseFloat(o.total) || 0), 0);
+      const total = orders.filter(o => (o.created_at || '').slice(0, 10) === key).reduce((s, o) => s + (parseFloat(o.total) || 0), 0);
       last7.push({ label, total });
     }
     if (salesChartInstance) salesChartInstance.destroy();
@@ -553,21 +1169,23 @@ function renderCharts(orders) {
   const catCtx = document.getElementById('categoryChart')?.getContext('2d');
   if (catCtx) {
     const categories = {};
-    orders.forEach(o => {
-      if (o.items) {
-        o.items.forEach(item => {
-          const cat = item.name?.toLowerCase().includes('polo') ? 'Polos' :
-            item.name?.toLowerCase().includes('bividi') ? 'Bividis' :
-              item.name?.toLowerCase().includes('bermudas') ? 'Bermudas' :
-                item.name?.toLowerCase().includes('polera') ? 'Poleras' :
-                  item.name?.toLowerCase().includes('perfume') ? 'Perfumes' : 'Otros';
-          categories[cat] = (categories[cat] || 0) + (item.price * (item.qty || 1));
-        });
-      }
+    orders.forEach((o) => {
+      parseOrderItems(o.items).forEach((item) => {
+        const cat = item.name?.toLowerCase().includes('polo') ? 'Polos' :
+          item.name?.toLowerCase().includes('bividi') ? 'Bividis' :
+            item.name?.toLowerCase().includes('bermudas') ? 'Bermudas' :
+              item.name?.toLowerCase().includes('polera') ? 'Poleras' :
+                item.name?.toLowerCase().includes('perfume') ? 'Perfumes' : 'Otros';
+        categories[cat] = (categories[cat] || 0) + (Number(item.price) * (item.qty || 1));
+      });
     });
-    const catLabels = Object.keys(categories);
-    const catData = Object.values(categories);
+    let catLabels = Object.keys(categories);
+    let catData = Object.values(categories);
     const catColors = ['#ff003c', '#00f0ff', '#f59e0b', '#10b981', '#8b5cf6', '#3b82f6'];
+    if (catLabels.length === 0) {
+      catLabels = ['Sin datos por categoría'];
+      catData = [1];
+    }
 
     if (categoryChartInstance) categoryChartInstance.destroy();
     categoryChartInstance = new Chart(catCtx, {
@@ -576,7 +1194,7 @@ function renderCharts(orders) {
         labels: catLabels,
         datasets: [{
           data: catData,
-          backgroundColor: catColors.slice(0, catLabels.length),
+          backgroundColor: catLabels[0] === 'Sin datos por categoría' ? ['#475569'] : catColors.slice(0, catLabels.length),
           borderColor: '#16161f',
           borderWidth: 3,
           hoverOffset: 6
@@ -596,8 +1214,12 @@ function renderCharts(orders) {
             bodyColor: '#e2e8f0',
             borderColor: 'rgba(255,255,255,0.1)',
             borderWidth: 1,
-            callbacks: { label: ctx => ` ${ctx.label}: S/${ctx.parsed.toFixed(2)}` }
-          }
+            callbacks: {
+              label: (ctx) => (ctx.label === 'Sin datos por categoría'
+                ? ' Sin ventas clasificadas aún'
+                : ` ${ctx.label}: S/${ctx.parsed.toFixed(2)}`),
+            },
+          },
         },
         cutout: '65%'
       }
@@ -607,7 +1229,8 @@ function renderCharts(orders) {
 
 // ========== ANALYTICS ==========
 function renderAnalytics(orders) {
-  if (typeof Chart === 'undefined') return;
+  const Chart = getChartConstructor();
+  if (!Chart) return;
 
   // KPIs
   const avgTicket = orders.length ? orders.reduce((s, o) => s + parseFloat(o.total), 0) / orders.length : 0;
@@ -682,8 +1305,9 @@ function renderAnalytics(orders) {
   const osCtx = document.getElementById('orderStatusChart')?.getContext('2d');
   if (osCtx) {
     const statuses = { Pendiente: 0, Confirmado: 0, Enviado: 0, Entregado: 0 };
-    orders.forEach(o => {
-      const s = o.status.charAt(0).toUpperCase() + o.status.slice(1);
+    orders.forEach((o) => {
+      const raw = o.status || 'pendiente';
+      const s = raw.charAt(0).toUpperCase() + raw.slice(1);
       statuses[s] = (statuses[s] || 0) + 1;
     });
 
@@ -717,12 +1341,10 @@ function renderAnalytics(orders) {
   const tpCtx = document.getElementById('topProductsChart')?.getContext('2d');
   if (tpCtx) {
     const productSales = {};
-    orders.forEach(o => {
-      if (o.items) {
-        o.items.forEach(i => {
-          productSales[i.name] = (productSales[i.name] || 0) + (i.price * (i.qty || 1));
-        });
-      }
+    orders.forEach((o) => {
+      parseOrderItems(o.items).forEach((i) => {
+        productSales[i.name] = (productSales[i.name] || 0) + (Number(i.price) * (i.qty || 1));
+      });
     });
     const sorted = Object.entries(productSales).sort((a, b) => b[1] - a[1]).slice(0, 6);
     const tpLabels = sorted.map(s => s[0].length > 20 ? s[0].slice(0, 20) + '…' : s[0]);

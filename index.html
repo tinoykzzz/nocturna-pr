@@ -3,11 +3,11 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="apple-touch-icon" href="/logo-tienda/icono-oficial.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/logo-tienda/icono-oficial.png?v=1" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/logo-tienda/icono-oficial.png?v=1" />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#ff003c" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>NOCTURNA PR | Urban Machine - Premium Streetwear</title>
   <meta name="description"
     content="Colección exclusiva de streetwear inspirada en motorsport y cultura nocturna. Drops limitados, calidad premium. Polos, Bermudas Baggy, Bividis y Perfumes.">
@@ -36,7 +36,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=League+Spartan:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
 </head>
 
@@ -148,6 +148,7 @@
           </svg>
         </a>
       </div>
+      <a href="/admin.html" class="mobile-menu-staff-link" aria-label="Acceso administración tienda">Equipo</a>
     </div>
   </div>
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
@@ -170,19 +171,14 @@
         <div class="hero-overlay"></div>
         <div class="hero-vignette"></div>
         <div class="hero-noise"></div>
-        <div class="car-indicators">
-          <span class="car-dot active" data-index="0"></span>
-          <span class="car-dot" data-index="1"></span>
-          <span class="car-dot" data-index="2"></span>
-          <span class="car-dot" data-index="3"></span>
-          <span class="car-dot" data-index="4"></span>
-          <span class="car-dot" data-index="5"></span>
-          <span class="car-dot" data-index="6"></span>
-          <span class="car-dot" data-index="7"></span>
-        </div>
-        <div class="car-name-display">
-          <span class="car-year">R34</span>
-          <span class="car-model">SKYLINE GT-R</span>
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="car-product-float">
+          <span class="car-vehicle-hint">R34 · SKYLINE GT-R</span>
+          <div class="car-product-row">
+            <span class="car-polo-name">GODZILLA GTR</span>
+            <span class="car-polo-price">S/50</span>
+          </div>
+          <a href="#polos" class="car-polo-cta">Ver polo en colección</a>
         </div>
       </div>
 
@@ -207,13 +203,13 @@
         </h1>
 
         <p class="hero-desc">
-          Siluetas nocturnas, motorsport y gráfica cruda.<br>
-          <strong>Una colección creada entre luces rojas y asfalto.</strong>
+          Streetwear nocturno con ADN motorsport y gráfica cruda.<br>
+          <strong>Ediciones limitadas diseñadas para destacar en la calle.</strong>
         </p>
 
         <div class="cta-group">
-          <a href="#polos" class="btn-primary glitch-btn" data-text="EXPLORAR DROP">
-            <span>EXPLORAR DROP</span>
+          <a href="#polos" class="btn-primary glitch-btn" data-text="VER COLECCIÓN">
+            <span>VER COLECCIÓN</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
@@ -250,8 +246,9 @@
     <!-- FEATURED PRODUCTS CAROUSEL -->
     <section class="featured-strip">
       <button class="featured-carousel-btn featured-prev" id="featuredPrev" aria-label="Anterior">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M15 18l-6-6 6-6" />
+        <svg class="featured-carousel-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15.75 19.5 8.25 12l7.5-7.5" />
         </svg>
       </button>
       <div class="featured-strip-inner" id="featuredCarousel">
@@ -298,8 +295,9 @@
         </div>
       </div>
       <button class="featured-carousel-btn featured-next" id="featuredNext" aria-label="Siguiente">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M9 18l6-6 6 6" />
+        <svg class="featured-carousel-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M8.25 4.5 15.75 12l-7.5 7.5" />
         </svg>
       </button>
       <div class="featured-dots" id="featuredDots">
@@ -339,23 +337,50 @@
       </div>
     </section>
 
-    <!-- FEATURED CARS BANNER -->
-    <section class="cars-banner">
+    <!-- FEATURED CARS BANNER — marquee infinito (dos grupos idénticos para bucle sin saltos) -->
+    <section class="cars-banner" aria-label="Motorsport culture">
+      <div class="cars-banner-glow" aria-hidden="true"></div>
       <div class="cars-track">
-        <img src="/header-cars/Nissan Silvia S15.png" alt="Nissan Silvia" loading="lazy">
-        <img src="/header-cars/Mazda RX-7.png" alt="Mazda RX-7" loading="lazy">
-        <img src="/header-cars/Nissan Skyline GT-R R34.png" alt="Nissan 350" loading="lazy">
-        <img src="/header-cars/Ford Mustang 1969.png" alt="Ford Mustang" loading="lazy">
-        <img src="/header-cars/Mitsubishi Eclipse.png" alt="Mitsubishi Lancer" loading="lazy">
-        <img src="/header-cars/Mazda RX-7.png" alt="Mazda RX8" loading="lazy">
-        <img src="/header-cars/Chevrolet Montecarlo.png" alt="Chevrolet Montecarlo" loading="lazy">
-        <!-- Duplicate for seamless loop -->
-        <img src="/header-cars/Nissan Silvia S15.png" alt="Nissan Silvia" loading="lazy">
-        <img src="/header-cars/Mazda RX-7.png" alt="Mazda RX-7" loading="lazy">
-        <img src="/header-cars/Nissan Skyline GT-R R34.png" alt="Nissan 350" loading="lazy">
+        <div class="cars-track-group">
+          <img src="/header-cars/Nissan Skyline GT-R R34.png" alt="Nissan Skyline GT-R R34" width="320" height="160"
+            loading="lazy" decoding="async">
+          <img src="/header-cars/Supra MKIV (1994).png" alt="Toyota Supra MKIV" width="320" height="160" loading="lazy"
+            decoding="async">
+          <img src="/header-cars/Mazda RX-7.png" alt="Mazda RX-7" width="320" height="160" loading="lazy"
+            decoding="async">
+          <img src="/header-cars/Nissan Silvia S15.png" alt="Nissan Silvia S15" width="320" height="160" loading="lazy"
+            decoding="async">
+          <img src="/header-cars/Dodge Charger.png" alt="Dodge Charger" width="320" height="160" loading="lazy"
+            decoding="async">
+          <img src="/header-cars/Ford Mustang 1969.png" alt="Ford Mustang 1969" width="320" height="160" loading="lazy"
+            decoding="async">
+          <img src="/header-cars/Mitsubishi Eclipse.png" alt="Mitsubishi Eclipse" width="320" height="160" loading="lazy"
+            decoding="async">
+          <img src="/header-cars/Chevrolet Montecarlo.png" alt="Chevrolet Monte Carlo" width="320" height="160"
+            loading="lazy" decoding="async">
+        </div>
+        <div class="cars-track-group" aria-hidden="true">
+          <img src="/header-cars/Nissan Skyline GT-R R34.png" alt="" width="320" height="160" loading="lazy"
+            decoding="async">
+          <img src="/header-cars/Supra MKIV (1994).png" alt="" width="320" height="160" loading="lazy" decoding="async">
+          <img src="/header-cars/Mazda RX-7.png" alt="" width="320" height="160" loading="lazy" decoding="async">
+          <img src="/header-cars/Nissan Silvia S15.png" alt="" width="320" height="160" loading="lazy"
+            decoding="async">
+          <img src="/header-cars/Dodge Charger.png" alt="" width="320" height="160" loading="lazy" decoding="async">
+          <img src="/header-cars/Ford Mustang 1969.png" alt="" width="320" height="160" loading="lazy"
+            decoding="async">
+          <img src="/header-cars/Mitsubishi Eclipse.png" alt="" width="320" height="160" loading="lazy"
+            decoding="async">
+          <img src="/header-cars/Chevrolet Montecarlo.png" alt="" width="320" height="160" loading="lazy"
+            decoding="async">
+        </div>
       </div>
+      <div class="cars-banner-line" aria-hidden="true"></div>
       <div class="cars-banner-overlay">
-        <h3>MOTORSPORT <span>CULTURE</span></h3>
+        <div class="cars-banner-overlay-inner">
+          <p class="cars-banner-kicker">NOCTURNA GARAGE</p>
+          <h3>MOTORSPORT <span>CULTURE</span></h3>
+        </div>
       </div>
     </section>
 
@@ -364,11 +389,19 @@
       <div class="section-header reveal-up">
         <div class="section-label">NEW SEASON</div>
         <h2>FRESH <span class="text-gradient">DROPS</span></h2>
-        <p class="section-desc">Lo último en streetwear. Bividis y Shorts para el verano 2026.</p>
+        <p class="section-desc">Novedades de temporada: Bividis y Bermudas Baggy en edición limitada.</p>
       </div>
 
-      <div class="fresh-drops-wrapper reveal-up">
-        <div class="fresh-drops-track">
+      <div class="fresh-drops-carousel reveal-up">
+        <button type="button" class="fresh-drops-nav fresh-drops-prev" id="freshDropsPrev"
+          aria-label="Ver productos anteriores">
+          <svg class="fresh-drops-nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15.75 19.5 8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+        <div class="fresh-drops-wrapper" id="freshDropsScroller">
+          <div class="fresh-drops-track">
           <!-- Bividi Blanco -->
           <div class="drop-card">
             <div class="drop-image">
@@ -452,7 +485,15 @@
               <span class="price">S/42.00</span>
             </div>
           </div>
+          </div>
         </div>
+        <button type="button" class="fresh-drops-nav fresh-drops-next" id="freshDropsNext"
+          aria-label="Ver más productos">
+          <svg class="fresh-drops-nav-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8.25 4.5 15.75 12l-7.5 7.5" />
+          </svg>
+        </button>
       </div>
     </section>
 
@@ -461,29 +502,22 @@
       <div class="section-header reveal-up">
         <div class="section-label">01</div>
         <h2>COLECCIÓN <span class="text-gradient">2026</span></h2>
-        <p class="section-desc">Diseños exclusivos inspirados en la cultura motorsport japonesa</p>
+        <p class="section-desc">Diseños exclusivos inspirados en la cultura motorsport japonesa.</p>
       </div>
 
-      <div class="products-filter-bar">
-        <div class="products-filter-row">
-          <div class="products-search">
-            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-            <input type="search" id="productsSearch" class="search-input" placeholder="Buscar productos..."
-              autocomplete="off">
-          </div>
-          <div class="products-filter">
-            <button class="filter-btn active" data-filter="all"><span>TODOS</span></button>
-            <button class="filter-btn" data-filter="polo"><span>POLOS</span></button>
-            <button class="filter-btn" data-filter="bividi"><span>BIVIDIS</span></button>
-            <button class="filter-btn" data-filter="short"><span>BERMUDAS BAGGY</span></button>
-            <button class="filter-btn" data-filter="polera"><span>POLERAS</span></button>
-          </div>
+      <div class="products-toolbar">
+        <div class="products-search">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input type="search" id="productsSearch" class="search-input" placeholder="Buscar en la colección…"
+            autocomplete="off" enterkeyhint="search">
+        </div>
+        <div class="products-toolbar-controls">
           <div class="products-sort">
-            <label class="sort-label">Ordenar:</label>
+            <label class="sort-label" for="sortTrigger">Ordenar</label>
             <div class="sort-dropdown" id="sortDropdown">
               <button class="sort-trigger" id="sortTrigger" type="button" aria-haspopup="listbox" aria-expanded="false">
                 <span class="sort-trigger-text">Destacados</span>
@@ -502,31 +536,38 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="products-drop-filter">
-          <label class="drop-filter-label">Drops:</label>
-          <div class="drop-dropdown" id="dropDropdown">
-            <button class="drop-dropdown-trigger" id="dropDropdownTrigger" type="button" aria-haspopup="listbox"
-              aria-expanded="false">
-              <span class="drop-dropdown-text">Todos los drops</span>
-              <svg class="drop-dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div class="drop-dropdown-options" id="dropDropdownOptions" role="listbox">
-              <button type="button" class="drop-dropdown-option active" data-drop="all" role="option">Todos los
-                drops</button>
-              <button type="button" class="drop-dropdown-option" data-drop="primer" role="option">Primer Drop</button>
-              <button type="button" class="drop-dropdown-option" data-drop="segundo" role="option">Segundo Drop</button>
-              <button type="button" class="drop-dropdown-option" data-drop="tercer" role="option">Tercer Drop</button>
-              <button type="button" class="drop-dropdown-option" data-drop="cuarto" role="option">Cuarto Drop</button>
-              <button type="button" class="drop-dropdown-option" data-drop="quinto" role="option">Quinto Drop</button>
-              <button type="button" class="drop-dropdown-option" data-drop="space" role="option">Drop Space</button>
-              <button type="button" class="drop-dropdown-option" data-drop="poleras" role="option">Poleras</button>
+          <div class="products-drop-filter">
+            <label class="drop-filter-label" for="dropDropdownTrigger">Drop</label>
+            <div class="drop-dropdown" id="dropDropdown">
+              <button class="drop-dropdown-trigger" id="dropDropdownTrigger" type="button" aria-haspopup="listbox"
+                aria-expanded="false">
+                <span class="drop-dropdown-text">Todos los drops</span>
+                <svg class="drop-dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+              <div class="drop-dropdown-options" id="dropDropdownOptions" role="listbox">
+                <button type="button" class="drop-dropdown-option active" data-drop="all" role="option">Todos los
+                  drops</button>
+                <button type="button" class="drop-dropdown-option" data-drop="primer" role="option">Primer Drop</button>
+                <button type="button" class="drop-dropdown-option" data-drop="segundo" role="option">Segundo Drop</button>
+                <button type="button" class="drop-dropdown-option" data-drop="tercer" role="option">Tercer Drop</button>
+                <button type="button" class="drop-dropdown-option" data-drop="cuarto" role="option">Cuarto Drop</button>
+                <button type="button" class="drop-dropdown-option" data-drop="quinto" role="option">Quinto Drop</button>
+                <button type="button" class="drop-dropdown-option" data-drop="space" role="option">Drop Space</button>
+                <button type="button" class="drop-dropdown-option" data-drop="poleras" role="option">Poleras</button>
+              </div>
             </div>
           </div>
         </div>
+        <nav class="products-filter" aria-label="Categorías de producto">
+          <button type="button" class="filter-btn active" data-filter="all"><span>TODOS</span></button>
+          <button type="button" class="filter-btn" data-filter="polo"><span>POLOS</span></button>
+          <button type="button" class="filter-btn" data-filter="bividi"><span>BIVIDIS</span></button>
+          <button type="button" class="filter-btn" data-filter="short"><span>BERMUDAS BAGGY</span></button>
+          <button type="button" class="filter-btn" data-filter="polera"><span>POLERAS</span></button>
+        </nav>
       </div>
 
       <div class="products-grid" id="productsGrid">
@@ -1300,39 +1341,45 @@
 
 
     <!-- FEATURED BANNERS -->
-    <section class="featured-banners">
+    <section class="featured-banners" aria-labelledby="featured-banners-heading">
+      <h2 id="featured-banners-heading" class="visually-hidden">Colecciones destacadas</h2>
       <div class="banner-grid">
-        <div class="banner-item large">
-          <img src="/tercer-drop/blackfuture-1.jpeg" alt="Future Collection" loading="lazy">
+        <a href="#polos" class="banner-item large banner-card-link">
+          <img src="/tercer-drop/blackfuture-1.jpeg" alt="" loading="lazy" decoding="async" width="800" height="600">
           <div class="banner-overlay">
             <span class="banner-tag">COLLECTION</span>
             <h3>FUTURE VISION</h3>
-            <a href="#polos" class="btn-small">EXPLORAR</a>
+            <span class="btn-small banner-cta-pill">EXPLORAR</span>
           </div>
-        </div>
-        <div class="banner-item">
-          <img src="/tercer-drop/grayfuture-1.jpeg" alt="Future 2" loading="lazy">
+        </a>
+        <a href="#polos" class="banner-item banner-card-link">
+          <img src="/tercer-drop/grayfuture-1.jpeg" alt="" loading="lazy" decoding="async" width="400" height="225">
           <div class="banner-overlay">
             <span class="banner-tag">NUEVO</span>
             <h3>URBAN NIGHTS</h3>
+            <span class="btn-small banner-cta-pill">EXPLORAR</span>
           </div>
-        </div>
-        <div class="banner-item">
-          <img src="/tercer-drop/whitefuture-1.jpeg" alt="Future 3" loading="lazy">
+        </a>
+        <a href="#polos" class="banner-item banner-card-link">
+          <img src="/tercer-drop/whitefuture-1.jpeg" alt="" loading="lazy" decoding="async" width="400" height="225">
           <div class="banner-overlay">
             <span class="banner-tag">EXCLUSIVO</span>
             <h3>STREET TECH</h3>
+            <span class="btn-small banner-cta-pill">EXPLORAR</span>
           </div>
-        </div>
+        </a>
       </div>
     </section>
 
     <!-- PERFUMES SECTION - ALL 8 PRODUCTS -->
-    <section id="perfumes" class="section-container dark-section">
-      <div class="section-header center reveal-up">
+    <section id="perfumes" class="section-container dark-section" aria-labelledby="perfumes-heading">
+      <div class="section-header center section-header--perfumes reveal-up">
         <div class="section-label">02</div>
-        <h2>ESSENCE OF <span class="text-gradient">NIGHT</span></h2>
-        <p class="section-desc">8 fragancias exclusivas que capturan la esencia de la noche</p>
+        <h2 id="perfumes-heading">ESSENCE OF <span class="text-gradient">NIGHT</span></h2>
+        <p class="section-desc perfumes-lead">Ocho esencias para prolongar la misma actitud que tu drop: noche, calle y
+          detalle.</p>
+        <p class="perfumes-intro">Aquí el foco es el aroma y la duración, no el ruido visual. Elige la familia olfativa
+          que mejor cierra tu look; el resto lo ves en vista rápida.</p>
       </div>
 
       <div class="perfumes-grid">
@@ -1353,7 +1400,7 @@
           </div>
           <div class="perfume-info">
             <h3>KHAMRA</h3>
-            <p>Ámbar, Vainilla, Especias Orientales</p>
+            <p class="perfume-notes">Ámbar, vainilla, especias orientales</p>
             <div class="perfume-footer">
               <span class="perfume-price">S/89.00</span>
               <button class="add-cart-btn" data-product="KHAMRA" data-price="89"
@@ -1384,7 +1431,7 @@
           </div>
           <div class="perfume-info">
             <h3>SCEPTRE</h3>
-            <p>Oceanic Breeze, Fresh Notes</p>
+            <p class="perfume-notes">Brisa marina, notas acuáticas y frescas</p>
             <div class="perfume-footer">
               <span class="perfume-price">S/95.00</span>
               <button class="add-cart-btn" data-product="SCEPTRE" data-price="95"
@@ -1415,7 +1462,7 @@
           </div>
           <div class="perfume-info">
             <h3>WANTED</h3>
-            <p>Rebel Soul, Leather, Spices</p>
+            <p class="perfume-notes">Cuero, especias, notas amaderadas</p>
             <div class="perfume-footer">
               <span class="perfume-price">S/78.00</span>
               <button class="add-cart-btn" data-product="WANTED" data-price="78"
@@ -1444,7 +1491,7 @@
           </div>
           <div class="perfume-info">
             <h3>NUIT</h3>
-            <p>Dark Mystery, Woods, Musk</p>
+            <p class="perfume-notes">Maderas oscuras, almizcle, acordes nocturnos</p>
             <div class="perfume-footer">
               <span class="perfume-price">S/85.00</span>
               <button class="add-cart-btn" data-product="NUIT" data-price="85"
@@ -1473,7 +1520,7 @@
           </div>
           <div class="perfume-info">
             <h3>AQUA</h3>
-            <p>Fresh Water, Citrus, Marine</p>
+            <p class="perfume-notes">Cítricos, notas marinas, frescura limpia</p>
             <div class="perfume-footer">
               <span class="perfume-price">S/72.00</span>
               <button class="add-cart-btn" data-product="AQUA" data-price="72"
@@ -1504,7 +1551,7 @@
           </div>
           <div class="perfume-info">
             <h3>WITH YOU</h3>
-            <p>Sweet Romance, Floral, Warm</p>
+            <p class="perfume-notes">Floral, cálido, dulzor discreto</p>
             <div class="perfume-footer">
               <span class="perfume-price">S/82.00</span>
               <button class="add-cart-btn" data-product="WITH YOU" data-price="82"
@@ -1535,7 +1582,7 @@
           </div>
           <div class="perfume-info">
             <h3>MANGO</h3>
-            <p>Tropical Vibes, Fruity, Sweet</p>
+            <p class="perfume-notes">Mango, frutal tropical, dulzor suave</p>
             <div class="perfume-footer">
               <span class="perfume-price">S/68.00</span>
               <button class="add-cart-btn" data-product="MANGO" data-price="68"
@@ -1566,7 +1613,7 @@
           </div>
           <div class="perfume-info">
             <h3>HARAMAIN</h3>
-            <p>Arabic Oud, Incense, Rose</p>
+            <p class="perfume-notes">Oud, incienso, rosa — acento árabe</p>
             <div class="perfume-footer">
               <span class="perfume-price">S/98.00</span>
               <button class="add-cart-btn" data-product="HARAMAIN" data-price="98"
@@ -1583,32 +1630,35 @@
     </section>
 
     <!-- LOOKBOOK / SPACE SECTION -->
-    <section id="lookbook" class="section-container immersive-section">
-      <canvas id="space-canvas"></canvas>
+    <section id="lookbook" class="section-container immersive-section" aria-labelledby="lookbook-heading">
+      <canvas id="space-canvas" aria-hidden="true"></canvas>
       <div class="immersive-content reveal-up">
         <div class="section-label">03</div>
-        <h2 class="mega-title">BEYOND<br><span class="outline-text">THE ASPHALT</span></h2>
+        <h2 id="lookbook-heading" class="mega-title">BEYOND<br><span class="outline-text">THE ASPHALT</span></h2>
+        <p class="immersive-bridge">El <strong>drop Space</strong> lleva esa misma energía al tejido: menos ruido, más
+          actitud.</p>
         <p class="immersive-desc">Nuestra inspiración viene de la velocidad y el infinito.<br>Diseños que desafían la
           gravedad.</p>
 
         <div class="space-gallery">
           <div class="space-item floating">
-            <img src="/drop-space/black-space.jpeg" alt="Space Black" loading="lazy">
+            <img src="/drop-space/black-space.jpeg" alt="Polo Space Black" loading="lazy" width="220" height="293">
             <span class="space-label">SPACE BLACK</span>
           </div>
           <div class="space-item floating delay-1">
-            <img src="/drop-space/white-space.jpeg" alt="Space Blue" loading="lazy">
-            <span class="space-label">SPACE BLUE</span>
+            <img src="/drop-space/white-space.jpeg" alt="Polo Space White" loading="lazy" width="220" height="293">
+            <span class="space-label">SPACE WHITE</span>
           </div>
           <div class="space-item floating delay-2">
-            <img src="/drop-space/red-space.jpeg" alt="Space Red" loading="lazy">
+            <img src="/drop-space/red-space.jpeg" alt="Polo Space Red" loading="lazy" width="220" height="293">
             <span class="space-label">SPACE RED</span>
           </div>
         </div>
 
-        <a href="#polos" class="btn-primary">
-          <span>EXPLORAR COLECCIÓN</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <a href="?drop=space#polos" class="btn-primary lookbook-cta">
+          <span>VER DROP SPACE</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            aria-hidden="true">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </a>
@@ -1616,121 +1666,276 @@
     </section>
 
     <!-- SOBRE NOSOTROS -->
-    <section id="nosotros" class="section-container about-section collapsible-section">
+    <section id="nosotros" class="section-container about-section collapsible-section" itemscope
+      itemtype="https://schema.org/Organization">
+      <meta itemprop="name" content="NOCTURNA PR">
       <div class="about-content reveal-up">
         <div class="about-text">
           <div class="section-label">NUESTRA HISTORIA</div>
           <h2>SOBRE <span class="text-gradient">NOCTURNA PR</span></h2>
-          <p class="about-preview">Nacimos entre luces rojas y asfalto. NOCTURNA PR es más que ropa: es una declaración
-            de identidad para quienes viven la noche, la velocidad y la cultura motorsport.</p>
-          <div class="about-expanded">
-            <p>Cada diseño está inspirado en iconos JDM, clásicos americanos y la estética urbana nocturna. Ediciones
-              limitadas, calidad premium y una comunidad que comparte la misma pasión.</p>
-            <div class="about-stats">
-              <div class="about-stat"><span class="about-stat-num">3+</span><span>Años en la calle</span></div>
-              <div class="about-stat"><span class="about-stat-num">5</span><span>Drops lanzados</span></div>
-              <div class="about-stat"><span class="about-stat-num">1000+</span><span>Clientes satisfechos</span></div>
+          <p class="about-preview" itemprop="description">Marca peruana de streetwear con base en Lima: drops en edición
+            limitada, inspiración JDM y cultura nocturna. Coordinamos pedidos y envíos por WhatsApp, con alcance a todo
+            el país.</p>
+          <div class="about-expanded" id="about-expanded-panel">
+            <p>Cada pieza nace de referentes JDM, clásicos americanos y la estética urbana de noche. Priorizamos tela,
+              corte y detalle sobre el ruido visual: si te identificas con la pista y la calle, ya compartes el mismo
+              lenguaje.</p>
+            <div class="about-stats" aria-label="Datos de la marca">
+              <div class="about-stat">
+                <span class="about-stat-num">Perú</span>
+                <span>Envíos nacionales · coordinación desde Lima</span>
+              </div>
+              <div class="about-stat">
+                <span class="about-stat-num">Drops</span>
+                <span>Varias ediciones limitadas por temporada</span>
+              </div>
+              <div class="about-stat">
+                <span class="about-stat-num">Directo</span>
+                <span>Atención y seguimiento por WhatsApp</span>
+              </div>
             </div>
           </div>
-          <button class="section-toggle" id="aboutToggle" type="button"><span class="text-expand">Leer más</span><span
+          <button class="section-toggle" id="aboutToggle" type="button" aria-expanded="false"
+            aria-controls="about-expanded-panel"><span class="text-expand">Leer más</span><span
               class="text-collapse">Leer menos</span></button>
         </div>
-        <div class="about-visual">
-          <img src="/header-cars/Nissan Skyline GT-R R34.png" alt="Skyline R34" loading="lazy">
+        <div class="about-visual about-visual--dual">
+          <div class="about-visual-primary">
+            <img src="/header-cars/Nissan Skyline GT-R R34.png" alt="Referencia JDM: Nissan Skyline GT-R R34" loading="lazy"
+              width="400" height="300">
+          </div>
+          <div class="about-visual-secondary">
+            <img src="/drop-space/black-space.jpeg" alt="Polo del drop Space — línea Beyond the Asphalt" loading="lazy"
+              width="400" height="300">
+          </div>
         </div>
       </div>
     </section>
 
     <!-- FAQ SECTION -->
-    <section id="faq" class="section-container faq-section">
+    <section id="faq" class="section-container faq-section" aria-labelledby="faq-heading">
       <div class="section-header center reveal-up">
         <div class="section-label">AYUDA</div>
-        <h2>PREGUNTAS <span class="text-gradient">FRECUENTES</span></h2>
+        <h2 id="faq-heading">PREGUNTAS <span class="text-gradient">FRECUENTES</span></h2>
       </div>
+      <nav class="faq-nav reveal-up" aria-label="Índice de preguntas">
+        <span class="faq-nav-label">Ir a:</span>
+        <ul class="faq-nav-list">
+          <li><a href="#faq-pedido">Pedido</a></li>
+          <li><a href="#faq-envios">Envíos</a></li>
+          <li><a href="#faq-cambios">Cambios</a></li>
+          <li><a href="#faq-stock">Stock</a></li>
+          <li><a href="#faq-reserva">Reserva</a></li>
+          <li><a href="#faq-pago">Pagos</a></li>
+          <li><a href="#faq-comprobante">Comprobante</a></li>
+          <li><a href="#faq-contacto">Contacto</a></li>
+        </ul>
+      </nav>
       <div class="faq-list reveal-up">
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+        <div class="faq-item" id="faq-pedido">
+          <button type="button" class="faq-question" id="faq-q-pedido" aria-expanded="false"
+            aria-controls="faq-a-pedido">
+            <span>¿Cómo hago un pedido?</span>
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-a-pedido" role="region" aria-labelledby="faq-q-pedido" aria-hidden="true">
+            <p>En la web puedes revisar colección, tallas y precios. Cuando decidas, escríbenos por <strong>WhatsApp</strong>
+              indicando el nombre del producto (como aparece en la tienda), la talla y, si quieres, una captura de pantalla.
+              Así evitamos confusiones entre drops o colores parecidos.</p>
+            <p>Te respondemos con el <strong>total exacto</strong> (incluye envío si aplica), confirmación de
+              <strong>stock</strong> y los <strong>datos para pagar</strong> (Yape, Plin o transferencia según lo que
+              acordemos). Cuando tengamos tu <strong>comprobante de pago</strong>, dejamos tu pedido registrado y
+              coordinamos fecha de envío o punto de entrega si aplica en Lima.</p>
+            <p>Si tienes dudas antes de pagar (talla, medidas, perfume), pregúntanos en el mismo chat: preferimos cerrar
+              detalles antes de que transfieras.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-envios">
+          <button type="button" class="faq-question" id="faq-q-envios" aria-expanded="false"
+            aria-controls="faq-a-envios">
             <span>¿A dónde enviamos?</span>
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
+              stroke-width="2" aria-hidden="true">
               <path d="M6 9l6 6 6-6" />
             </svg>
           </button>
-          <div class="faq-answer">
-            <p>Enviamos a todo Lima (24-48 hrs) y a todo el Perú (2-5 días hábiles). Envío gratis en pedidos mayores a
-              S/50.</p>
+          <div class="faq-answer" id="faq-a-envios" role="region" aria-labelledby="faq-q-envios" aria-hidden="true">
+            <p>Enviamos a <strong>todo Lima Metropolitana</strong> y a <strong>provincias</strong> mediante courier o
+              agencia según destino. Los plazos orientativos son <strong>24 a 48 horas hábiles</strong> en Lima y
+              <strong>2 a 5 días hábiles</strong> al resto del país, según distrito y disponibilidad del servicio.</p>
+            <p>En pedidos mayores a <strong>S/50</strong> el envío puede salir <strong>gratis</strong> según la campaña
+              vigente; el total te lo confirmamos siempre en WhatsApp antes de pagar, para que sepas el monto final.</p>
+            <p>Te enviamos <strong>seguimiento</strong> o número de guía cuando el paquete salga. Si tu zona tiene
+              restricciones de entrega o feriados locales, puede sumarse un día extra: te avisamos si pasa.</p>
           </div>
         </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+        <div class="faq-item" id="faq-cambios">
+          <button type="button" class="faq-question" id="faq-q-cambios" aria-expanded="false"
+            aria-controls="faq-a-cambios">
             <span>¿Cómo funcionan los cambios?</span>
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
+              stroke-width="2" aria-hidden="true">
               <path d="M6 9l6 6 6-6" />
             </svg>
           </button>
-          <div class="faq-answer">
-            <p>Tienes 7 días para cambiar tu prenda por talla. El producto debe estar sin usar y con etiquetas.
-              Contáctanos por WhatsApp para coordinar.</p>
+          <div class="faq-answer" id="faq-a-cambios" role="region" aria-labelledby="faq-q-cambios" aria-hidden="true">
+            <p>Cuentas con <strong>7 días calendario</strong> desde que recibes el producto para solicitar un
+              <strong>cambio por talla</strong> de la misma referencia (mismo modelo y color), sujeto a disponibilidad de
+              stock.</p>
+            <p>La prenda debe estar <strong>sin usar</strong>, sin olor a perfume o humo, con <strong>etiquetas</strong>
+              originales y empaque en buen estado. Si llega usada o dañada, no podemos aceptar el cambio.</p>
+            <p>Escríbenos por <strong>WhatsApp</strong> con tu número de pedido o captura del comprobante; te indicamos
+              si hay talla disponible y el proceso para envío del cambio o retiro en Lima si aplica. Los costos de envío
+              en cambios pueden correr por cuenta del cliente según el caso: te lo explicamos antes de avanzar.</p>
           </div>
         </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
+        <div class="faq-item" id="faq-stock">
+          <button type="button" class="faq-question" id="faq-q-stock" aria-expanded="false" aria-controls="faq-a-stock">
+            <span>¿Qué pasa si mi talla se agota?</span>
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-a-stock" role="region" aria-labelledby="faq-q-stock" aria-hidden="true">
+            <p>Los drops son por <strong>ediciones limitadas</strong>: a veces una talla se agota entre que la ves en la
+              web y completas el pago. Por eso el pedido queda confirmado solo cuando tenemos tu <strong>pago
+              verificado</strong> y stock disponible.</p>
+            <p>Si la talla que quieres ya no está, te escribimos por WhatsApp para ofrecerte <strong>otra talla</strong>
+              cercana si hay, o dejarte anotado si vuelve stock en un restock (no siempre garantizado).</p>
+            <p>Si <strong>ya pagaste</strong> y el producto no está disponible, coordinamos <strong>devolución del monto</strong>
+              o <strong>cambio</strong> por otro ítem de valor similar, según lo que acordemos contigo por chat.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-reserva">
+          <button type="button" class="faq-question" id="faq-q-reserva" aria-expanded="false"
+            aria-controls="faq-a-reserva">
+            <span>¿Pueden reservar o apartar stock?</span>
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-a-reserva" role="region" aria-labelledby="faq-q-reserva" aria-hidden="true">
+            <p>No apartamos unidades de forma fija: el inventario se mueve rápido y varias personas pueden consultar la
+              misma talla al mismo tiempo. La única forma de asegurar la prenda es completar el <strong>pago y que lo
+              registremos</strong> con stock disponible.</p>
+            <p>Si necesitas unas horas para transferir o revisar con alguien, dímelo por <strong>WhatsApp</strong>: en
+              algunos casos podemos indicarte si el stock sigue vigente, pero <strong>no es una reserva formal</strong>
+              hasta ver el comprobante.</p>
+            <p>En drops muy solicitados, priorizamos quien confirma pago primero con datos correctos.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-pago">
+          <button type="button" class="faq-question" id="faq-q-pago" aria-expanded="false" aria-controls="faq-a-pago">
             <span>¿Qué métodos de pago aceptan?</span>
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
+              stroke-width="2" aria-hidden="true">
               <path d="M6 9l6 6 6-6" />
             </svg>
           </button>
-          <div class="faq-answer">
-            <p>Aceptamos Yape, Plin y transferencia BCP. <a href="#metodos-pago" style="color:var(--color-primary);">Ver
-                datos de pago y QR Yape</a>.</p>
+          <div class="faq-answer" id="faq-a-pago" role="region" aria-labelledby="faq-q-pago" aria-hidden="true">
+            <p>Aceptamos <strong>Yape</strong>, <strong>Plin</strong> y <strong>transferencia al BCP</strong> en soles, o
+              <strong>CCI interbancario</strong> si pagas desde otro banco. Los números de cuenta, QR y datos actualizados
+              están en la sección <a href="#metodos-pago" class="faq-answer-link">Métodos de pago</a>.</p>
+            <p>El flujo habitual es: te confirmamos el monto total → realizas el pago → nos envías <strong>captura o
+              voucher</strong> con fecha y monto legible → conciliamos y te confirmamos pedido y envío.</p>
+            <p><strong>Seguridad:</strong> jamás te pediremos clave de banca, token de tarjeta, “código de
+              verificación” de Yape/Plin ni PIN por WhatsApp. Solo usamos el chat para coordinar y revisar tu comprobante.
+              Si algo te suena raro, escríbenos al número oficial de la web.</p>
           </div>
         </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            <span>¿Cómo contacto con ustedes?</span>
+        <div class="faq-item" id="faq-comprobante">
+          <button type="button" class="faq-question" id="faq-q-comprobante" aria-expanded="false"
+            aria-controls="faq-a-comprobante">
+            <span>¿Emiten boleta o factura?</span>
             <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
+              stroke-width="2" aria-hidden="true">
               <path d="M6 9l6 6 6-6" />
             </svg>
           </button>
-          <div class="faq-answer">
-            <p>Por WhatsApp: +51 970 663 060. También en Instagram @nocturna_pr. Respondemos en menos de 24 horas.
-              Atención Lun - Sáb 10:00 - 20:00.</p>
+          <div class="faq-answer" id="faq-a-comprobante" role="region" aria-labelledby="faq-q-comprobante" aria-hidden="true">
+            <p>Emitimos <strong>comprobante de pago</strong> según corresponda a la operación (boleta de venta o documento
+              equivalente según normativa vigente). Para pedidos personales suele bastar con el registro del pago y el
+              envío del producto.</p>
+            <p>Si necesitas <strong>factura a empresa</strong> (con RUC), envíanos por <strong>WhatsApp</strong>, antes de
+              pagar, los datos completos: <strong>RUC</strong>, razón social, dirección fiscal y correo de envío del XML
+              si aplica. Así validamos que el monto y nombre coincidan antes de emitir.</p>
+            <p>Las facturas mal emitidas por error de datos del cliente pueden generar notas de crédito con demoras;
+              revisa bien los datos antes de confirmar el pago.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-contacto">
+          <button type="button" class="faq-question" id="faq-q-contacto" aria-expanded="false"
+            aria-controls="faq-a-contacto">
+            <span>¿Cómo contacto con ustedes?</span>
+            <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-a-contacto" role="region" aria-labelledby="faq-q-contacto" aria-hidden="true">
+            <p>El canal principal es <strong>WhatsApp</strong>: es donde confirmamos stock, precios, pagos y envíos.</p>
+            <p class="faq-contact-line">Número:
+              <a href="https://wa.me/51970663060" rel="noopener noreferrer">+51 970 663 060</a>
+              <button type="button" class="btn-outline btn-copy btn-copy--inline" data-copy="51970663060"
+                aria-label="Copiar número de WhatsApp"><span class="btn-copy-label">Copiar</span></button>
+            </p>
+            <p>También estamos en Instagram <a href="https://www.instagram.com/nocturna_pr/" rel="noopener noreferrer"
+                class="faq-answer-link">@nocturna_pr</a> para novedades y drops; para pedidos y postventa, prioriza
+              WhatsApp.</p>
+            <p>Intentamos responder en <strong>menos de 24 horas</strong>. Horario de atención habitual:
+              <strong>Lunes a Sábado, 10:00 - 20:00</strong> (hora Perú). Mensajes fuera de horario los vemos en el
+              siguiente bloque disponible.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- MÉTODOS DE PAGO -->
-    <section id="metodos-pago" class="section-container metodos-pago-section">
+    <section id="metodos-pago" class="section-container metodos-pago-section" aria-labelledby="metodos-pago-heading">
       <div class="section-header center reveal-up">
         <div class="section-label">PAGO</div>
-        <h2>MÉTODOS <span class="text-gradient">DE PAGO</span></h2>
-        <p class="section-desc">Yape, Plin, transferencia BCP. Pago seguro al confirmar por WhatsApp.</p>
+        <h2 id="metodos-pago-heading">MÉTODOS <span class="text-gradient">DE PAGO</span></h2>
+        <p class="section-desc">Yape, Plin y transferencia BCP. Confirma el pedido por WhatsApp; el titular de la cuenta
+          te lo validamos al cerrar la compra.</p>
       </div>
+      <p class="metodos-pago-security reveal-up" role="note">Nunca pedimos claves de banco, ni códigos de Yape/Plin ni
+        PIN por chat. Solo te pedimos comprobante o captura para conciliar tu pago.</p>
       <div class="metodos-pago-grid reveal-up">
         <div class="metodo-card">
           <h4>YAPE</h4>
           <div class="metodo-qr">
             <img src="/metodos-pago/yape-qr.png" alt="QR Yape - Escanea para pagar"
-              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" loading="lazy">
-            <p class="metodo-qr-placeholder"
-              style="display:none;padding:2rem;background:rgba(255,255,255,0.05);border-radius:8px;">Añade tu QR en
-              /public/metodos-pago/yape-qr.png</p>
+              onerror="this.style.display='none'; this.nextElementSibling.classList.add('is-visible');" loading="lazy"
+              width="180" height="180">
+            <p class="metodo-qr-placeholder">Añade tu QR en /public/metodos-pago/yape-qr.png</p>
           </div>
           <p class="metodo-desc">Escanea el QR desde la app Yape</p>
         </div>
         <div class="metodo-card">
-          <h4>BCP - Transferencia Soles</h4>
-          <p class="metodo-cuenta">Cuenta: <strong>19109406783099</strong></p>
-          <button class="btn-outline btn-copy" data-copy="19109406783099">Copiar</button>
+          <h4>PLIN</h4>
+          <p class="metodo-cuenta">Número: <strong>970 663 060</strong></p>
+          <p class="metodo-desc">Busca el número en Plin o envía al mismo contacto que WhatsApp.</p>
+          <button type="button" class="btn-outline btn-copy" data-copy="51970663060"><span
+              class="btn-copy-label">Copiar número</span></button>
         </div>
         <div class="metodo-card">
-          <h4>BCP - CCI Interbancario</h4>
+          <h4>BCP — Transferencia soles</h4>
+          <p class="metodo-cuenta">Cuenta: <strong>19109406783099</strong></p>
+          <p class="metodo-meta">Titular: te lo confirmamos por WhatsApp al validar tu pedido.</p>
+          <button type="button" class="btn-outline btn-copy" data-copy="19109406783099"><span
+              class="btn-copy-label">Copiar cuenta</span></button>
+        </div>
+        <div class="metodo-card">
+          <h4>BCP — CCI interbancario</h4>
           <p class="metodo-cuenta">CCI: <strong>00219110940678309954</strong></p>
-          <button class="btn-outline btn-copy" data-copy="00219110940678309954">Copiar</button>
+          <p class="metodo-meta">Titular: te lo confirmamos por WhatsApp al validar tu pedido.</p>
+          <button type="button" class="btn-outline btn-copy" data-copy="00219110940678309954"><span
+              class="btn-copy-label">Copiar CCI</span></button>
         </div>
       </div>
     </section>
@@ -1816,7 +2021,10 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2026 NOCTURNA PR. Todos los derechos reservados.</p>
+      <div class="footer-bottom-left">
+        <p>&copy; 2026 NOCTURNA PR. Todos los derechos reservados.</p>
+        <a href="/admin.html" class="footer-staff-link" aria-label="Acceso administración tienda">Acceso equipo</a>
+      </div>
       <div class="payment-methods">
         <span>Yape</span>
         <span>Plin</span>
@@ -1977,15 +2185,17 @@
         </div>
 
         <div class="quick-view-actions">
-          <button class="btn-primary add-to-cart-modal" id="addToCartModal">
+          <button type="button" class="btn-primary add-to-cart-modal" id="addToCartModal">
             <span>AGREGAR AL CARRITO</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
           </button>
-          <button class="btn-outline add-to-wishlist-modal" id="addToWishlistModal">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button type="button" class="btn-outline add-to-wishlist-modal" id="addToWishlistModal"
+            aria-label="Agregar a favoritos" aria-pressed="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
               <path
                 d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
               </path>

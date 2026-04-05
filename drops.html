@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="apple-touch-icon" href="/logo-tienda/icono-oficial.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/logo-tienda/icono-oficial.png?v=1" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/logo-tienda/icono-oficial.png?v=1" />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#ff003c" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=League+Spartan:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
 </head>
 
@@ -131,6 +131,7 @@
           </svg>
         </a>
       </div>
+      <a href="/admin.html" class="mobile-menu-staff-link" aria-label="Acceso administración tienda">Equipo</a>
     </div>
   </div>
   <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
@@ -142,7 +143,7 @@
       <div class="section-header reveal-up">
         <div class="section-label">ARCHIVO</div>
         <h2>CRONOLOGÍA <span class="text-gradient">DE DROPS</span></h2>
-        <p class="section-desc">Historial de lanzamientos. Cada drop, una edición limitada en el tiempo.</p>
+        <p class="section-desc">Archivo oficial de lanzamientos. Cada drop conserva su estética y edición limitada.</p>
       </div>
     </section>
 
@@ -340,21 +341,21 @@
           </button>
           <div class="timeline-images" id="perfumes-images">
             <img src="/perfumes-drop/perfume-khamra/product-khamra.png" alt="Khamra" loading="lazy">
-            <img src="/perfumes-drop/perfume-khamra/khamra.png" alt="Khamra 2" loading="lazy">
+            <img src="/perfumes-drop/perfume-khamra/product-khamra.png" alt="Khamra 2" loading="lazy">
             <img src="/perfumes-drop/perfume-sceptre/product-sceptre.png" alt="Sceptre" loading="lazy">
-            <img src="/perfumes-drop/perfume-sceptre/sceptre.png" alt="Sceptre 2" loading="lazy">
+            <img src="/perfumes-drop/perfume-sceptre/product-sceptre.png" alt="Sceptre 2" loading="lazy">
             <img src="/perfumes-drop/perfume-mostwanted/product-mostwanted.png" alt="Wanted" loading="lazy">
-            <img src="/perfumes-drop/perfume-mostwanted/azzaro.png" alt="Wanted 2" loading="lazy">
+            <img src="/perfumes-drop/perfume-mostwanted/product-mostwanted.png" alt="Wanted 2" loading="lazy">
             <img src="/perfumes-drop/perfume-nuit/product-nuit.png" alt="Nuit" loading="lazy">
-            <img src="/perfumes-drop/perfume-nuit/nuit.png" alt="Nuit 2" loading="lazy">
+            <img src="/perfumes-drop/perfume-nuit/product-nuit.png" alt="Nuit 2" loading="lazy">
             <img src="/perfumes-drop/perfume-aqua/product-aqua.png" alt="Aqua" loading="lazy">
-            <img src="/perfumes-drop/perfume-aqua/aqua.png" alt="Aqua 2" loading="lazy">
+            <img src="/perfumes-drop/perfume-aqua/product-aqua.png" alt="Aqua 2" loading="lazy">
             <img src="/perfumes-drop/perfume-with/product-with.png" alt="With You" loading="lazy">
-            <img src="/perfumes-drop/perfume-with/with.png" alt="With You 2" loading="lazy">
+            <img src="/perfumes-drop/perfume-with/product-with.png" alt="With You 2" loading="lazy">
             <img src="/perfumes-drop/perfume-mango/product-mango.png" alt="Mango" loading="lazy">
-            <img src="/perfumes-drop/perfume-mango/mango.png" alt="Mango 2" loading="lazy">
+            <img src="/perfumes-drop/perfume-mango/product-mango.png" alt="Mango 2" loading="lazy">
             <img src="/perfumes-drop/perfume-haramain/producto-haramain.png" alt="Haramain" loading="lazy">
-            <img src="/perfumes-drop/perfume-haramain/haramain.png" alt="Haramain 2" loading="lazy">
+            <img src="/perfumes-drop/perfume-haramain/producto-haramain.png" alt="Haramain 2" loading="lazy">
           </div>
         </div>
       </article>
@@ -406,7 +407,10 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 NOCTURNA PR. Todos los derechos reservados.</p>
+      <div class="footer-bottom-left">
+        <p>&copy; 2026 NOCTURNA PR. Todos los derechos reservados.</p>
+        <a href="/admin.html" class="footer-staff-link" aria-label="Acceso administración tienda">Acceso equipo</a>
+      </div>
     </div>
   </footer>
 
@@ -541,14 +545,16 @@
           </div>
         </div>
         <div class="quick-view-actions">
-          <button class="btn-primary add-to-cart-modal" id="addToCartModal">
+          <button type="button" class="btn-primary add-to-cart-modal" id="addToCartModal">
             <span>AGREGAR AL CARRITO</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
             </svg>
           </button>
-          <button class="btn-outline add-to-wishlist-modal" id="addToWishlistModal">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <button type="button" class="btn-outline add-to-wishlist-modal" id="addToWishlistModal"
+            aria-label="Agregar a favoritos" aria-pressed="false">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              aria-hidden="true">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
             </svg>
           </button>
