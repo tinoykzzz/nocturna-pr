@@ -48,6 +48,8 @@ body {
   max-width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
+  /* Hueco bajo el pie para que no quede tapado por UI fija (redes, volver arriba) */
+  padding-bottom: calc(3rem + env(safe-area-inset-bottom, 0px));
 }
 
 main {
@@ -4487,7 +4489,15 @@ a.banner-card-link:hover img {
 
 .contact-section {
   padding: 6rem 3rem;
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
+  position: relative;
+  z-index: 2;
+}
+
+/* Siempre visible: el observer de .reveal-up a veces no dispara al final de la página */
+#contacto .contact-grid.reveal-up {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .contact-grid {
@@ -4548,6 +4558,8 @@ a.banner-card-link:hover img {
 
 /* ========== FOOTER ========== */
 .main-footer {
+  position: relative;
+  z-index: 5;
   background: #0d0d0d;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
@@ -6783,7 +6795,7 @@ a.banner-card-link:hover img {
 @media (max-width: 768px) {
   /* Espacio al final del scroll: pie legible sobre redes fijas + botón volver arriba */
   body {
-    padding-bottom: calc(10rem + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(13rem + env(safe-area-inset-bottom, 0px));
   }
 
   .wishlist-sidebar {

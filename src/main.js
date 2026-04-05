@@ -508,9 +508,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0, rootMargin: '0px 0px -24px 0px' });
+  }, { threshold: 0, rootMargin: '0px 0px 64px 0px' });
 
   revealElements.forEach(el => revealObserver.observe(el));
+
+  /* Contacto al final: evita quedarse en opacity 0 si el observer no alcanza el umbral */
+  document.querySelectorAll('#contacto .reveal-up').forEach((el) => {
+    el.classList.add('visible');
+    revealObserver.unobserve(el);
+  });
 
   requestAnimationFrame(() => {
     document.querySelectorAll('#hero .reveal-up').forEach((el) => el.classList.add('visible'));
@@ -1752,9 +1758,15 @@ document.addEventListener('DOMContentLoaded', async () => {
           } else if (error.code === '42P01') {
             showToast('Configura la base de datos. Ejecuta supabase-setup.sql');
             console.error('Newsletter error:', error);
+          } else if (error.code === '42501' || /permission denied|rls/i.test(String(error.message || ''))) {
+            showToast('Falta permiso en Supabase: ejecuta el SQL de newsletter (INSERT para anon) en el proyecto.');
+            console.error('Newsletter RLS/grants:', error);
+          } else if (error.code === 'PGRST204' || /column|schema/i.test(String(error.message || ''))) {
+            showToast('Revisa la tabla newsletter_subscribers en Supabase (columnas).');
+            console.error('Newsletter error:', error);
           } else {
             showToast('Error al suscribir. Intenta de nuevo.');
-            console.error('Newsletter error:', error);
+            console.error('Newsletter error:', error.code, error.message, error);
           }
           return;
         }

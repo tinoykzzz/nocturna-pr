@@ -105,6 +105,9 @@ CREATE INDEX IF NOT EXISTS idx_newsletter_email ON newsletter_subscribers(email)
 
 ALTER TABLE newsletter_subscribers ENABLE ROW LEVEL SECURITY;
 
+-- La API usa la clave anon: hace falta INSERT explícito además de la política RLS
+GRANT INSERT ON newsletter_subscribers TO anon;
+
 -- Solo permitir insert (anon puede suscribirse)
 CREATE POLICY "Permitir suscripciones"
   ON newsletter_subscribers FOR INSERT
