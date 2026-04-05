@@ -6718,6 +6718,12 @@ a.banner-card-link:hover img {
   box-shadow: 0 10px 30px var(--color-primary-glow);
 }
 
+.back-to-top .back-to-top-icon {
+  display: block;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
 /* ========== LOADING OVERLAY ========== */
 .loading-overlay {
   position: fixed;
@@ -6775,6 +6781,11 @@ a.banner-card-link:hover img {
 }
 
 @media (max-width: 768px) {
+  /* Espacio al final del scroll: pie legible sobre redes fijas + botón volver arriba */
+  body {
+    padding-bottom: calc(10rem + env(safe-area-inset-bottom, 0px));
+  }
+
   .wishlist-sidebar {
     width: 100%;
     right: -100%;

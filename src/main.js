@@ -519,7 +519,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // =========== MODERN MOTION SYSTEM ===========
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reducedMotion) {
-    const motionSections = document.querySelectorAll('.section-container, .drops-hero-section, .timeline, .drops-cta-section');
+    const motionSections = document.querySelectorAll(
+      '.section-container:not(#contacto), .drops-hero-section, .timeline, .drops-cta-section'
+    );
     const motionCards = document.querySelectorAll('.product-card, .perfume-card, .drop-card, .timeline-content');
 
     motionSections.forEach((section, index) => {
