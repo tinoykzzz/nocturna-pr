@@ -80,38 +80,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (heroPrice) heroPrice.textContent = `S/${STANDARD_PRICES.polo}`;
   }
 
+  /** Catálogo inicial inmediato (no bloquea el primer pintado ni el resto del JS por await a Supabase). */
   let products = [...CATALOG_FALLBACK];
-  let catalogFromDb = false;
-  if (supabase) {
-    try {
-      const { data, error } = await supabase.from('products').select('*').order('sort_order', { ascending: true });
-      if (!error && data?.length > 0) {
-        catalogFromDb = true;
-        products = data.map((p) => ({
-          id: p.id,
-          name: p.name,
-          price: parseFloat(p.price),
-          image: p.image,
-          images: (Array.isArray(p.images) && p.images.length) ? p.images : [p.image],
-          category: p.category,
-          stock: p.stock ?? 0,
-          drop: p.drop_name || '',
-          newItem: p.new_item ?? false
-        }));
-      }
-    } catch (e) {
-      console.warn('[NOCTURNA] Catálogo Supabase no disponible, usando datos locales.', e);
-    }
-  }
-  if (!catalogFromDb) {
-    const stored = loadShopCatalogFromStorage();
-    if (stored?.length) products = stored;
-  }
+  const storedCatalog = loadShopCatalogFromStorage();
+  if (storedCatalog?.length) products = storedCatalog;
   try {
     products = normalizeCatalogProducts(products);
     applyStandardPricesToDom();
   } catch (e) {
     console.warn('[NOCTURNA] Error al normalizar catálogo.', e);
+  }
+
+  /** Sincronización con Supabase en segundo plano: evita demoras si la API o la red van lentos. */
+  if (supabase) {
+    void (async () => {
+      try {
+        const { data, error } = await supabase.from('products').select('*').order('sort_order', { ascending: true });
+        if (error || !data?.length) return;
+        products = normalizeCatalogProducts(
+          data.map((p) => ({
+            id: p.id,
+            name: p.name,
+            price: parseFloat(p.price),
+            image: p.image,
+            images: (Array.isArray(p.images) && p.images.length) ? p.images : [p.image],
+            category: p.category,
+            stock: p.stock ?? 0,
+            drop: p.drop_name || '',
+            newItem: p.new_item ?? false
+          }))
+        );
+        applyStandardPricesToDom();
+      } catch (e) {
+        console.warn('[NOCTURNA] Catálogo Supabase no disponible, usando datos locales.', e);
+      }
+    })();
   }
 
   // =========== CUSTOM CURSOR ===========
